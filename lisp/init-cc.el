@@ -64,7 +64,7 @@
                     ("\\.cxx\\'" (".hxx" ".hh" ".h")) ("\\.hxx\\'" (".cxx"))))
             (setq ff-search-directories '("." "../src" "../include"))
 
-            (local-set-key  (kbd "C-c o") 'ff-find-other-file)
+            (local-set-key  (kbd "C-x j") 'ff-find-other-file)
             ;; (local-set-key  (kbd "C-c C-c") 'ff-find-other-file)
             )
           )

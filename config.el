@@ -28,7 +28,7 @@
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-theme 'doom-one-light)
 ;; (setq doom-theme 'doom-one)
-(setq doom-theme 'sails)
+;; (setq doom-theme 'sails)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -144,14 +144,13 @@
 ;; (global-set-key (kbd "C-=") 'hs-show-block)
 ;; (global-set-key (kbd "C--") 'hs-hide-block)
 (map! "C-=" #'hs-show-block
-      "C--" #'hs-hide-block
-      "C-c o" #'hs-hide-block)
+      "C--" #'hs-hide-block)
 
 ;; 自动折行
 (setq-default truncate-lines nil)
 
 ;; 高亮当前行
-(remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
+;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
 
 ;; (custom-set-faces
 ;;   (hl-line-mode nil)
