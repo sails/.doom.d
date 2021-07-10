@@ -19,12 +19,16 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-; (setq doom-font (font-spec :family "Fira Mono" :size 12))
+;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'medium))
+(setq doom-font (font-spec :family "Fira Code" :size 12))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-;; (setq doom-theme 'doom-molokai)
+;; (setq doom-theme 'doom-vibrant)
+;; (setq doom-theme 'doom-one-light)
+;; (setq doom-theme 'doom-one)
+(setq doom-theme 'sails)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -67,12 +71,13 @@
 ;; they are implemented.
 ;;
 (put 'customize-themes 'disabled nil)
-(setq doom-theme 'doom-vibrant)
+
+;; flyecheck默认关闭
+(flycheck-mode -1)
 
 (add-load-path! "lisp")
 (require 'init-convert)
 (require 'init-cc)
-
 
 ;; (pushnew! initial-frame-alist '(width . 120) '(height . 60))
 ;; 设置窗口位置
@@ -113,7 +118,7 @@
 ;; 复制当前buffer name
 (defun copy-file-name(choice)
   "Copy the `buffer-file-name` to the `kill-ring` as CHOICE."
-  (interactive "cCopy Buffer Name (f) full, (d) directory, (n) name")
+  (interactive "cCopy Buffer Name (f) full, (d) directory, (n) name, (r) relative")
   (let ((new-kill-string)
         (name (if (eq major-mode 'dired-mode)
                   (dired-get-filename)
@@ -124,6 +129,8 @@
            (setq new-kill-string (file-name-directory name)))
           ((eq choice ?n)
            (setq new-kill-string (file-name-nondirectory name)))
+          ((eq choice ?r)
+           (setq new-kill-string  (file-relative-name buffer-file-name (projectile-project-root))))
           (t (message "Quit")))
     (when new-kill-string
       (message "%s copied" new-kill-string)
@@ -133,6 +140,19 @@
   )
 
 
-;; firestarter
-(firestarter-mode)
+;; 代码折叠
+;; (global-set-key (kbd "C-=") 'hs-show-block)
+;; (global-set-key (kbd "C--") 'hs-hide-block)
+(map! "C-=" #'hs-show-block
+      "C--" #'hs-hide-block
+      "C-c o" #'hs-hide-block)
 
+;; 自动折行
+(setq-default truncate-lines nil)
+
+;; 高亮当前行
+(remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
+
+;; (custom-set-faces
+;;   (hl-line-mode nil)
+;;   )

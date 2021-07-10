@@ -55,3 +55,4 @@
 (package! google-c-style)
 (package! lsp-mode)
 (package! ccls)
+(package! ag)

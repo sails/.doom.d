@@ -9,6 +9,9 @@
           (lambda ()
             (google-set-c-style)
 
+            ;; firestarter
+            (firestarter-mode)
+
             (setenv "GTAGSFORCECPP" "1")
             (add-hook 'c-mode-hook 'helm-gtags-mode)
             (add-hook 'c++-mode-hook 'helm-gtags-mode)
@@ -61,7 +64,8 @@
                     ("\\.cxx\\'" (".hxx" ".hh" ".h")) ("\\.hxx\\'" (".cxx"))))
             (setq ff-search-directories '("." "../src" "../include"))
 
-            (local-set-key  (kbd "M-o") 'ff-find-other-file)
+            (local-set-key  (kbd "C-c o") 'ff-find-other-file)
+            ;; (local-set-key  (kbd "C-c C-c") 'ff-find-other-file)
             )
           )
 
