@@ -78,6 +78,7 @@
 (add-load-path! "lisp")
 (require 'init-convert)
 (require 'init-cc)
+(require 'init-shell)
 
 ;; (pushnew! initial-frame-alist '(width . 120) '(height . 60))
 ;; 设置窗口位置
@@ -146,11 +147,14 @@
 (map! "C-=" #'hs-show-block
       "C--" #'hs-hide-block)
 
+
 ;; 自动折行
 (setq-default truncate-lines nil)
 
+
 ;; 高亮当前行
 ;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
+;;
 
 ;; (custom-set-faces
 ;;   (hl-line-mode nil)

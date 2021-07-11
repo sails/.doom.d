@@ -56,3 +56,4 @@
 (package! lsp-mode)
 (package! ccls)
 (package! ag)
+(package! vterm-toggle)
