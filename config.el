@@ -20,15 +20,17 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'medium))
-(setq doom-font (font-spec :family "Fira Code" :size 12))
+(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'medium))
+;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'normal))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-;; (setq doom-theme 'doom-vibrant)
+(setq doom-theme 'doom-vibrant)
 ;; (setq doom-theme 'doom-one-light)
 ;; (setq doom-theme 'doom-one)
-;; (setq doom-theme 'sails)
+;; (setq doom-theme 'sailsxu)
+
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -76,6 +78,7 @@
 (flycheck-mode -1)
 
 (add-load-path! "lisp")
+(add-load-path! "themes")
 (require 'init-convert)
 (require 'init-cc)
 (require 'init-shell)
@@ -148,13 +151,41 @@
       "C--" #'hs-hide-block)
 
 
+;; project-find-file 比 projectile-find-file快, 并且不卡
+;; (map! "C-c p f=" #'project-find-file)
+
+
 ;; 自动折行
 (setq-default truncate-lines nil)
 
-
 ;; 高亮当前行
 ;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
-;;
+
+;; snails
+(when (display-graphic-p)
+  (use-package! snails
+    :defer t
+    :custom (snails-use-exec-path-from-shell nil)
+    :load-path  "lisp/snails"
+     :custom-face
+     (snails-content-buffer-face ((t (:background "#111" :height 110))))
+     (snails-input-buffer-face ((t (:background "#222" :foreground "gold" :height 110))))
+     (snails-header-line-face ((t (:inherit font-lock-function-name-face :underline t :height 1.1))))
+    :commands snails
+    :config
+    (setq snails-show-with-frame nil)
+    (map!
+     (:map snails-mode-map
+      :nvi "C-g" #'snails-quit
+      :nvi "ESC ESC ESC" #'snail-quit
+      :nvi "C-n" #'snails-select-next-item
+      :nvi "C-p" #'snails-select-prev-item
+      :nvi "C-v" #'snails-select-next-backend
+      :nvi "M-v" #'snails-select-prev-backend
+      :nvi "RET" #'snails-candidate-do
+      :nvi "C-RET" #'snails-candiate-alternate-do))
+    )
+  )
 
 ;; (custom-set-faces
 ;;   (hl-line-mode nil)
