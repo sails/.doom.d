@@ -26,10 +26,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-vibrant)
-;; (setq doom-theme 'doom-one-light)
-;; (setq doom-theme 'doom-one)
-;; (setq doom-theme 'sailsxu)
+(setq doom-theme 'doom-one)
 
 
 ;; If you use `org' and don't want your org files in the default location below,
@@ -85,19 +82,21 @@
 
 ;; (pushnew! initial-frame-alist '(width . 120) '(height . 60))
 ;; 设置窗口位置
-(defun my/set-initial-frame ()
-  (let* ((width-factor 0.50)
-         (height-factor 0.80)
-         (a-width (* (display-pixel-width) width-factor))
-         (a-height (* (display-pixel-height) height-factor))
-         (a-left (truncate (/ (- (display-pixel-width) a-width) 2)))
-         ;; (a-top (truncate (/ (- (display-pixel-height) a-height) 2)))
-         )
-    ;; (set-frame-position (selected-frame) a-left a-top)
-    (set-frame-position (selected-frame) a-left 0)
-    (set-frame-size (selected-frame) (truncate a-width)  (truncate a-height) t)))
-(setq frame-resize-pixelwise t)
-(my/set-initial-frame)
+(when (display-graphic-p)
+  (defun my/set-initial-frame ()
+    (let* ((width-factor 0.50)
+           (height-factor 0.80)
+           (a-width (* (display-pixel-width) width-factor))
+           (a-height (* (display-pixel-height) height-factor))
+           (a-left (truncate (/ (- (display-pixel-width) a-width) 2)))
+           ;; (a-top (truncate (/ (- (display-pixel-height) a-height) 2)))
+           )
+      ;; (set-frame-position (selected-frame) a-left a-top)
+      (set-frame-position (selected-frame) a-left 0)
+      (set-frame-size (selected-frame) (truncate a-width)  (truncate a-height) t)))
+  (setq frame-resize-pixelwise t)
+  (my/set-initial-frame)
+)
 
 
 ;; (global-set-key [remap switch-to-buffer] 'consult-buffer)
