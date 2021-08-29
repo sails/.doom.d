@@ -1,7 +1,19 @@
 ;;; lisp/init-shell.el -*- lexical-binding: t; -*-
 
-(map! "M-j" #'vterm-toggle-cd)
 
+;; eshell-toggle
+(global-set-key "\M-j" 'eshell-toggle)
+(require 'eshell-toggle)
+(with-eval-after-load "esh-opt"
+  (eshell-git-prompt-use-theme 'robbyrussell)
+  )
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            ;;  关闭company，自动补全反而会让多次输入回车，影响速度
+            (company-mode -1)
+            ))
+
+;; (map! "M-j" #'vterm-toggle-cd)
 (add-hook 'vterm-mode-hook
           (lambda ()
             ;; 当打开vterm后M-j替换eshell中的快捷键

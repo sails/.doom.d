@@ -58,3 +58,5 @@
 (package! ag)
 (package! vterm-toggle)
 (package! exec-path-from-shell)
+(package! eshell-toggle)
+(package! eshell-git-prompt)
