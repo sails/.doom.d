@@ -41,8 +41,10 @@
 (setq evil-default-state 'emacs)
 
 
-(setq doom-modeline-height 2)
-(setq doom-modeline-icon nil)
+(when (display-graphic-p)
+  (setq doom-modeline-height 2)
+  (setq doom-modeline-icon nil)
+)
 ;; (set-face-attribute 'mode-line nil :family "Noto Sans" :height 100)
 ;; (set-face-attribute 'mode-line-inactive nil :family "Noto Sans" :height 100)
 
@@ -184,6 +186,14 @@
       :nvi "RET" #'snails-candidate-do
       :nvi "C-RET" #'snails-candiate-alternate-do))
     )
+  )
+
+;;;; Mouse scrolling in terminal emacs
+(unless (display-graphic-p)
+  ;; activate mouse-based scrolling
+  (xterm-mouse-mode 1)
+  (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
+  (global-set-key (kbd "<mouse-5>") 'scroll-up-line)
   )
 
 ;; (custom-set-faces
