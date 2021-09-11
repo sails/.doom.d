@@ -26,7 +26,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-one-light)
 
 
 ;; If you use `org' and don't want your org files in the default location below,
@@ -162,6 +162,11 @@
 ;; 高亮当前行
 ;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
 
+;; 保存时自动格式化
+(setq +format-on-save-enabled-modes
+      '(go-mode
+        sql-mode))
+
 ;; snails
 (when (display-graphic-p)
   (use-package! snails
@@ -169,9 +174,9 @@
     :custom (snails-use-exec-path-from-shell nil)
     :load-path  "lisp/snails"
      :custom-face
-     (snails-content-buffer-face ((t (:background "#111" :height 110))))
-     (snails-input-buffer-face ((t (:background "#222" :foreground "gold" :height 110))))
-     (snails-header-line-face ((t (:inherit font-lock-function-name-face :underline t :height 1.1))))
+     ;; (snails-content-buffer-face ((t (:background "#111" :height 110))))
+     ;; (snails-input-buffer-face ((t (:background "#222" :foreground "gold" :height 110))))
+     ;; (snails-header-line-face ((t (:inherit font-lock-function-name-face :underline t :height 1.1))))
     :commands snails
     :config
     (setq snails-show-with-frame nil)

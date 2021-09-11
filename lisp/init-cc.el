@@ -15,6 +15,16 @@
             (firestarter-mode)
 
             (setenv "GTAGSFORCECPP" "1")
+
+            ;; (add-hook 'c-mode-hook 'counsel-gtags-mode)
+            ;; (add-hook 'c++-mode-hook 'counsel-gtags-mode)
+
+            ;; (with-eval-after-load 'counsel-gtags
+            ;;   (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-find-definition)
+            ;;   (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
+            ;;   (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
+            ;;   (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward))
+
             (add-hook 'c-mode-hook 'helm-gtags-mode)
             (add-hook 'c++-mode-hook 'helm-gtags-mode)
             (add-hook 'protobuf-mode-hook 'helm-gtags-mode)
@@ -24,6 +34,7 @@
               (define-key helm-gtags-mode-map (kbd "M-s") 'helm-gtags-find-symbol)
               (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack))
 
+            (lsp-modeline-diagnostics-mode -1)
             (after! ccls
               (when IS-MAC
                 (setq ccls-initialization-options
@@ -44,6 +55,8 @@
               
 
               (lsp-diagnostics-mode -1)
+              (flycheck-mode -1)
+              (setq lsp-modeline-diagnostics-enable nil)
               (setq lsp-enable-file-watchers nil)
               (setq lsp-diagnostics-provider :none)
               (set-lsp-priority! 'ccls 2)) ; optional as ccls is the default in Doom
