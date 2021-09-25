@@ -19,15 +19,13 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'medium))
-(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'medium))
-;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'normal))
+;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one-light)
-
+(setq doom-theme 'doom-one)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -38,26 +36,10 @@
 (setq display-line-numbers-type t)
 
 
-(setq evil-default-state 'emacs)
-
-
-(when (display-graphic-p)
-  (setq doom-modeline-height 2)
-  (setq doom-modeline-icon nil)
-)
-;; (set-face-attribute 'mode-line nil :family "Noto Sans" :height 100)
-;; (set-face-attribute 'mode-line-inactive nil :family "Noto Sans" :height 100)
-
-(when IS-MAC
-    (setq mac-command-modifier 'meta)
-    (setq mac-option-modifier 'none))
-
-
-
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
-;; - `use-package' for configuring packages
+;; - `use-package!' for configuring packages
 ;; - `after!' for running code after a package has loaded
 ;; - `add-load-path!' for adding directories to the `load-path', relative to
 ;;   this file. Emacs searches the `load-path' when you load packages with
@@ -65,29 +47,28 @@
 ;; - `map!' for binding new keys
 ;;
 ;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
 ;; This will open documentation for it, including demos of how they are used.
-;;pp
-;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
+;;
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 ;;
-(put 'customize-themes 'disabled nil)
+;;
+(when IS-MAC
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier 'none))
 
-;; flyecheck默认关闭
-(flycheck-mode -1)
 
-(add-load-path! "lisp")
-(add-load-path! "themes")
-(require 'init-convert)
-(require 'init-cc)
-(require 'init-shell)
+(when (display-graphic-p)
+  (setq doom-modeline-height 2)
+  (setq doom-modeline-icon nil)
+)
 
-;; (pushnew! initial-frame-alist '(width . 120) '(height . 60))
 ;; 设置窗口位置
 (when (display-graphic-p)
   (defun my/set-initial-frame ()
-    (let* ((width-factor 0.50)
-           (height-factor 0.80)
+    (let* ((width-factor 0.45)
+           (height-factor 0.70)
            (a-width (* (display-pixel-width) width-factor))
            (a-height (* (display-pixel-height) height-factor))
            (a-left (truncate (/ (- (display-pixel-width) a-width) 2)))
@@ -101,24 +82,11 @@
 )
 
 
-;; (global-set-key [remap switch-to-buffer] 'consult-buffer)
-(global-set-key [remap goto-line] 'consult-goto-line)
-;; (global-set-key (kbd "C-x b") 'consult-buffer)
-;;; :completion ivy
-(after! ivy
-  (global-set-key (kbd "C-x b") '+ivy/switch-buffer)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-virtual-abbreviate 'abbreviate))
-
-
-(setq ns-use-proxy-icon nil)
-(setq frame-title-format
-      '((:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))))
-
 ;; 高效的选中region
 (global-set-key (kbd "C-x m") 'er/expand-region)
+
+;; 光标闪烁
+;; (blink-cursor-mode t)
 
 ;; 复制当前buffer name
 (defun copy-file-name(choice)
@@ -152,20 +120,53 @@
       "C--" #'hs-hide-block)
 
 
-;; project-find-file 比 projectile-find-file快, 并且不卡
-;; (map! "C-c p f=" #'project-find-file)
-
-
 ;; 自动折行
 (setq-default truncate-lines nil)
-
-;; 高亮当前行
-;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
 
 ;; 保存时自动格式化
 (setq +format-on-save-enabled-modes
       '(go-mode
         sql-mode))
+
+;;;; Mouse scrolling in terminal emacs
+(unless (display-graphic-p)
+  ;; activate mouse-based scrolling
+  (xterm-mouse-mode 1)
+  (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
+  (global-set-key (kbd "<mouse-5>") 'scroll-up-line)
+  )
+
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+;; (global-set-key (kbd "C-x b") 'consult-buffer)
+;; (global-set-key (kbd "C-x b") 'counsel-recentf)
+;; :completion ivy
+(after! ivy
+  (global-set-key (kbd "C-x b") '+ivy/switch-buffer)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-virtual-abbreviate 'abbreviate))
+
+;; flyecheck默认关闭
+(flycheck-mode -1)
+
+; Default doom threshold of 400 is too low in my experience.
+(after! so-long (setq so-long-threshold 1000))
+
+(setq ns-use-proxy-icon nil)
+(setq frame-title-format
+      '((:eval (if (buffer-file-name)
+                   ;; (abbreviate-file-name (buffer-file-name))
+                   ;; (file-relative-name buffer-file-name (projectile-project-root))
+                   (buffer-name)
+                 "%b"))))
+
+
+(add-load-path! "lisp")
+(require 'init-convert)
+(require 'init-cc)
+(require 'init-shell)
+
 
 ;; snails
 (when (display-graphic-p)
@@ -192,15 +193,3 @@
       :nvi "C-RET" #'snails-candiate-alternate-do))
     )
   )
-
-;;;; Mouse scrolling in terminal emacs
-(unless (display-graphic-p)
-  ;; activate mouse-based scrolling
-  (xterm-mouse-mode 1)
-  (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
-  (global-set-key (kbd "<mouse-5>") 'scroll-up-line)
-  )
-
-;; (custom-set-faces
-;;   (hl-line-mode nil)
-;;   )

@@ -4,9 +4,9 @@
 ;; eshell-toggle
 (global-set-key "\M-j" 'eshell-toggle)
 (require 'eshell-toggle)
-(with-eval-after-load "esh-opt"
-  (eshell-git-prompt-use-theme 'robbyrussell)
-  )
+;; (with-eval-after-load "esh-opt"
+;;   (eshell-git-prompt-use-theme 'robbyrussell)
+;;   )
 (add-hook 'eshell-mode-hook
           (lambda ()
             ;;  关闭company，自动补全反而会让多次输入回车，影响速度
