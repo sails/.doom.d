@@ -54,6 +54,8 @@
 ;; (package! consult)
 ;; (package! vterm-toggle)
 (package! ag)
+;; ag->edit->commit
+(package! helm-ag)
 (package! helm-gtags)
 (package! firestarter)
 
