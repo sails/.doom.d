@@ -25,7 +25,8 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one-light)
+;; (setq doom-theme 'doom-one-light)
+;; Disable doom-theme by commenting 'doom' in the ui section
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -60,9 +61,17 @@
 
 
 (when (display-graphic-p)
-  ;;(setq doom-modeline-height 2)
-  ;;(setq doom-modeline-icon nil)
+  (setq doom-modeline-height 2)
+  (setq doom-modeline-icon nil)
 )
+
+;; 当禁用doom-theme时，改变fire字体
+(if (display-graphic-p)
+    (progn
+      ;; if graphic
+      (set-face-attribute 'default nil :font "Fira Code-12")
+      )
+  )
 
 ;; 设置窗口位置
 (when (display-graphic-p)
