@@ -27,6 +27,15 @@
 ;; `load-theme' function. This is the default:
 ;; (setq doom-theme 'doom-one-light)
 ;; Disable doom-theme by commenting 'doom' in the ui section
+;; 当禁用doom-theme时，改变fire字体
+;; (setq doom-theme 'sails)
+;; (if (display-graphic-p)
+;;     (progn
+;;       ;; if graphic
+;;       (set-face-attribute 'default nil :font "Fira Code-12")
+;;       )
+;;   )
+
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -59,19 +68,12 @@
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'none))
 
-
 (when (display-graphic-p)
   (setq doom-modeline-height 2)
   (setq doom-modeline-icon nil)
 )
-
-;; 当禁用doom-theme时，改变fire字体
-(if (display-graphic-p)
-    (progn
-      ;; if graphic
-      (set-face-attribute 'default nil :font "Fira Code-12")
-      )
-  )
+;; 当使用vertico时，补全列表中默认没有开启recent files
+;; (recentf-mode 1)
 
 ;; 设置窗口位置
 (when (display-graphic-p)
@@ -93,9 +95,6 @@
 
 ;; 高效的选中region
 (global-set-key (kbd "C-x m") 'er/expand-region)
-
-;; 光标闪烁
-;; (blink-cursor-mode t)
 
 ;; 复制当前buffer name
 (defun copy-file-name(choice)
@@ -148,8 +147,6 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
-;; (global-set-key (kbd "C-x b") 'consult-buffer)
-;; (global-set-key (kbd "C-x b") 'counsel-recentf)
 ;; :completion ivy
 (after! ivy
   (global-set-key (kbd "C-x b") '+ivy/switch-buffer)
@@ -169,13 +166,16 @@
                    ;; (file-relative-name buffer-file-name (projectile-project-root))
                    (buffer-name)
                  "%b"))))
-
+;; 光亮当前行
+;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
 
 (add-load-path! "lisp")
 (require 'init-convert)
 (require 'init-cc)
 (require 'init-shell)
 
+;;doom uses it to highlight incorrect indentation in buffers and activates it default
+(global-whitespace-mode nil)
 
 ;; snails
 (when (display-graphic-p)
