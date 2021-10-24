@@ -7,6 +7,7 @@
 
 ;; cc-mode设置
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
 (add-hook 'c-mode-common-hook
           (lambda ()
             (google-set-c-style)
@@ -35,6 +36,9 @@
               (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack))
 
             (lsp-modeline-diagnostics-mode -1)
+            ;; 在首次打开头文件时执行+format/region会卡住，但是当打开过cpp文件后正常
+            (setq +format-with-lsp nil)
+
             (after! ccls
               (when IS-MAC
                 (setq ccls-initialization-options
