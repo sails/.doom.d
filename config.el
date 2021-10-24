@@ -29,12 +29,12 @@
 ;; Disable doom-theme by commenting 'doom' in the ui section
 ;; 当禁用doom-theme时，改变fire字体
 ;; (setq doom-theme 'sails)
-;; (if (display-graphic-p)
-;;     (progn
-;;       ;; if graphic
-;;       (set-face-attribute 'default nil :font "Fira Code-12")
-;;       )
-;;   )
+(if (display-graphic-p)
+    (progn
+      ;; if graphic
+      (set-face-attribute 'default nil :font "Fira Code-12")
+      )
+  )
 
 
 ;; If you use `org' and don't want your org files in the default location below,
@@ -73,12 +73,12 @@
   (setq doom-modeline-icon nil)
 )
 ;; 当使用vertico时，补全列表中默认没有开启recent files
-;; (recentf-mode 1)
+(recentf-mode 1)
 
 ;; 设置窗口位置
 (when (display-graphic-p)
   (defun my/set-initial-frame ()
-    (let* ((width-factor 0.45)
+    (let* ((width-factor 0.40)
            (height-factor 0.70)
            (a-width (* (display-pixel-width) width-factor))
            (a-height (* (display-pixel-height) height-factor))
@@ -147,11 +147,12 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
+(global-set-key (kbd "C-x b") 'consult-buffer)
 ;; :completion ivy
-(after! ivy
-  (global-set-key (kbd "C-x b") '+ivy/switch-buffer)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-virtual-abbreviate 'abbreviate))
+;; (after! ivy
+;;   (global-set-key (kbd "C-x b") '+ivy/switch-buffer)
+;;   (setq ivy-use-virtual-buffers t)
+;;   (setq ivy-virtual-abbreviate 'abbreviate))
 
 ;; flyecheck默认关闭
 (flycheck-mode -1)
