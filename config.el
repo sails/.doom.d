@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-;; (setq doom-theme 'doom-one-light)
+(setq doom-theme 'doom-one-light)
 ;; Disable doom-theme by commenting 'doom' in the ui section
 ;; 当禁用doom-theme时，改变fire字体
 ;; (setq doom-theme 'sails)
@@ -174,6 +174,7 @@
 (require 'init-convert)
 (require 'init-cc)
 (require 'init-shell)
+(require 'init-exec-path)
 
 ;;doom uses it to highlight incorrect indentation in buffers and activates it default
 (global-whitespace-mode nil)
