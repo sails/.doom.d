@@ -120,7 +120,6 @@
     )
   )
 
-
 ;; 代码折叠
 ;; (global-set-key (kbd "C-=") 'hs-show-block)
 ;; (global-set-key (kbd "C--") 'hs-hide-block)
@@ -177,7 +176,11 @@
 (require 'init-exec-path)
 
 ;;doom uses it to highlight incorrect indentation in buffers and activates it default
-(global-whitespace-mode nil)
+;; (global-whitespace-mode nil)
+
+;; 大小写M-u,M-l
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
 
 ;; snails
 (when (display-graphic-p)
