@@ -62,6 +62,7 @@
               (flycheck-mode -1)
               (setq lsp-modeline-diagnostics-enable nil)
               (setq lsp-enable-file-watchers nil)
+              (setq lsp-lens-enable nil)  ;; 导致cpu100%
               (setq lsp-diagnostics-provider :none)
               (set-lsp-priority! 'ccls 2)) ; optional as ccls is the default in Doom
 
