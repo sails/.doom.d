@@ -30,6 +30,7 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one-light)
+;; (setq doom-theme 'doom-vibrant)
 ;; Disable doom-theme by commenting 'doom' in the ui section
 ;; 当禁用doom-theme时，改变fire字体
 ;; (setq doom-theme 'sails)
