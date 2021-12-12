@@ -40,7 +40,6 @@
 ;;     (progn
 ;;       ;; if graphic
 ;;       ;;(set-face-attribute 'default nil :font "Fira Code-12")
-;;       ;;(set-face-background 'modeline "#4477aa")
 ;;       )
 ;;   )
 
