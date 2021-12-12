@@ -9,7 +9,7 @@
 (setq user-full-name "sailsxu"
       user-mail-address "sailsxu@qq.com")
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
+;; Doom exposes five (optional) variables for controlling fonts in Doom.b Here
 ;; are the three important ones:
 ;;
 ;; + `doom-font'
@@ -24,20 +24,23 @@
 ;;
 
 ;; (setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'medium))
-(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
+;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one-light)
+;; (setq doom-theme 'doom-one-light)
 ;; (setq doom-theme 'doom-vibrant)
-;; Disable doom-theme by commenting 'doom' in the ui section
+(setq doom-theme 'sails-light)
+;; Disable doom-theme, Set to `nil' to load no theme at all
+;;(setq doom-theme nil)
 ;; 当禁用doom-theme时，改变fire字体
 ;; (setq doom-theme 'sails)
 ;; (if (display-graphic-p)
 ;;     (progn
 ;;       ;; if graphic
-;;       (set-face-attribute 'default nil :font "Fira Code-12")
+;;       ;;(set-face-attribute 'default nil :font "Fira Code-12")
+;;       ;;(set-face-background 'modeline "#4477aa")
 ;;       )
 ;;   )
 
@@ -77,6 +80,7 @@
 ;;   (setq doom-modeline-height 2)
 ;;   (setq doom-modeline-icon nil)
 ;; )
+
 ;; 当使用vertico时，补全列表中默认没有开启recent files
 (recentf-mode 1)
 
