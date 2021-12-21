@@ -23,7 +23,7 @@
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 ;;
 
-;; (setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'medium))
+(setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'medium))
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -83,22 +83,30 @@
 ;; 当使用vertico时，补全列表中默认没有开启recent files
 (recentf-mode 1)
 
-;; 设置窗口位置
-(when (display-graphic-p)
-  (defun my/set-initial-frame ()
-    (let* ((width-factor 0.40)
-           (height-factor 0.70)
-           (a-width (* (display-pixel-width) width-factor))
-           (a-height (* (display-pixel-height) height-factor))
-           (a-left (truncate (/ (- (display-pixel-width) a-width) 2)))
-           ;; (a-top (truncate (/ (- (display-pixel-height) a-height) 2)))
-           )
-      ;; (set-frame-position (selected-frame) a-left a-top)
-      (set-frame-position (selected-frame) a-left 0)
-      (set-frame-size (selected-frame) (truncate a-width)  (truncate a-height) t)))
-  (setq frame-resize-pixelwise t)
-  (my/set-initial-frame)
-)
+
+;; (pushnew! initial-frame-alist '(width . 120) '(height . 60))
+;;设置窗口位置
+(defun my/frame-recenter (&optional frame)
+  (interactive)
+  (unless (eq 'maximised (frame-parameter nil 'fullscreen))
+    (let* ((frame (or (and (boundp 'frame)
+                            frame)
+                      (selected-frame)))
+           (monitor-w (nth 2 (frame-monitor-workarea frame)))
+           (monitor-h (nth 3 (frame-monitor-workarea frame)))
+
+           (frame-w (truncate (* monitor-w 0.35)))
+           (frame-h (truncate (* monitor-h 0.8)))
+
+
+           (a-left (truncate (/ (- monitor-w frame-w) 2))))
+
+           (set-frame-position (selected-frame) a-left 0)
+           (set-frame-size (selected-frame) (truncate frame-w)  (truncate frame-h) t)
+      )))
+
+(add-hook 'after-init-hook #'my/frame-recenter)
+(add-hook 'after-make-frame-functions #'my/frame-recenter)
 
 
 ;; 高效的选中region
@@ -215,3 +223,13 @@
       :nvi "C-RET" #'snails-candiate-alternate-do))
     )
   )
+
+;; leetcode-cn
+;; (when (display-graphic-p)
+;;   (use-package! leetcode-cn
+;;     :load-path  "lisp/leetcode-cn"
+;;     :config
+;;     (setq leetcode-save-solutions t)
+;;     (setq leetcode-directory "~/leetcode")
+;;     )
+;;   )

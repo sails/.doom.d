@@ -111,6 +111,13 @@
             (local-set-key  (kbd "C-x j") 'ff-find-other-file)
             ;; (local-set-key  (kbd "C-c C-c") 'ff-find-other-file)
             )
+
+          (quickrun-add-command "c++/c11"
+              '((:command . "g++")
+                (:exec    . ("%c -std=c++11 %o -o %e %s"
+                             "%e %a"))
+                (:remove  . ("%e")))
+              :default "c++")
           )
 
 
