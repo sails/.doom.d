@@ -23,15 +23,15 @@
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 ;;
 
-(setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'medium))
-;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
+;; (setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;; (setq doom-theme 'doom-one-light)
 ;; (setq doom-theme 'doom-vibrant)
-(setq doom-theme 'sails-light)
+;; (setq doom-theme 'sails-light)
 ;; Disable doom-theme, Set to `nil' to load no theme at all
 ;;(setq doom-theme nil)
 ;; 当禁用doom-theme时，改变fire字体
@@ -95,8 +95,8 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.35)))
-           (frame-h (truncate (* monitor-h 0.8)))
+           (frame-w (truncate (* monitor-w 0.32)))
+           (frame-h (truncate (* monitor-h 0.7)))
 
 
            (a-left (truncate (/ (- monitor-w frame-w) 2))))
@@ -233,3 +233,6 @@
 ;;     (setq leetcode-directory "~/leetcode")
 ;;     )
 ;;   )
+
+;; 设置cache文件数50w,如果太小，会在重启后清理，导致每次启动后运行projectile都需要重建
+(setq doom-projectile-cache-limit 500000)
