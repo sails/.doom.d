@@ -23,8 +23,8 @@
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 ;;
 
-;; (setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
-(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
+;;(setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
+;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -32,6 +32,9 @@
 ;; (setq doom-theme 'doom-one-light)
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-theme 'sails-light)
+;; (setq doom-theme 'doom-dracula)
+;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light))
+
 ;; Disable doom-theme, Set to `nil' to load no theme at all
 ;;(setq doom-theme nil)
 ;; 当禁用doom-theme时，改变fire字体
@@ -95,8 +98,8 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.32)))
-           (frame-h (truncate (* monitor-h 0.7)))
+           (frame-w (truncate (* monitor-w 0.38)))
+           (frame-h (truncate (* monitor-h 0.85)))
 
 
            (a-left (truncate (/ (- monitor-w frame-w) 2))))
@@ -175,12 +178,12 @@
 ; Default doom threshold of 400 is too low in my experience.
 (after! so-long (setq so-long-threshold 1000))
 
-(setq ns-use-proxy-icon nil)
+;; (setq ns-use-proxy-icon nil)
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
                    ;; (abbreviate-file-name (buffer-file-name))
-                   ;; (file-relative-name buffer-file-name (projectile-project-root))
-                   (buffer-name)
+                   (file-relative-name buffer-file-name (projectile-project-root))
+                   ;; (buffer-name)
                  "%b"))))
 ;; 光亮当前行
 ;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
@@ -224,15 +227,30 @@
     )
   )
 
-;; leetcode-cn
-;; (when (display-graphic-p)
-;;   (use-package! leetcode-cn
-;;     :load-path  "lisp/leetcode-cn"
-;;     :config
-;;     (setq leetcode-save-solutions t)
-;;     (setq leetcode-directory "~/leetcode")
-;;     )
-;;   )
+(when (display-graphic-p)
+  (use-package! leetcode
+    :defer t
+    :config
+    (setq leetcode-save-solutions t)
+    (setq leetcode-prefer-language "cpp")
+    (setq leetcode-directory "~/.leetcode")
+    )
+  )
 
 ;; 设置cache文件数50w,如果太小，会在重启后清理，导致每次启动后运行projectile都需要重建
 (setq doom-projectile-cache-limit 500000)
+
+(add-to-list 'doom-large-file-excluded-modes 'c++-mode)
+
+;; (use-package hide-mode-line
+;;   :ensure t
+;;   :config
+;;   ;; (add-hook 'prog-mode #'hide-mode-line-mode)
+;;   ;; (add-hook 'go-mode-hook #'hide-mode-line-mode)
+;;   (global-hide-mode-line-mode)
+;;   )
+
+
+;; Hide the menu for as minimalistic a startup screen as possible.
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+;; (setq sails-light-brighter-comments t)

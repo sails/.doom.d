@@ -56,7 +56,6 @@
                                 :initialWhitelist ,+ccls-initial-whitelist)
                         :completion (:detailedLabel t))
                       ))
-              
 
               (lsp-diagnostics-mode -1)
               (flycheck-mode -1)
