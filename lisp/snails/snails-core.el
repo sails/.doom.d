@@ -306,6 +306,9 @@ need to set face attribute, such as foreground and background.")
 (defvar snails-init-frame nil
   "The frame before snails start, use for focus after snails hide.")
 
+(defvar snails-frame-name "emacs-snails"
+  "The frame name of snails created.")
+
 (defvar snails-input-buffer " *snails input*"
   "The buffer name of search input buffer.")
 
@@ -451,7 +454,9 @@ or set it with any string you want."
     (setq snails-project-root-dir
           (let ((project (project-current)))
             (when project
-              (expand-file-name (cdr project))
+              (if (version< "27.0" emacs-version)
+                  (expand-file-name (cdr project))
+                (expand-file-name (car (last project))))
               )))
 
     ;; Create.
@@ -749,7 +754,8 @@ or set it with any string you want."
              (frame-visible-p snails-frame))
       (setq snails-frame
             (make-frame
-             '((parent-frame . snails-init-frame)
+             '((name . snails-frame-name)
+               (parent-frame . snails-init-frame)
                (skip-taskbar . t)
                (minibuffer . nil)
                (visibility . nil)
@@ -1538,11 +1544,11 @@ Otherwise return nil."
   (when (string-match-p "@" input)
     (let (search-content input-dir)
       (setq search-content (split-string input "@"))
-      (setq input-dir (second search-content))
+      (setq input-dir (cl-second search-content))
       (cond ((equal input-dir "")
-             (list (expand-file-name "~") (first search-content)))
+             (list (expand-file-name "~") (cl-first search-content)))
             ((file-exists-p input-dir)
-             (list input-dir (first search-content)))
+             (list input-dir (cl-first search-content)))
             (t nil))
       )))
 

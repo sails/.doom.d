@@ -29,7 +29,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-;; (setq doom-theme 'doom-one-light)
+(setq doom-theme 'doom-one-light)
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-theme 'sails-light)
 ;; (setq doom-theme 'doom-dracula)
@@ -78,17 +78,17 @@
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'none))
 
-;; (when (display-graphic-p)
-;;   (setq doom-modeline-height 2)
-;;   (setq doom-modeline-icon nil)
-;; )
+(when (display-graphic-p)
+  (setq doom-modeline-height 2)
+  (setq doom-modeline-icon nil)
+)
 
 ;; 当使用vertico时，补全列表中默认没有开启recent files
 (recentf-mode 1)
 
 
 ;; (pushnew! initial-frame-alist '(width . 120) '(height . 60))
-;;设置窗口位置
+;; 设置窗口位置
 (defun my/frame-recenter (&optional frame)
   (interactive)
   (unless (eq 'maximised (frame-parameter nil 'fullscreen))
@@ -166,7 +166,7 @@
   (exec-path-from-shell-initialize))
 
 (global-set-key (kbd "C-x b") 'consult-buffer)
-;; :completion ivy
+;; completion ivy
 ;; (after! ivy
 ;;   (global-set-key (kbd "C-x b") '+ivy/switch-buffer)
 ;;   (setq ivy-use-virtual-buffers t)
@@ -230,10 +230,12 @@
 (when (display-graphic-p)
   (use-package! leetcode
     :defer t
+    ;; :load-path  "lisp/leetcode"
     :config
     (setq leetcode-save-solutions t)
     (setq leetcode-prefer-language "cpp")
     (setq leetcode-directory "~/.leetcode")
+    ;; :commands leetcode
     )
   )
 
@@ -254,3 +256,13 @@
 ;; Hide the menu for as minimalistic a startup screen as possible.
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 ;; (setq sails-light-brighter-comments t)
+
+
+;; (setq gcmh-high-cons-threshold (* 500 1024 1024))
+;; (setq gc-cons-threshold 1000000000)
+
+;; 光标
+;; (blink-cursor-mode t)
+
+;; (setq-default garbage-collection-messages t)
+                                        ;

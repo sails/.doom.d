@@ -57,6 +57,7 @@
 ;; ag->edit->commit
 (package! helm-ag)
 (package! helm-gtags)
+;; (package! citre)
 (package! firestarter)
 
 (package! google-c-style)
