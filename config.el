@@ -35,6 +35,40 @@
 ;; (setq doom-theme 'doom-dracula)
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light))
 
+(use-package modus-themes
+  :ensure
+  :init
+  ;; Add all your customizations prior to loading the themes
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs nil
+        modus-themes-mode-line '(borderless)
+         modus-themes-syntax '(yellow-comments green-strings alt-syntax)
+        modus-themes-region '(bg-only no-extend))
+
+  ;; Load the theme files before enabling a theme
+  (modus-themes-load-themes)
+  :config
+  ;; Load the theme of your choice:
+  ;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+  :bind ("<f5>" . modus-themes-toggle))
+
+(use-package bespoke-themes
+  :load-path  "themes"
+  :config
+  ;; Set evil cursor colors
+  (setq bespoke-set-evil-cursors t)
+  ;; Set use of italics
+  (setq bespoke-set-italic-comments t
+        bespoke-set-italic-keywords t)
+  ;; Set variable pitch
+  (setq bespoke-set-variable-pitch t)
+  ;; Set initial theme variant
+  ;; (setq bespoke-set-theme 'dark)
+  ;; Load theme
+  (load-theme 'bespoke t)
+  )
+
+
 ;; Disable doom-theme, Set to `nil' to load no theme at all
 ;;(setq doom-theme nil)
 ;; 当禁用doom-theme时，改变fire字体
@@ -257,12 +291,6 @@
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 ;; (setq sails-light-brighter-comments t)
 
-
-;; (setq gcmh-high-cons-threshold (* 500 1024 1024))
-;; (setq gc-cons-threshold 1000000000)
-
 ;; 光标
 ;; (blink-cursor-mode t)
 
-;; (setq-default garbage-collection-messages t)
-                                        ;

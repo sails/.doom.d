@@ -54,7 +54,7 @@
 ;; (package! consult)
 ;; (package! vterm-toggle)
 (package! ag)
-;; ag->edit->commit
+;; ag/(do ag)->edit->commit
 (package! helm-ag)
 (package! helm-gtags)
 ;; (package! citre)
@@ -66,3 +66,5 @@
 (package! bazel)
 (package! protobuf-mode)
 (package! leetcode)
+
+(package! modus-themes)
