@@ -42,14 +42,16 @@
   (setq modus-themes-italic-constructs t
         modus-themes-bold-constructs nil
         modus-themes-mode-line '(borderless)
-         modus-themes-syntax '(yellow-comments green-strings alt-syntax)
-        modus-themes-region '(bg-only no-extend))
+        modus-themes-syntax '(yellow-comments green-strings alt-syntax )
+        modus-themes-completions '((t . (extrabold intense background)))
+        ;; modus-themes-region '(bg-only no-extend)
+        )
 
   ;; Load the theme files before enabling a theme
   (modus-themes-load-themes)
   :config
   ;; Load the theme of your choice:
-  ;; (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
+  (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
   :bind ("<f5>" . modus-themes-toggle))
 
 (use-package bespoke-themes
@@ -65,7 +67,7 @@
   ;; Set initial theme variant
   ;; (setq bespoke-set-theme 'dark)
   ;; Load theme
-  (load-theme 'bespoke t)
+  ;; (load-theme 'bespoke t)
   )
 
 
