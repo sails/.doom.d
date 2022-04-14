@@ -29,9 +29,15 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one-light)
+;; (setq doom-theme 'doom-one-light)
+;; (setq doom-one-light-brighter-modeline t)
+;; (setq doom-one-light-brighter-comments t)
+
 ;; (setq doom-theme 'doom-vibrant)
-;; (setq doom-theme 'sails-light)
+
+(setq doom-theme 'sails-light)
+(setq sails-light-brighter-comments t)
+;;
 ;; (setq doom-theme 'doom-dracula)
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light))
 
@@ -48,7 +54,7 @@
         )
 
   ;; Load the theme files before enabling a theme
-  (modus-themes-load-themes)
+  ;; (modus-themes-load-themes)
   :config
   ;; Load the theme of your choice:
   (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
@@ -291,8 +297,12 @@
 
 ;; Hide the menu for as minimalistic a startup screen as possible.
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
-;; (setq sails-light-brighter-comments t)
 
 ;; 光标
 ;; (blink-cursor-mode t)
 
+;; 性能调整
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq gcmh-idle-delay 5
+      gcmh-high-cons-threshold (* 200 1024 1024)
+      gcmh-verbose doom-debug-p)
