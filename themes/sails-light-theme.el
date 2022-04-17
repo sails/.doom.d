@@ -157,11 +157,43 @@ Can be an integer to determine the exact padding."
    ;;;; outline <built-in>
    ((outline-1 &override) :foreground red)
    ((outline-2 &override) :foreground orange)
-   ;;;; org <built-in>
-   ((org-block &override) :background base1)
-   ((org-block-begin-line &override) :foreground fg :slant 'italic)
-   (org-ellipsis :underline nil :background bg     :foreground red)
-   ((org-quote &override) :background base1)
+   ;; ;; org <built-in>
+   ;; ((org-block &override) :background base1)
+   ;; ((org-block-begin-line &override) :foreground fg :slant 'italic)
+   ;; (org-ellipsis :underline nil :background bg     :foreground red)
+   ;; ((org-quote &override) :background base1)
+   (org-block            :background base0)
+   (org-level-1          :foreground base8 :weight 'bold :height 1.25)
+   (org-level-2          :foreground base6 :weight 'bold :height 1.1)
+   (org-level-3          :foreground base5 :bold bold :height 1.0)
+   (org-level-4          :foreground base4 :bold bold :height 1.0)
+   (org-ellipsis         :underline nil :background bg-alt     :foreground grey)
+   (org-quote            :background base1)
+   (org-checkbox-statistics-done :foreground base2 :weight 'normal)
+   (org-done nil)
+   (org-done :foreground green :weight 'normal)
+   (org-headline-done :foreground base3 :weight 'normal :strike-through t)
+   (org-date :foreground orange)
+   (org-code :foreground dark-blue)
+   (org-special-keyword :foreground base8 :underline t)
+   (org-document-title :foreground base8 :weight 'bold :height 1.5)
+   (org-document-info-keyword :foreground base4 :height 0.75)
+   (org-block-begin-line :foreground base4 :height 0.65)
+   (org-meta-line :foreground base4 :height 0.65)
+   (org-list-dt :foreground magenta)
+
+   (org-todo-keyword-faces
+    '(("TODO" :foreground "#7c7c75" :weight normal :underline t)
+      ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
+      ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
+      ("DONE" :foreground "#50a14f" :weight normal :underline t)
+      ("CANCELLED" :foreground "#ff6480" :weight normal :underline t)))
+
+   (org-priority-faces '((65 :foreground "#e45649")
+                         (66 :foreground "#da8548")
+                         (67 :foreground "#0098dd")))
+
+
    ;;;; posframe
    (ivy-posframe               :background base0)
    ;;;; selectrum
@@ -188,5 +220,21 @@ Can be an integer to determine the exact padding."
   ;;;; Base theme variable overrides-
   ()
   )
+
+(after! org
+  (setq
+   org-bullets-bullet-list '("⁖")
+   org-ellipsis " ... "
+   org-todo-keyword-faces
+   '(("TODO" :foreground "#7c7c75" :weight normal :underline t)
+     ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
+     ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
+     ("DONE" :foreground "#50a14f" :weight normal :underline t)
+     ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))
+   org-priority-faces '((65 :foreground "#e45649")
+                        (66 :foreground "#da8548")
+                        (67 :foreground "#0098dd"))
+   ))
+
 
 ;;; sails-light-theme.el ends here

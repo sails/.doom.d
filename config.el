@@ -306,3 +306,8 @@
 (setq gcmh-idle-delay 5
       gcmh-high-cons-threshold (* 200 1024 1024)
       gcmh-verbose doom-debug-p)
+
+;; fringe-mode(左侧边缘宽度，有几种设置)
+;; fringe-mode和vi-tilde-fringe-mode打开时,默认buffer尾部空白处会有波浪线
+(remove-hook 'prog-mode-hook 'vi-tilde-fringe-mode)
+(remove-hook 'text-mode-hook #'vi-tilde-fringe-mode)
