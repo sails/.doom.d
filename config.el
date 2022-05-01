@@ -311,3 +311,6 @@
 ;; fringe-mode和vi-tilde-fringe-mode打开时,默认buffer尾部空白处会有波浪线
 (remove-hook 'prog-mode-hook 'vi-tilde-fringe-mode)
 (remove-hook 'text-mode-hook #'vi-tilde-fringe-mode)
+
+;; 平滑滚动，但cpu占用很高
+(pixel-scroll-precision-mode 1)
