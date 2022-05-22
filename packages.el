@@ -50,6 +50,7 @@
 ;(unpin! t)
 
 (package! exec-path-from-shell)
+
 (package! eshell-toggle)
 ;; (package! consult)
 ;; (package! vterm-toggle)
@@ -66,5 +67,3 @@
 (package! bazel)
 (package! protobuf-mode)
 (package! leetcode)
-
-(package! modus-themes)
