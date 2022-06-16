@@ -67,3 +67,4 @@
 (package! bazel)
 (package! protobuf-mode)
 (package! leetcode)
+(package! unicad)

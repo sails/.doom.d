@@ -21,7 +21,7 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -38,6 +38,7 @@
 
 ;; (setq doom-theme 'doom-dracula)
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 12))
 
 ;; (use-package modus-themes
 ;;   :ensure
@@ -314,6 +315,8 @@
 ;; 平滑滚动，但cpu占用很高
 (pixel-scroll-precision-mode 1)
 
+;; 自动识别文件编码
+ (unicad-mode 1)
 
 ;; magit (setq magit-refresh-verbose 1) to show times when magit-status
 ;; (use-package magit
@@ -332,10 +335,10 @@
 ;;   :config
 ;;   ;;(remove-hook 'magit-status-sections-hook 'magit-insert-tags-header)
 ;;   (remove-hook 'magit-status-sections-hook 'magit-insert-untracked-files)
-;;   ;;(remove-hook 'magit-status-sections-hook 'magit-insert-status-headers)
+;;   (remove-hook 'magit-status-sections-hook 'magit-insert-status-headers)
 ;;   ;;(remove-hook 'magit-status-sections-hook 'magit-insert-bisect-log)
 ;;   ;;(remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-pushremote)
 ;;   ;;(remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-pushremote)
 ;;   ;;(remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-upstream)
-;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
+;;    (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
 ;;   )
