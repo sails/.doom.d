@@ -451,13 +451,7 @@ or set it with any string you want."
     (snails-create-content-buffer)
 
     ;; Set project directory.
-    (setq snails-project-root-dir
-          (let ((project (project-current)))
-            (when project
-              (if (version< "27.0" emacs-version)
-                  (expand-file-name (cdr project))
-                (expand-file-name (car (last project))))
-              )))
+    (setq snails-project-root-dir (snails-project-root-dir))
 
     ;; Create.
     (if snails-show-with-frame
@@ -485,6 +479,16 @@ or set it with any string you want."
      ;; Just launch with empty string when `search-object' is nil.
      (t
       (snails-search "")))))
+
+(defun snails-project-root-dir ()
+  (let ((project (project-current)))
+    (when project
+      (setq project (cdr project))
+
+      (when (listp project)
+        (setq project (nth (- (length project) 1) project)))
+
+      (expand-file-name project))))
 
 (defun snails-search-point ()
   "Search symbol at point"
@@ -754,7 +758,7 @@ or set it with any string you want."
              (frame-visible-p snails-frame))
       (setq snails-frame
             (make-frame
-             '((name . snails-frame-name)
+             `((name . ,snails-frame-name)
                (parent-frame . snails-init-frame)
                (skip-taskbar . t)
                (minibuffer . nil)
@@ -829,9 +833,9 @@ or set it with any string you want."
   (setq snails-split-window-conf (current-window-configuration))
 
   ;; Focus downest window.
-  (delete-other-windows)
-  (split-window)
   (ignore-errors
+    (delete-other-windows)
+    (split-window)
     (dotimes (_ 50)
       (windmove-down)))
 

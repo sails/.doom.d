@@ -21,7 +21,7 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -32,48 +32,10 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-;;(setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-one)
 (setq doom-theme 'sails-light)
 (setq sails-light-brighter-comments t)
-
-;; (setq doom-theme 'doom-dracula)
-;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light))
 (setq doom-font (font-spec :family "JetBrains Mono" :size 12))
-
-;; (use-package modus-themes
-;;   :ensure
-;;   :init
-;;   ;; Add all your customizations prior to loading the themes
-;;   (setq modus-themes-italic-constructs t
-;;         modus-themes-bold-constructs nil
-;;         modus-themes-mode-line '(borderless)
-;;         modus-themes-syntax '(yellow-comments green-strings alt-syntax )
-;;         modus-themes-completions '((t . (extrabold intense background)))
-;;         ;; modus-themes-region '(bg-only no-extend)
-;;         )
-
-;;   ;; Load the theme files before enabling a theme
-;;   ;; (modus-themes-load-themes)
-;;   :config
-;;   ;; Load the theme of your choice:
-;;   (modus-themes-load-operandi) ;; OR (modus-themes-load-vivendi)
-;;   :bind ("<f5>" . modus-themes-toggle))
-
-;; (use-package bespoke-themes
-;;   :load-path  "themes"
-;;   :config
-;;   ;; Set evil cursor colors
-;;   (setq bespoke-set-evil-cursors t)
-;;   ;; Set use of italics
-;;   (setq bespoke-set-italic-comments t
-;;         bespoke-set-italic-keywords t)
-;;   ;; Set variable pitch
-;;   (setq bespoke-set-variable-pitch t)
-;;   ;; Set initial theme variant
-;;   ;; (setq bespoke-set-theme 'dark)
-;;   ;; Load theme
-;;   ;; (load-theme 'bespoke t)
-;;   )
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -120,14 +82,16 @@
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'none))
 
-
-(when (display-graphic-p)
-  (setq doom-modeline-height 2)
-  (setq doom-modeline-icon nil)
-)
+;; (when (display-graphic-p)
+;;   (setq doom-modeline-height 2)
+;;   (setq doom-modeline-icon nil)
+;; )
 
 ;; 当使用vertico时，补全列表中默认没有开启recent files
 (recentf-mode 1)
+
+;; 高效的选中region
+(global-set-key (kbd "C-x m") 'er/expand-region)
 
 ;; (pushnew! initial-frame-alist '(width . 120) '(height . 60))
 ;; 设置窗口位置
@@ -152,10 +116,6 @@
 
 (add-hook 'after-init-hook #'my/frame-recenter)
 (add-hook 'after-make-frame-functions #'my/frame-recenter)
-
-
-;; 高效的选中region
-(global-set-key (kbd "C-x m") 'er/expand-region)
 
 ;; 复制当前buffer name
 (defun copy-file-name(choice)
@@ -204,15 +164,15 @@
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line)
   )
 
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+;; (when (memq window-system '(mac ns x))
+;;   (exec-path-from-shell-initialize))
 
 (global-set-key (kbd "C-x b") 'consult-buffer)
 ;; completion ivy
-;; (after! ivy
-;;   (global-set-key (kbd "C-x b") '+ivy/switch-buffer)
-;;   (setq ivy-use-virtual-buffers t)
-;;   (setq ivy-virtual-abbreviate 'abbreviate))
+(after! ivy
+  (global-set-key (kbd "C-x b") '+ivy/switch-buffer)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-virtual-abbreviate 'abbreviate))
 
 ;; flyecheck默认关闭
 (flycheck-mode -1)
@@ -294,18 +254,11 @@
 ;;   (global-hide-mode-line-mode)
 ;;   )
 
-
 ;; Hide the menu for as minimalistic a startup screen as possible.
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
 ;; 光标
 ;; (blink-cursor-mode t)
-
-;; 性能调整
-(setq read-process-output-max (* 1024 1024)) ;; 1mb
-(setq gcmh-idle-delay 5
-      gcmh-high-cons-threshold (* 200 1024 1024)
-      gcmh-verbose doom-debug-p)
 
 ;; fringe-mode(左侧边缘宽度，有几种设置)
 ;; fringe-mode和vi-tilde-fringe-mode打开时,默认buffer尾部空白处会有波浪线
@@ -318,27 +271,3 @@
 ;; 自动识别文件编码
  (unicad-mode 1)
 
-;; magit (setq magit-refresh-verbose 1) to show times when magit-status
-;; (use-package magit
-;;   :ensure t
-;;   :bind ("C-x g" . magit-status)
-;;   :custom
-;;   (magit-git-executable "/usr/local/bin/git")
-;;   :init
-;;   (use-package with-editor :ensure t)
-;;   (defadvice magit-status (around magit-fullscreen activate)
-;;     (window-configuration-to-register :magit-fullscreen)
-;;     ad-do-it
-;;     (delete-other-windows))
-;;   (defadvice magit-quit-window (after magit-restore-screen activate)
-;;     (jump-to-register :magit-fullscreen))
-;;   :config
-;;   ;;(remove-hook 'magit-status-sections-hook 'magit-insert-tags-header)
-;;   (remove-hook 'magit-status-sections-hook 'magit-insert-untracked-files)
-;;   (remove-hook 'magit-status-sections-hook 'magit-insert-status-headers)
-;;   ;;(remove-hook 'magit-status-sections-hook 'magit-insert-bisect-log)
-;;   ;;(remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-pushremote)
-;;   ;;(remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-pushremote)
-;;   ;;(remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-upstream)
-;;    (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
-;;   )
