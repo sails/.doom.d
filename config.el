@@ -34,6 +34,7 @@
 ;; `load-theme' function. This is the default:
 ;; (setq doom-theme 'doom-one)
 (setq doom-theme 'sails-light)
+;; (setq doom-theme 'doom-one-light)
 (setq sails-light-brighter-comments t)
 (setq doom-font (font-spec :family "JetBrains Mono" :size 12))
 
@@ -93,29 +94,29 @@
 ;; 高效的选中region
 (global-set-key (kbd "C-x m") 'er/expand-region)
 
-;; (pushnew! initial-frame-alist '(width . 120) '(height . 60))
+(pushnew! initial-frame-alist '(width . 90) '(height . 50))
 ;; 设置窗口位置
-(defun my/frame-recenter (&optional frame)
-  (interactive)
-  (unless (eq 'maximised (frame-parameter nil 'fullscreen))
-    (let* ((frame (or (and (boundp 'frame)
-                            frame)
-                      (selected-frame)))
-           (monitor-w (nth 2 (frame-monitor-workarea frame)))
-           (monitor-h (nth 3 (frame-monitor-workarea frame)))
+;; (defun my/frame-recenter (&optional frame)
+;;   (interactive)
+;;   (unless (eq 'maximised (frame-parameter nil 'fullscreen))
+;;     (let* ((frame (or (and (boundp 'frame)
+;;                             frame)
+;;                       (selected-frame)))
+;;            (monitor-w (nth 2 (frame-monitor-workarea frame)))
+;;            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.38)))
-           (frame-h (truncate (* monitor-h 0.85)))
+;;            (frame-w (truncate (* monitor-w 0.38)))
+;;            (frame-h (truncate (* monitor-h 0.85)))
 
 
-           (a-left (truncate (/ (- monitor-w frame-w) 2))))
+;;            (a-left (truncate (/ (- monitor-w frame-w) 2))))
 
-           (set-frame-position (selected-frame) a-left 0)
-           (set-frame-size (selected-frame) (truncate frame-w)  (truncate frame-h) t)
-      )))
+;;            (set-frame-position (selected-frame) a-left 0)
+;;            (set-frame-size (selected-frame) (truncate frame-w)  (truncate frame-h) t)
+;;       )))
 
-(add-hook 'after-init-hook #'my/frame-recenter)
-(add-hook 'after-make-frame-functions #'my/frame-recenter)
+;; (add-hook 'after-init-hook #'my/frame-recenter)
+;; (add-hook 'after-make-frame-functions #'my/frame-recenter)
 
 ;; 复制当前buffer name
 (defun copy-file-name(choice)
@@ -282,3 +283,7 @@
   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-upstream)
   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
   )
+
+;; 透明
+;; (set-frame-parameter (selected-frame) 'alpha '(85 100))
+;; (add-to-list 'default-frame-alist '(alpha 97 100))
