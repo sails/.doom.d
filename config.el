@@ -181,7 +181,7 @@
 ; Default doom threshold of 400 is too low in my experience.
 (after! so-long (setq so-long-threshold 1000))
 
-;; (setq ns-use-proxy-icon nil)
+(setq ns-use-proxy-icon nil)
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
                    ;; (abbreviate-file-name (buffer-file-name))
