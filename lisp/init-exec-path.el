@@ -11,6 +11,9 @@
 (when (or (memq window-system '(mac ns x))
           (unless (memq system-type '(ms-dos windows-nt))
             (daemonp)))
+  ;; 设成nil 则不从 .zshrc 读 只从 .zshenv读
+  ;; （可以加快速度，但是需要你将环境变量相关的都放到 .zshenv 中，而非 .zshrc 中）
+  (setq exec-path-from-shell-check-startup-files nil) ;
   (exec-path-from-shell-initialize))
 
 (provide 'init-exec-path)

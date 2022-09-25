@@ -85,10 +85,9 @@
 
             ;; (add-load-path! "~/.doom.d/lisp/lsp-bridge")
             ;; (require 'lsp-bridge)
-            ;; (setq lsp-bridge-c-lsp-server "ccls")
+            ;; (setq lsp-bridge-c-lsp-server "clangd")
             ;; (setq acm-enable-tabnine-helper nil)
             ;; (global-lsp-bridge-mode)
-
 
             ;; 可以很方便的在头文件与cpp文件中切换
             (setq cc-other-file-alist
