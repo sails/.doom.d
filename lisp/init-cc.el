@@ -2,8 +2,8 @@
 
 (setq enable-local-variables t)
 ;; 默认只reindex打开的文件
-(defvar +ccls-initial-blacklist [".*"])
-(defvar +ccls-initial-whitelist [])
+;; (defvar +ccls-initial-blacklist [".*"])
+;; (defvar +ccls-initial-whitelist [])
 
 ;; cc-mode设置
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
@@ -35,65 +35,60 @@
               (define-key helm-gtags-mode-map (kbd "M-s") 'helm-gtags-find-symbol)
               (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack))
 
-            (lsp-modeline-diagnostics-mode -1)
-            ;; 在首次打开头文件时执行+format/region会卡住，但是当打开过cpp文件后正常
-            (setq +format-with-lsp nil)
-
-            (after! ccls
-              (when IS-MAC
-                (setq ccls-initialization-options
-                      (append ccls-initialization-options
-                              `(:clang ,(list
-                                         :extraArgs ["-isystem/Library/Developer/CommandLineTools/usr/include/c++/v1"
-                                                     "-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
-                                                     "-isystem/usr/local/include"]
-                                         :resourceDir (cdr (doom-call-process "clang" "-print-resource-dir")))))))
-              (when (or IS-MAC IS-LINUX)
-                (setq ccls-initialization-options
-                      `(:index (:comments 2
-                                :threads 1
-                                :initialBlacklist ,+ccls-initial-blacklist
-                                :initialWhitelist ,+ccls-initial-whitelist)
-                        :completion (:detailedLabel t))
-                      ))
-
+            (after! lsp-clangd
+              (setq lsp-clients-clangd-args
+                    '("-j=3"
+                      "--background-index"
+                      "--clang-tidy"
+                      "--completion-style=detailed"
+                      "--header-insertion=never"
+                      "--enable-config"
+                      "--header-insertion-decorators=0"))
+              (set-lsp-priority! 'clangd 1)
               (lsp-diagnostics-mode -1)
               (flycheck-mode -1)
               (setq lsp-modeline-diagnostics-enable nil)
               (setq lsp-enable-file-watchers nil)
               (setq lsp-lens-enable nil)  ;; 导致cpu100%
               (setq lsp-diagnostics-provider :none)
-              (set-lsp-priority! 'ccls 2)) ; optional as ccls is the default in Doom
+              )
 
-            ;; (require 'ccls)
-            ;; (setq ccls-initialization-options
-            ;;       `(:clang ,(list :extraArgs ["-isystem/Library/Developer/CommandLineTools/usr/include/c++/v1"
-            ;;                                   "-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
-            ;;                                   "-isystem/usr/local/include"]
-            ;;                       :resourceDir (cdr (doom-call-process "clang" "-print-resource-dir")))))
+            ;; (lsp-modeline-diagnostics-mode -1)
+            ;; ;; 在首次打开头文件时执行+format/region会卡住，但是当打开过cpp文件后正常
+            ;; (setq +format-with-lsp nil)
 
-
-            ;; (add-hook 'lsp-mode-hook (lambda ()
-            ;;           ;; 顶部目录、文件、方法breadcrumb
-            ;;           (setq lsp-headerline-breadcrumb-enable nil)
-            ;;           (setq lsp-modeline-diagnostics-enable nil)
-
-            ;;           (lsp-diagnostics-mode -1)
-            ;;           (flycheck-mode -1)
+            ;; (after! ccls
+            ;;   (when IS-MAC
+            ;;     (setq ccls-initialization-options
+            ;;           (append ccls-initialization-options
+            ;;                   `(:clang ,(list
+            ;;                              :extraArgs ["-isystem/Library/Developer/CommandLineTools/usr/include/c++/v1"
+            ;;                                          "-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+            ;;                                          "-isystem/usr/local/include"]
+            ;;                              :resourceDir (cdr (doom-call-process "clang" "-print-resource-dir")))))))
+            ;;   (when (or IS-MAC IS-LINUX)
+            ;;     (setq ccls-initialization-options
+            ;;           `(:index (:comments 2
+            ;;                     :threads 1
+            ;;                     :initialBlacklist ,+ccls-initial-blacklist
+            ;;                     :initialWhitelist ,+ccls-initial-whitelist)
+            ;;             :completion (:detailedLabel t))
             ;;           ))
-            ;; (add-hook 'hack-local-variables-hook
-            ;;           (lambda ()
-            ;;             (when (derived-mode-p 'c++-mode)
-            ;;               ;; +ccls-initial-blacklist +ccls-initial-whitelist在dir-locals.el重新中设置新值
-            ;;               (setq ccls-initialization-options
-            ;;                     (append ccls-initialization-options
-            ;;                             `(:index (:threads 1 :initialBlacklist ,+ccls-initial-blacklist :initialWhitelist ,+ccls-initial-whitelist))))
-            ;;               ;; (print ccls-initialization-options)
-            ;;               (setq lsp-enable-file-watchers nil)
-            ;;               (setq lsp-diagnostics-provider :none)
-            ;;               (lsp)
-            ;;               )
-            ;;             ))
+
+            ;;   (lsp-diagnostics-mode -1)
+            ;;   (flycheck-mode -1)
+            ;;   (setq lsp-modeline-diagnostics-enable nil)
+            ;;   (setq lsp-enable-file-watchers nil)
+            ;;   (setq lsp-lens-enable nil)  ;; 导致cpu100%
+            ;;   (setq lsp-diagnostics-provider :none)
+            ;;   (set-lsp-priority! 'ccls 1)) ; optional as ccls is the default in Doom
+
+            ;; (add-load-path! "~/.doom.d/lisp/lsp-bridge")
+            ;; (require 'lsp-bridge)
+            ;; (setq lsp-bridge-c-lsp-server "ccls")
+            ;; (setq acm-enable-tabnine-helper nil)
+            ;; (global-lsp-bridge-mode)
+
 
             ;; 可以很方便的在头文件与cpp文件中切换
             (setq cc-other-file-alist

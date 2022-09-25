@@ -33,10 +33,13 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;; (setq doom-theme 'doom-one)
-(setq doom-theme 'sails-light)
+;; (setq doom-theme 'sails-light)
 ;; (setq doom-theme 'doom-one-light)
-(setq sails-light-brighter-comments t)
+;; (setq sails-light-brighter-comments t)
 (setq doom-font (font-spec :family "JetBrains Mono" :size 12))
+(use-package ef-themes
+  :init
+  (ef-themes-select 'ef-light))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -83,10 +86,10 @@
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'none))
 
-;; (when (display-graphic-p)
-;;   (setq doom-modeline-height 2)
-;;   (setq doom-modeline-icon nil)
-;; )
+(when (display-graphic-p)
+  (setq doom-modeline-height 2)
+  (setq doom-modeline-icon nil)
+)
 
 ;; 当使用vertico时，补全列表中默认没有开启recent files
 (recentf-mode 1)
@@ -147,6 +150,8 @@
 ;; (global-set-key (kbd "C--") 'hs-hide-block)
 (map! "C-=" #'hs-show-block
       "C--" #'hs-hide-block)
+
+(map! "C-c p f" #'projectile-find-file)
 
 
 ;; 自动折行
@@ -272,17 +277,17 @@
 ;; 自动识别文件编码
  (unicad-mode 1)
 
-(setq magit-refresh-verbose 1)
-(use-package! magit
-  :config
-  ;; (remove-hook 'magit-status-sections-hook 'magit-insert-untracked-files)
-  ;; (remove-hook 'magit-status-sections-hook 'magit-insert-tags-header)
-  ;; (remove-hook 'magit-status-sections-hook 'magit-insert-status-headers)
-  ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-pushremote)
-  ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-pushremote)
-  ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-upstream)
-  ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
-  )
+;; (use-package! magit
+;;   :config
+;;   ;;(setq magit-refresh-verbose 1)
+;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-untracked-files)
+;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-tags-header)
+;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-status-headers)
+;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-pushremote)
+;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-pushremote)
+;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-upstream)
+;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
+;;   )
 
 ;; 透明
 ;; (set-frame-parameter (selected-frame) 'alpha '(85 100))

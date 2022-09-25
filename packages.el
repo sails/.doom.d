@@ -49,6 +49,10 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+(package! ef-themes
+  :recipe (:host github :repo "protesilaos/ef-themes"))
+;; (package! ef-themes)
+;;
 (package! exec-path-from-shell)
 
 (package! eshell-toggle)
@@ -62,9 +66,12 @@
 (package! firestarter)
 
 (package! google-c-style)
-(package! ccls)
+;; (package! ccls)
 
 (package! bazel)
 (package! protobuf-mode)
 (package! leetcode)
 (package! unicad)
+
+;; lsp-bridge
+;; (package! posframe)
