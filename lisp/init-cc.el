@@ -34,10 +34,9 @@
               (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-find-tag-from-here)
               (define-key helm-gtags-mode-map (kbd "M-s") 'helm-gtags-find-symbol)
               (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack))
-
             (after! lsp-clangd
               (setq lsp-clients-clangd-args
-                    '("-j=3"
+                    '("-j=1"
                       "--background-index"
                       "--clang-tidy"
                       "--completion-style=detailed"
@@ -51,6 +50,10 @@
               (setq lsp-enable-file-watchers nil)
               (setq lsp-lens-enable nil)  ;; 导致cpu100%
               (setq lsp-diagnostics-provider :none)
+              )
+
+            (after! flycheck
+              (flycheck-select-checker 'c/c++-cppcheck)
               )
 
             ;; (lsp-modeline-diagnostics-mode -1)

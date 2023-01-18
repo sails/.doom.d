@@ -285,6 +285,8 @@
 
 ;; 平滑滚动，但cpu占用很高
 (pixel-scroll-precision-mode 1)
+(setq scroll-margin 4)
+
 
 ;; 自动识别文件编码
  (unicad-mode 1)
