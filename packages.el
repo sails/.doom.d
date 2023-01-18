@@ -62,6 +62,7 @@
 ;; ag/(do ag)->edit->commit
 (package! helm-ag)
 (package! helm-gtags)
+;; ivy occur
 ;; (package! citre)
 (package! firestarter)
 
@@ -74,4 +75,4 @@
 (package! unicad)
 
 ;; lsp-bridge
-;; (package! posframe)
+(package! posframe)

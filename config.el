@@ -37,9 +37,12 @@
 ;; (setq doom-theme 'doom-one-light)
 ;; (setq sails-light-brighter-comments t)
 (setq doom-font (font-spec :family "JetBrains Mono" :size 12))
+;;(setq doom-font (font-spec :family "Fira code" :size 12))
 (use-package ef-themes
   :init
-  (ef-themes-select 'ef-light))
+  ;;(ef-themes-select 'ef-light)
+  (ef-themes-select 'ef-duo-light)
+  )
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -152,6 +155,7 @@
       "C--" #'hs-hide-block)
 
 (map! "C-c p f" #'projectile-find-file)
+(map! "C-x c i" #'helm-imenu)
 
 
 ;; 自动折行
@@ -160,7 +164,10 @@
 ;; 保存时自动格式化
 (setq +format-on-save-enabled-modes
       '(go-mode
+        rustic-mode
         sql-mode))
+
+;; (add-hook 'rustic-mode-hook #'format-all-mode)
 
 ;;;; Mouse scrolling in terminal emacs
 (unless (display-graphic-p)
@@ -181,7 +188,12 @@
   (setq ivy-virtual-abbreviate 'abbreviate))
 
 ;; flyecheck默认关闭
-(flycheck-mode -1)
+(setq flycheck-checker-error-threshold 5000)
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (flycheck-mode -1)
+            ))
+
 
 ; Default doom threshold of 400 is too low in my experience.
 (after! so-long (setq so-long-threshold 1000))
@@ -214,7 +226,7 @@
   (use-package! snails
     :defer t
     :custom (snails-use-exec-path-from-shell nil)
-    :load-path  "lisp/snails"
+    :load-path  "~/.doom.d/lisp/snails"
      :custom-face
      ;; (snails-content-buffer-face ((t (:background "#111" :height 110))))
      ;; (snails-input-buffer-face ((t (:background "#222" :foreground "gold" :height 110))))
