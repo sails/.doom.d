@@ -17,15 +17,6 @@
 
             (setenv "GTAGSFORCECPP" "1")
 
-            ;; (add-hook 'c-mode-hook 'counsel-gtags-mode)
-            ;; (add-hook 'c++-mode-hook 'counsel-gtags-mode)
-
-            ;; (with-eval-after-load 'counsel-gtags
-            ;;   (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-find-definition)
-            ;;   (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
-            ;;   (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
-            ;;   (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward))
-
             (add-hook 'c-mode-hook 'helm-gtags-mode)
             (add-hook 'c++-mode-hook 'helm-gtags-mode)
             (add-hook 'protobuf-mode-hook 'helm-gtags-mode)
@@ -34,13 +25,15 @@
               (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-find-tag-from-here)
               (define-key helm-gtags-mode-map (kbd "M-s") 'helm-gtags-find-symbol)
               (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack))
+
             (after! lsp-clangd
               (setq lsp-clients-clangd-args
                     '("-j=1"
                       "--background-index"
                       "--clang-tidy"
-                      "--completion-style=detailed"
+                      "--all-scopes-completion"
                       "--header-insertion=never"
+                      "--completion-style=detailed"
                       "--enable-config"
                       "--header-insertion-decorators=0"))
               (set-lsp-priority! 'clangd 1)
@@ -51,40 +44,21 @@
               (setq lsp-lens-enable nil)  ;; 导致cpu100%
               (setq lsp-diagnostics-provider :none)
               )
-
-            (after! flycheck
-              (flycheck-select-checker 'c/c++-cppcheck)
+            (after! eglot
+              :config
+              (flycheck-mode -1)
+              (set-eglot-client! 'c++-mode
+                                 '("clangd"
+                                   "-j=1"
+                                   "--background-index"
+                                   "--clang-tidy"
+                                   "--all-scopes-completion"
+                                   "--header-insertion=never"
+                                   "--completion-style=detailed"
+                                   "--enable-config"
+                                   "--header-insertion-decorators=0"))
               )
 
-            ;; (lsp-modeline-diagnostics-mode -1)
-            ;; ;; 在首次打开头文件时执行+format/region会卡住，但是当打开过cpp文件后正常
-            ;; (setq +format-with-lsp nil)
-
-            ;; (after! ccls
-            ;;   (when IS-MAC
-            ;;     (setq ccls-initialization-options
-            ;;           (append ccls-initialization-options
-            ;;                   `(:clang ,(list
-            ;;                              :extraArgs ["-isystem/Library/Developer/CommandLineTools/usr/include/c++/v1"
-            ;;                                          "-isystem/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
-            ;;                                          "-isystem/usr/local/include"]
-            ;;                              :resourceDir (cdr (doom-call-process "clang" "-print-resource-dir")))))))
-            ;;   (when (or IS-MAC IS-LINUX)
-            ;;     (setq ccls-initialization-options
-            ;;           `(:index (:comments 2
-            ;;                     :threads 1
-            ;;                     :initialBlacklist ,+ccls-initial-blacklist
-            ;;                     :initialWhitelist ,+ccls-initial-whitelist)
-            ;;             :completion (:detailedLabel t))
-            ;;           ))
-
-            ;;   (lsp-diagnostics-mode -1)
-            ;;   (flycheck-mode -1)
-            ;;   (setq lsp-modeline-diagnostics-enable nil)
-            ;;   (setq lsp-enable-file-watchers nil)
-            ;;   (setq lsp-lens-enable nil)  ;; 导致cpu100%
-            ;;   (setq lsp-diagnostics-provider :none)
-            ;;   (set-lsp-priority! 'ccls 1)) ; optional as ccls is the default in Doom
 
             ;; (add-load-path! "~/.doom.d/lisp/lsp-bridge")
             ;; (require 'lsp-bridge)
