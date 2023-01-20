@@ -46,7 +46,6 @@
               )
             (after! eglot
               :config
-              (flycheck-mode -1)
               (set-eglot-client! 'c++-mode
                                  '("clangd"
                                    "-j=1"
