@@ -34,6 +34,7 @@
                       "--all-scopes-completion"
                       "--header-insertion=never"
                       "--completion-style=detailed"
+                      "--enable-config"
                       "--header-insertion-decorators=0"))
               (set-lsp-priority! 'clangd 1)
               (lsp-diagnostics-mode -1)
@@ -53,6 +54,7 @@
                                    "--all-scopes-completion"
                                    "--header-insertion=never"
                                    "--completion-style=detailed"
+                                   "--enable-config"
                                    "--header-insertion-decorators=0"))
               )
 

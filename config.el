@@ -306,3 +306,6 @@
 ;; 透明
 ;; (set-frame-parameter (selected-frame) 'alpha '(85 100))
 ;; (add-to-list 'default-frame-alist '(alpha 97 100))
+
+
+(setq enable-remote-dir-locals t)
