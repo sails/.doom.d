@@ -66,19 +66,8 @@
             ;; (global-lsp-bridge-mode)
 
             ;; 可以很方便的在头文件与cpp文件中切换
-            (setq cc-other-file-alist
-                  '(("\\.cc\\'"  (".hh" ".h")) ("\\.hh\\'"  (".cc" ".C"))
-                    ("\\.c\\'"   (".h")) ("\\.h\\'"   (".c" ".cc" ".C" ".CC" ".cxx" ".cpp" ".m" ".mm"))
-                    ("\\.m\\'"    (".h")) ("\\.mm\\'"    (".h"))
-                    ("\\.C\\'"   (".H"  ".hh" ".h")) ("\\.H\\'"   (".C"  ".CC"))
-                    ("\\.CC\\'"  (".HH" ".H"  ".hh" ".h")) ("\\.HH\\'"  (".CC"))
-                    ("\\.c\\+\\+\\'" (".h++" ".hh" ".h")) ("\\.h\\+\\+\\'" (".c++"))
-                    ("\\.cpp\\'" (".hpp" ".hh" ".h" "_p.h")) ("\\.hpp\\'" (".cpp"))
-                    ("\\.cxx\\'" (".hxx" ".hh" ".h")) ("\\.hxx\\'" (".cxx"))))
-            (setq ff-search-directories '("." "../src" "../include"))
-
-            (local-set-key  (kbd "C-x j") 'ff-find-other-file)
-            ;; (local-set-key  (kbd "C-c C-c") 'ff-find-other-file)
+            (local-set-key
+             (kbd "C-x j") 'projectile-find-other-file)
             )
 
           (quickrun-add-command "c++/c11"

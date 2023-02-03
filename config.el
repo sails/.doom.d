@@ -36,12 +36,12 @@
 ;; (setq doom-theme 'sails-light)
 ;; (setq doom-theme 'doom-one-light)
 ;; (setq sails-light-brighter-comments t)
-(setq doom-font (font-spec :family "JetBrains Mono" :size 12))
-;;(setq doom-font (font-spec :family "Fira code" :size 12))
+;;(setq doom-font (font-spec :family "JetBrains Mono" :size 12))
+(setq doom-font (font-spec :family "Fira code" :size 12))
+;;(setq doom-theme 'doom-solarized-dark-high-contrast)
 (use-package ef-themes
   :init
-  ;;(ef-themes-select 'ef-light)
-  (ef-themes-select 'ef-duo-light)
+  (ef-themes-select 'ef-light)
   )
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -309,3 +309,6 @@
 
 
 (setq enable-remote-dir-locals t)
+
+(map! "M-n" #'forward-paragraph)
+(map! "M-p" #'backward-paragraph)
