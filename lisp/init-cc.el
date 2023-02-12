@@ -37,12 +37,12 @@
                       "--enable-config"
                       "--header-insertion-decorators=0"))
               (set-lsp-priority! 'clangd 1)
-              (lsp-diagnostics-mode -1)
-              (flycheck-mode -1)
+              ;; (lsp-diagnostics-mode -1)
+              ;; (flycheck-mode -1)
               (setq lsp-modeline-diagnostics-enable nil)
               (setq lsp-enable-file-watchers nil)
               (setq lsp-lens-enable nil)  ;; 导致cpu100%
-              (setq lsp-diagnostics-provider :none)
+              ;; (setq lsp-diagnostics-provider :none)
               )
             (after! eglot
               :config

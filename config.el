@@ -41,7 +41,7 @@
 ;;(setq doom-theme 'doom-solarized-dark-high-contrast)
 (use-package ef-themes
   :init
-  (ef-themes-select 'ef-light)
+  (ef-themes-select 'ef-duo-light)
   )
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -111,8 +111,8 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.38)))
-           (frame-h (truncate (* monitor-h 0.85)))
+           (frame-w (truncate (* monitor-w 0.5)))
+           (frame-h (truncate (* monitor-h 0.9)))
 
 
            (a-left (truncate (/ (- monitor-w frame-w) 2))))
@@ -213,6 +213,7 @@
 (require 'init-cc)
 (require 'init-shell)
 (require 'init-exec-path)
+(require 'color-rg)
 
 ;;doom uses it to highlight incorrect indentation in buffers and activates it default
 ;; (global-whitespace-mode nil)
@@ -276,7 +277,7 @@
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
 ;; 光标
-(blink-cursor-mode t)
+;; (blink-cursor-mode t)
 
 ;; fringe-mode(左侧边缘宽度，有几种设置)
 ;; fringe-mode和vi-tilde-fringe-mode打开时,默认buffer尾部空白处会有波浪线
@@ -284,7 +285,7 @@
 (remove-hook 'text-mode-hook #'vi-tilde-fringe-mode)
 
 ;; 平滑滚动，但cpu占用很高
-(pixel-scroll-precision-mode 1)
+;;(pixel-scroll-precision-mode 1)
 (setq scroll-margin 4)
 
 
@@ -310,5 +311,43 @@
 
 (setq enable-remote-dir-locals t)
 
-(map! "M-n" #'forward-paragraph)
-(map! "M-p" #'backward-paragraph)
+;; (map! "M-n" #'forward-paragraph)
+;; (map! "M-p" #'backward-paragraph)
+(global-set-key (kbd "M-n")
+    (lambda () (interactive) (forward-line  10)))
+(global-set-key (kbd "M-p")
+    (lambda () (interactive) (forward-line -10)))
+
+;; eglot提示在minibuffer会占用多行，让页面跳动，如果不占用多行，显示的内容又没有意义，所以关闭eldoc-mode
+;; (setq eldoc-echo-area-use-multiline-p nil) ;; 不占用多行
+;; (eldoc-mode nil)
+
+;; 关闭一些告警
+(setq byte-compile-warnings
+      '(not
+        ;; free-vars
+        ;; unresolved
+        ;; callargs
+        ;; redefine
+        ;; obsolete
+        ;; noruntime
+        ;; interactive-only
+        ;; lexical
+        ;; lexical-dynamic
+        ;; make-local
+        ;; mapcar
+        ;; not-unused
+        ;; constants
+        docstrings
+        ;; docstrings-non-ascii-quotes
+        ;; suspicious
+        ))
+
+
+;; 分配一定内存会触发一次gc
+;; 在超过1000行的c++文件上滚动时，会发现偶尔卡住，可以通过下garbage-collection-messages来查看是否发起了gc回收
+;; (setq garbage-collection-messages t)
+;; 可以通过调整回收阀值来优化滚动速度，但也不能太高，否则回收时会明显感受卡顿
+;; https://github.com/doomemacs/doomemacs/issues/3108
+(after! gcmh
+  (setq gcmh-high-cons-threshold (* 64 1024 1024)))
