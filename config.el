@@ -33,16 +33,16 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;; (setq doom-theme 'doom-one)
-;; (setq doom-theme 'sails-light)
+(setq doom-theme 'sails-light)
+(setq sails-light-brighter-comments t)
 ;; (setq doom-theme 'doom-one-light)
-;; (setq sails-light-brighter-comments t)
 ;;(setq doom-font (font-spec :family "JetBrains Mono" :size 12))
 (setq doom-font (font-spec :family "Fira code" :size 12))
 ;;(setq doom-theme 'doom-solarized-dark-high-contrast)
-(use-package ef-themes
-  :init
-  (ef-themes-select 'ef-duo-light)
-  )
+;; (use-package ef-themes
+;;   :init
+;;   (ef-themes-select 'ef-duo-light)
+;;   )
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -89,10 +89,10 @@
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'none))
 
-(when (display-graphic-p)
-  (setq doom-modeline-height 2)
-  (setq doom-modeline-icon nil)
-)
+;; (when (display-graphic-p)
+;;   (setq doom-modeline-height 2)
+;;   (setq doom-modeline-icon nil)
+;; )
 
 ;; 当使用vertico时，补全列表中默认没有开启recent files
 (recentf-mode 1)
@@ -181,6 +181,8 @@
 ;;   (exec-path-from-shell-initialize))
 
 (global-set-key (kbd "C-x b") 'consult-buffer)
+;; (global-set-key (kbd "C-s") 'consult-line)
+isearch-forward
 ;; completion ivy
 (after! ivy
   (global-set-key (kbd "C-x b") '+ivy/switch-buffer)
@@ -344,7 +346,7 @@
         ))
 
 
-;; 分配一定内存会触发一次gc
+;; 分配一定量的内存后会触发一次gc
 ;; 在超过1000行的c++文件上滚动时，会发现偶尔卡住，可以通过下garbage-collection-messages来查看是否发起了gc回收
 ;; (setq garbage-collection-messages t)
 ;; 可以通过调整回收阀值来优化滚动速度，但也不能太高，否则回收时会明显感受卡顿
