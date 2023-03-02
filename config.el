@@ -215,7 +215,6 @@ isearch-forward
 (require 'init-cc)
 (require 'init-shell)
 (require 'init-exec-path)
-(require 'color-rg)
 
 ;;doom uses it to highlight incorrect indentation in buffers and activates it default
 ;; (global-whitespace-mode nil)

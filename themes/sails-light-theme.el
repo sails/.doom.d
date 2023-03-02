@@ -147,6 +147,10 @@ Can be an integer to determine the exact padding."
    (helm-candidate-number :background blue :foreground bg)
    ;;;; lsp-mode
    (lsp-ui-doc-background      :background base0)
+   (lsp-face-highlight-textual
+    (&all   :weight 'bold)
+    (&light :background (doom-blend highlight bg 0.3) :foreground base0 :distant-foreground base8)
+    (&dark  :background (doom-blend highlight bg 0.3) :foreground base8 :distant-foreground base0))
    ;;;; magit
    (magit-blame-heading     :foreground orange :background bg-alt)
    (magit-diff-removed :foreground (doom-darken red 0.2) :background (doom-blend red bg 0.1))
