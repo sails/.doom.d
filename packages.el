@@ -58,7 +58,8 @@
 (package! eshell-toggle)
 ;; (package! consult)
 ;; (package! vterm-toggle)
-(package! ag)
+;; (package! ag)
+;; (package! rg)
 ;; ag/(do ag)->edit->commit
 (package! helm-ag)
 (package! helm-gtags)

@@ -200,13 +200,12 @@ isearch-forward
 ; Default doom threshold of 400 is too low in my experience.
 (after! so-long (setq so-long-threshold 1000))
 
-(setq ns-use-proxy-icon nil)
-(setq frame-title-format
-      '((:eval (if (buffer-file-name)
-                   ;; (abbreviate-file-name (buffer-file-name))
-                   (file-relative-name buffer-file-name (projectile-project-root))
-                   ;; (buffer-name)
-                 "%b"))))
+;; (setq ns-use-proxy-icon nil)
+;; (setq frame-title-format
+;;       '((:eval (if (buffer-file-name)
+;;                    (file-relative-name buffer-file-name (projectile-project-root))
+;;                    ;;(buffer-name)
+;;                  "%b"))))
 ;; 光亮当前行
 ;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
 
@@ -222,32 +221,6 @@ isearch-forward
 ;; 大小写M-u,M-l
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
-
-;; snails
-(when (display-graphic-p)
-  (use-package! snails
-    :defer t
-    :custom (snails-use-exec-path-from-shell nil)
-    :load-path  "~/.doom.d/lisp/snails"
-     :custom-face
-     ;; (snails-content-buffer-face ((t (:background "#111" :height 110))))
-     ;; (snails-input-buffer-face ((t (:background "#222" :foreground "gold" :height 110))))
-     ;; (snails-header-line-face ((t (:inherit font-lock-function-name-face :underline t :height 1.1))))
-    :commands snails
-    :config
-    (setq snails-show-with-frame nil)
-    (map!
-     (:map snails-mode-map
-      :nvi "C-g" #'snails-quit
-      :nvi "ESC ESC ESC" #'snail-quit
-      :nvi "C-n" #'snails-select-next-item
-      :nvi "C-p" #'snails-select-prev-item
-      :nvi "C-v" #'snails-select-next-backend
-      :nvi "M-v" #'snails-select-prev-backend
-      :nvi "RET" #'snails-candidate-do
-      :nvi "C-RET" #'snails-candiate-alternate-do))
-    )
-  )
 
 (when (display-graphic-p)
   (use-package! leetcode
@@ -352,3 +325,18 @@ isearch-forward
 ;; https://github.com/doomemacs/doomemacs/issues/3108
 (after! gcmh
   (setq gcmh-high-cons-threshold (* 64 1024 1024)))
+
+
+;; 加快与外部进程交互速度(eg: eshell)
+(setq process-adaptive-read-buffering nil)
+
+;;
+(setq ag-highlight-search t)
+
+;; (use-package aichat
+;;   :ensure nil
+;;   :load-path "~/.doom.d/lisp/aichat")
+
+(use-package blink-search
+  :ensure nil
+  :load-path "~/.doom.d/lisp/blink-search")
