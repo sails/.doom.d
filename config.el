@@ -37,7 +37,7 @@
 (setq sails-light-brighter-comments t)
 ;; (setq doom-theme 'doom-one-light)
 ;;(setq doom-font (font-spec :family "JetBrains Mono" :size 12))
-(setq doom-font (font-spec :family "Fira code" :size 12))
+(setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
 ;;(setq doom-theme 'doom-solarized-dark-high-contrast)
 ;; (use-package ef-themes
 ;;   :init
