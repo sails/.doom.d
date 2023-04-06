@@ -73,6 +73,19 @@
   (convert:replace-region start end 'md5)
   )
 
+;; base64
+(defun convert:base64-encode-region (start end)
+  "Convert base64 for region START and END."
+  (interactive "r")
+  (base64-encode-region start end)
+  )
+
+(defun convert:base64-decode-region (start end)
+  "Convert base64 for region START and END."
+  (interactive "r")
+  (base64-decode-region start end)
+  )
+
 (provide 'init-convert)
 
 ;;; init-convert.el ends here
