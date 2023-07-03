@@ -182,7 +182,7 @@
 
 (global-set-key (kbd "C-x b") 'consult-buffer)
 ;; (global-set-key (kbd "C-s") 'consult-line)
-isearch-forward
+
 ;; completion ivy
 (after! ivy
   (global-set-key (kbd "C-x b") '+ivy/switch-buffer)
@@ -337,6 +337,11 @@ isearch-forward
 ;;   :ensure nil
 ;;   :load-path "~/.doom.d/lisp/aichat")
 
-(use-package blink-search
-  :ensure nil
-  :load-path "~/.doom.d/lisp/blink-search")
+;; (use-package blink-search
+;;   :ensure nil
+;;   :load-path "~/.doom.d/lisp/blink-search")
+
+
+;; (use-package lsp-bridge
+;;   :ensure nil
+;;   :load-path "~/.doom.d/lisp/lsp-bridge")

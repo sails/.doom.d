@@ -61,6 +61,8 @@
 ;; (package! ag)
 ;; (package! rg)
 ;; ag/(do ag)->edit->commit
+;; helm-resume 可复用打开上次搜索列表
+;; C-j 打开文件不关闭搜索列表
 (package! helm-ag)
 (package! helm-gtags)
 ;; ivy occur
