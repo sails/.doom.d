@@ -111,7 +111,7 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.5)))
+           (frame-w (truncate (* monitor-w 0.55)))
            (frame-h (truncate (* monitor-h 0.9)))
 
 
@@ -259,7 +259,7 @@
 (remove-hook 'text-mode-hook #'vi-tilde-fringe-mode)
 
 ;; 平滑滚动，但cpu占用很高
-;;(pixel-scroll-precision-mode 1)
+(pixel-scroll-precision-mode 1)
 (setq scroll-margin 4)
 
 
