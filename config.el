@@ -36,8 +36,8 @@
 (setq doom-theme 'sails-light)
 (setq sails-light-brighter-comments t)
 ;; (setq doom-theme 'doom-one-light)
-;;(setq doom-font (font-spec :family "JetBrains Mono" :size 12))
-(setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
+;;(setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
 ;;(setq doom-theme 'doom-solarized-dark-high-contrast)
 ;; (use-package ef-themes
 ;;   :init
@@ -345,3 +345,18 @@
 ;; (use-package lsp-bridge
 ;;   :ensure nil
 ;;   :load-path "~/.doom.d/lisp/lsp-bridge")
+
+
+(use-package highlight-indent-guides
+:hook (prog-mode . highlight-indent-guides-mode)
+:config
+  (setq highlight-indent-guides-method 'character
+        highlight-indent-guides-character 9474
+        highlight-indent-guides-auto-enabled nil
+  )
+  (set-face-attribute 'highlight-indent-guides-character-face nil
+    :foreground "#99a2ad")
+  (set-face-attribute 'highlight-indent-guides-top-character-face nil
+    :foreground "#ffcc66")
+
+)
