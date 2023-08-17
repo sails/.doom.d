@@ -348,15 +348,15 @@
 
 
 (use-package highlight-indent-guides
-:hook (prog-mode . highlight-indent-guides-mode)
-:config
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :config
   (setq highlight-indent-guides-method 'character
-        highlight-indent-guides-character 9474
+        ;;highlight-indent-guides-character 9474
+        ;; Indent character samples: | ┆ ┊ ⁞
+        highlight-indent-guides-character ?\┊
+        highlight-indent-guides-auto-character-face-perc 20
         highlight-indent-guides-auto-enabled nil
-  )
+        )
   (set-face-attribute 'highlight-indent-guides-character-face nil
-    :foreground "#99a2ad")
-  (set-face-attribute 'highlight-indent-guides-top-character-face nil
-    :foreground "#ffcc66")
-
-)
+                      :foreground "#9c9c9c")
+  )
