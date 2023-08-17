@@ -111,8 +111,8 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.55)))
-           (frame-h (truncate (* monitor-h 0.9)))
+           (frame-w (truncate (* monitor-w 0.50)))
+           (frame-h (truncate (* monitor-h 0.85)))
 
 
            (a-left (truncate (/ (- monitor-w frame-w) 2))))
@@ -324,7 +324,7 @@
 ;; 可以通过调整回收阀值来优化滚动速度，但也不能太高，否则回收时会明显感受卡顿
 ;; https://github.com/doomemacs/doomemacs/issues/3108
 (after! gcmh
-  (setq gcmh-high-cons-threshold (* 64 1024 1024)))
+  (setq gcmh-high-cons-threshold (* 128 1024 1024)))
 
 
 ;; 加快与外部进程交互速度(eg: eshell)
