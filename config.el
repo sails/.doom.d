@@ -35,7 +35,7 @@
 ;; (setq doom-theme 'doom-one)
 (setq doom-theme 'sails-light)
 (setq sails-light-brighter-comments t)
-;; (setq doom-theme 'doom-one-light)
+;;(setq doom-theme 'doom-one-light)
 (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
 ;;(setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
 ;;(setq doom-theme 'doom-solarized-dark-high-contrast)
@@ -111,7 +111,7 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.50)))
+           (frame-w (truncate (* monitor-w 0.55)))
            (frame-h (truncate (* monitor-h 0.85)))
 
 
@@ -246,12 +246,13 @@
 ;;   ;; (add-hook 'go-mode-hook #'hide-mode-line-mode)
 ;;   (global-hide-mode-line-mode)
 ;;   )
+;; (global-hide-mode-line-mode)
 
 ;; Hide the menu for as minimalistic a startup screen as possible.
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
 ;; 光标
-;; (blink-cursor-mode t)
+(blink-cursor-mode t)
 
 ;; fringe-mode(左侧边缘宽度，有几种设置)
 ;; fringe-mode和vi-tilde-fringe-mode打开时,默认buffer尾部空白处会有波浪线
@@ -357,6 +358,14 @@
         highlight-indent-guides-auto-character-face-perc 20
         highlight-indent-guides-auto-enabled nil
         )
+  ;; 文件单数列不显示缩进线(否则在c-google-style中public/private显示会太密集)
+  (defun highlight-indent-guides-custom-highlight (level responsive display)
+    (if (zerop (mod (current-column) 2))
+        nil
+      (highlight-indent-guides--highlighter-default level responsive display)))
+  (setq highlight-indent-guides-highlighter-function 'highlight-indent-guides-custom-highlight)
   (set-face-attribute 'highlight-indent-guides-character-face nil
                       :foreground "#9c9c9c")
   )
+
+(setq mouse-wheel-progressive-speed t)
