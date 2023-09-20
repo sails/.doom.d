@@ -32,12 +32,13 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-;; (setq doom-theme 'doom-one)
-(setq doom-theme 'sails-light)
-(setq sails-light-brighter-comments t)
-;;(setq doom-theme 'doom-one-light)
-(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
+;;(setq doom-theme 'doom-one)
+;; (setq doom-theme 'sails-light)
+;; (setq sails-light-brighter-comments t)
+(setq doom-theme 'doom-one-light)
+;; (setq doom-one-light-brighter-comments t)
+;;(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
+(setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
 ;;(setq doom-theme 'doom-solarized-dark-high-contrast)
 ;; (use-package ef-themes
 ;;   :init
@@ -106,19 +107,19 @@
   (interactive)
   (unless (eq 'maximised (frame-parameter nil 'fullscreen))
     (let* ((frame (or (and (boundp 'frame)
-                            frame)
+                           frame)
                       (selected-frame)))
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.55)))
+           (frame-w (truncate (* monitor-w 0.50)))
            (frame-h (truncate (* monitor-h 0.85)))
 
 
            (a-left (truncate (/ (- monitor-w frame-w) 2))))
 
-           (set-frame-position (selected-frame) a-left 0)
-           (set-frame-size (selected-frame) (truncate frame-w)  (truncate frame-h) t)
+      (set-frame-position (selected-frame) a-left 0)
+      (set-frame-size (selected-frame) (truncate frame-w)  (truncate frame-h) t)
       )))
 
 (add-hook 'after-init-hook #'my/frame-recenter)
@@ -162,10 +163,19 @@
 (setq-default truncate-lines nil)
 
 ;; 保存时自动格式化
-(setq +format-on-save-enabled-modes
-      '(go-mode
-        rustic-mode
-        sql-mode))
+;; 目前format-on-save有bug，先不打开+onsave选项
+;; (setq +format-on-save-enabled-modes
+;;       '(go-mode
+;;         rustic-mode
+;;         sql-mode))
+;; (setq +format-on-save-disabled-modes
+;;       '(c-mode
+;;         cc-mode
+;;         c++-mode
+;;         emacs-lisp-mode  ; elisp's mechanisms are good enough
+;;         sql-mode         ; sqlformat is currently broken
+;;         tex-mode         ; latexindent is broken
+;;         latex-mode))
 
 ;; (add-hook 'rustic-mode-hook #'format-all-mode)
 
@@ -247,6 +257,19 @@
 ;;   (global-hide-mode-line-mode)
 ;;   )
 ;; (global-hide-mode-line-mode)
+(use-package! awesome-tray
+  :init
+  (awesome-tray-mode 1)
+  :config
+  (add-hook 'after-change-major-mode-hook #'hide-mode-line-mode)
+  (setq awesome-tray-active-modules '("parent-dir" "buffer-name" "location" "mode-name" "git" ))
+  (setq awesome-tray-date-format "%m-%d %H:%M")
+  (setq awesome-tray-git-format "%s")
+  (setq awesome-tray-location-format "%l:%c")
+  ;; (setq awesome-tray-location-info-bottom " ↓")
+  ;; (setq awesome-tray-location-info-top " ↑")
+  )
+
 
 ;; Hide the menu for as minimalistic a startup screen as possible.
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
@@ -265,7 +288,7 @@
 
 
 ;; 自动识别文件编码
- (unicad-mode 1)
+(unicad-mode 1)
 
 ;; (use-package! magit
 ;;   :config
@@ -289,9 +312,9 @@
 ;; (map! "M-n" #'forward-paragraph)
 ;; (map! "M-p" #'backward-paragraph)
 (global-set-key (kbd "M-n")
-    (lambda () (interactive) (forward-line  10)))
+                (lambda () (interactive) (forward-line  10)))
 (global-set-key (kbd "M-p")
-    (lambda () (interactive) (forward-line -10)))
+                (lambda () (interactive) (forward-line -10)))
 
 ;; eglot提示在minibuffer会占用多行，让页面跳动，如果不占用多行，显示的内容又没有意义，所以关闭eldoc-mode
 ;; (setq eldoc-echo-area-use-multiline-p nil) ;; 不占用多行
@@ -348,24 +371,27 @@
 ;;   :load-path "~/.doom.d/lisp/lsp-bridge")
 
 
-(use-package highlight-indent-guides
-  :hook (prog-mode . highlight-indent-guides-mode)
-  :config
-  (setq highlight-indent-guides-method 'character
-        ;;highlight-indent-guides-character 9474
-        ;; Indent character samples: | ┆ ┊ ⁞
-        highlight-indent-guides-character ?\┊
-        highlight-indent-guides-auto-character-face-perc 20
-        highlight-indent-guides-auto-enabled nil
-        )
-  ;; 文件单数列不显示缩进线(否则在c-google-style中public/private显示会太密集)
-  (defun highlight-indent-guides-custom-highlight (level responsive display)
-    (if (zerop (mod (current-column) 2))
-        nil
-      (highlight-indent-guides--highlighter-default level responsive display)))
-  (setq highlight-indent-guides-highlighter-function 'highlight-indent-guides-custom-highlight)
-  (set-face-attribute 'highlight-indent-guides-character-face nil
-                      :foreground "#9c9c9c")
-  )
+;; (use-package highlight-indent-guides
+;;   :hook (prog-mode . highlight-indent-guides-mode)
+;;   :config
+;;   (setq highlight-indent-guides-method 'character
+;;         ;;highlight-indent-guides-character 9474
+;;         ;; Indent character samples: | ┆ ┊ ⁞
+;;         ;;highlight-indent-guides-character ?\┊
+;;         highlight-indent-guides-auto-character-face-perc 20
+;;         highlight-indent-guides-auto-enabled nil
+;;         ;; highlight-indent-guides-responsive 'top
+;;         )
+;;   ;; 文件单数列不显示缩进线(否则在c-google-style中public/private显示会太密集)
+;;   (defun highlight-indent-guides-custom-highlight (level responsive display)
+;;     (if (zerop (mod (current-column) 2))
+;;         nil
+;;       (highlight-indent-guides--highlighter-default level responsive display)))
+;;   (setq highlight-indent-guides-highlighter-function 'highlight-indent-guides-custom-highlight)
+;;   (set-face-attribute 'highlight-indent-guides-character-face nil
+;;                       :foreground "#9c9c9c")
+;;   )
 
 (setq mouse-wheel-progressive-speed t)
+
+
