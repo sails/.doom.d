@@ -68,6 +68,8 @@
             ;; 可以很方便的在头文件与cpp文件中切换
             (local-set-key
              (kbd "C-x j") 'projectile-find-other-file)
+            (local-set-key
+             (kbd "C-c o j") 'projectile-find-other-file)
             )
 
           (quickrun-add-command "c++/c11"

@@ -33,11 +33,15 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;;(setq doom-theme 'doom-one)
-;; (setq doom-theme 'sails-light)
-;; (setq sails-light-brighter-comments t)
-(setq doom-theme 'doom-one-light)
+;;(setq doom-theme 'sails-light)
+(setq doom-theme 'sails-light2)
+(setq sails-light-brighter-comments t)
+(setq sails-light2-brighter-comments t)
+;; (setq doom-theme 'doom-one-light)
+;; (setq doom-theme 'doom-nord-aurora)
 ;; (setq doom-one-light-brighter-comments t)
-;;(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
+;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
+;; (setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
 (setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
 ;;(setq doom-theme 'doom-solarized-dark-high-contrast)
 ;; (use-package ef-themes
@@ -94,6 +98,8 @@
 ;;   (setq doom-modeline-height 2)
 ;;   (setq doom-modeline-icon nil)
 ;; )
+;; (setq doom-modeline-buffer-file-name-style 'relative-to-project)
+;; (setq doom-modeline-major-mode-icon t)
 
 ;; 当使用vertico时，补全列表中默认没有开启recent files
 (recentf-mode 1)
@@ -207,15 +213,19 @@
             ))
 
 
-; Default doom threshold of 400 is too low in my experience.
-(after! so-long (setq so-long-threshold 1000))
+;; 单行长文本
+(setq-default bidi-display-reordering nil)
+(setq bidi-inhibit-bpa t
+      long-line-threshold 1000
+      large-hscroll-threshold 1000
+      syntax-wholeline-max 1000)
 
 ;; (setq ns-use-proxy-icon nil)
-;; (setq frame-title-format
-;;       '((:eval (if (buffer-file-name)
-;;                    (file-relative-name buffer-file-name (projectile-project-root))
-;;                    ;;(buffer-name)
-;;                  "%b"))))
+(setq frame-title-format
+      '((:eval (if (buffer-file-name)
+                   ;; (file-relative-name buffer-file-name (projectile-project-root))
+                   (buffer-name)
+                 "%b"))))
 ;; 光亮当前行
 ;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
 
@@ -256,26 +266,30 @@
 ;;   ;; (add-hook 'go-mode-hook #'hide-mode-line-mode)
 ;;   (global-hide-mode-line-mode)
 ;;   )
-;; (global-hide-mode-line-mode)
-(use-package! awesome-tray
-  :init
-  (awesome-tray-mode 1)
-  :config
-  (add-hook 'after-change-major-mode-hook #'hide-mode-line-mode)
-  (setq awesome-tray-active-modules '("parent-dir" "buffer-name" "location" "mode-name" "git" ))
-  (setq awesome-tray-date-format "%m-%d %H:%M")
-  (setq awesome-tray-git-format "%s")
-  (setq awesome-tray-location-format "%l:%c")
-  ;; (setq awesome-tray-location-info-bottom " ↓")
-  ;; (setq awesome-tray-location-info-top " ↑")
-  )
+(global-hide-mode-line-mode)
 
+;; (global-anzu-mode +1)
+;; (use-package! awesome-tray
+;;   :init
+;;   (awesome-tray-mode 1)
+;;   :config
+;;   (add-hook 'after-change-major-mode-hook #'hide-mode-line-mode)
+;;   ;; (setq awesome-tray-active-modules '("anzu" "parent-dir" "buffer-name" "location" "belong" "mode-name" "git" ))
+;;   (setq awesome-tray-active-modules '("anzu" "file-path" "location" "belong" "mode-name" "git" ))
+;;   (setq awesome-tray-file-path-show-filename t)
+;;   (setq awesome-tray-date-format "%m-%d %H:%M")
+;;   (setq awesome-tray-git-format "%s")
+;;   (setq awesome-tray-location-format "%l:%c")
+;;   (setq awesome-tray-buffer-name-max-length 30) ;; default 20
+;;   ;; (setq awesome-tray-location-info-bottom " ↓")
+;;   ;; (setq awesome-tray-location-info-top " ↑")
+;;   )
 
 ;; Hide the menu for as minimalistic a startup screen as possible.
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
 ;; 光标
-(blink-cursor-mode t)
+;; (blink-cursor-mode t)
 
 ;; fringe-mode(左侧边缘宽度，有几种设置)
 ;; fringe-mode和vi-tilde-fringe-mode打开时,默认buffer尾部空白处会有波浪线
@@ -284,7 +298,6 @@
 
 ;; 平滑滚动，但cpu占用很高
 (pixel-scroll-precision-mode 1)
-(setq scroll-margin 4)
 
 
 ;; 自动识别文件编码
@@ -392,6 +405,4 @@
 ;;                       :foreground "#9c9c9c")
 ;;   )
 
-(setq mouse-wheel-progressive-speed t)
-
-
+;; (setq mouse-wheel-progressive-speed t)
