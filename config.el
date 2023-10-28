@@ -43,11 +43,6 @@
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
 ;; (setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
 (setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
-;;(setq doom-theme 'doom-solarized-dark-high-contrast)
-;; (use-package ef-themes
-;;   :init
-;;   (ef-themes-select 'ef-duo-light)
-;;   )
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
