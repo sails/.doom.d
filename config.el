@@ -232,6 +232,7 @@
 
 ;;doom uses it to highlight incorrect indentation in buffers and activates it default
 ;; (global-whitespace-mode nil)
+(advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
 
 ;; 大小写M-u,M-l
 (put 'upcase-region 'disabled nil)
@@ -261,7 +262,7 @@
 ;;   ;; (add-hook 'go-mode-hook #'hide-mode-line-mode)
 ;;   (global-hide-mode-line-mode)
 ;;   )
-(global-hide-mode-line-mode)
+;; (global-hide-mode-line-mode)
 
 ;; (global-anzu-mode +1)
 ;; (use-package! awesome-tray
@@ -284,7 +285,7 @@
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
 ;; 光标
-;; (blink-cursor-mode t)
+(blink-cursor-mode t)
 
 ;; fringe-mode(左侧边缘宽度，有几种设置)
 ;; fringe-mode和vi-tilde-fringe-mode打开时,默认buffer尾部空白处会有波浪线
@@ -311,7 +312,7 @@
 ;;   )
 
 ;; 透明
-;; (set-frame-parameter (selected-frame) 'alpha '(85 100))
+;; (set-frame-parameter (selected-frame) 'alpha '(95 100))
 ;; (add-to-list 'default-frame-alist '(alpha 97 100))
 
 
@@ -369,9 +370,15 @@
 ;;   :ensure nil
 ;;   :load-path "~/.doom.d/lisp/aichat")
 
-;; (use-package blink-search
-;;   :ensure nil
-;;   :load-path "~/.doom.d/lisp/blink-search")
+(use-package blink-search
+  :ensure nil
+  :load-path "~/.doom.d/lisp/blink-search"
+  :config
+  (setq blink-search-enable-posframe nil
+        ;;blink-search-search-backends '("History" "Buffer List" "Recent File" "Find File" "Current Buffer" "Grep File" "IMenu")
+        blink-search-search-backends '("Buffer List" "Recent File" "Find File" "Current Buffer" "Grep File")
+        )
+  )
 
 
 ;; (use-package lsp-bridge
@@ -401,3 +408,10 @@
 ;;   )
 
 ;; (setq mouse-wheel-progressive-speed t)
+
+
+;; (use-package! vertico-posframe
+;;   :after vertico
+;;   :config (vertico-posframe-mode 1)
+;;   (setq vertico-posframe-border-width 1)
+;;   )

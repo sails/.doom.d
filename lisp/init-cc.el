@@ -57,6 +57,14 @@
                                    "--enable-config"
                                    "--header-insertion-decorators=0"))
               )
+            ;; 禁用flycheck-eglot-mode
+            (use-package! flycheck-eglot
+              :config
+              (remove-hook 'eglot-managed-mode-hook #'flycheck-eglot-mode)
+              )
+
+
+
 
 
             ;; (add-load-path! "~/.doom.d/lisp/lsp-bridge")
