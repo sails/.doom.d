@@ -276,14 +276,21 @@
       (t :foreground "#ff9500" :bold nil))
     "Awesome tray orange."
     :group 'awesome-tray)
+  (defface awesome-tray-red-face
+    '((((background light)) :foreground "#cc2444" :bold nil)
+      (t :foreground "#ff2d55" :bold nil))
+    "Awesome tray red."
+    :group 'awesome-tray)
+
   (awesome-tray-mode 1)
   :config
   (add-hook 'after-change-major-mode-hook #'hide-mode-line-mode)
   (global-anzu-mode +1)
-  (setq awesome-tray-active-modules '("buffer-name" "location" "mode-name"))
+  (setq awesome-tray-active-modules '("buffer-name" "location" "mode-name" "git"))
   (setq awesome-tray-file-path-show-filename nil)
   (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
   (setq awesome-tray-location-format "(%l:%c)")
+  (setq awesome-tray-git-format "%s")
   )
 
 ;; Hide the menu for as minimalistic a startup screen as possible.
