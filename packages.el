@@ -79,6 +79,11 @@
 
 ;; lsp-bridge
 (package! posframe)
+;; (package! lsp-bridge
+;;   :recipe (:host github :repo "manateelazycat/lsp-bridge"))
+
+(package! blink-search
+  :recipe (:host github :repo "manateelazycat/blink-search"))
 
 (package! awesome-tray
   :recipe (:host github :repo "manateelazycat/awesome-tray"))

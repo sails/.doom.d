@@ -218,8 +218,8 @@
 ;; (setq ns-use-proxy-icon nil)
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
-                   ;; (file-relative-name buffer-file-name (projectile-project-root))
-                   (buffer-name)
+                   (file-relative-name buffer-file-name (projectile-project-root))
+                   ;;(buffer-name)
                  "%b"))))
 ;; 光亮当前行
 ;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
@@ -262,24 +262,29 @@
 ;;   ;; (add-hook 'go-mode-hook #'hide-mode-line-mode)
 ;;   (global-hide-mode-line-mode)
 ;;   )
-;; (global-hide-mode-line-mode)
+(global-hide-mode-line-mode)
 
-;; (global-anzu-mode +1)
-;; (use-package! awesome-tray
-;;   :init
-;;   (awesome-tray-mode 1)
-;;   :config
-;;   (add-hook 'after-change-major-mode-hook #'hide-mode-line-mode)
-;;   ;; (setq awesome-tray-active-modules '("anzu" "parent-dir" "buffer-name" "location" "belong" "mode-name" "git" ))
-;;   (setq awesome-tray-active-modules '("anzu" "file-path" "location" "belong" "mode-name" "git" ))
-;;   (setq awesome-tray-file-path-show-filename t)
-;;   (setq awesome-tray-date-format "%m-%d %H:%M")
-;;   (setq awesome-tray-git-format "%s")
-;;   (setq awesome-tray-location-format "%l:%c")
-;;   (setq awesome-tray-buffer-name-max-length 30) ;; default 20
-;;   ;; (setq awesome-tray-location-info-bottom " ↓")
-;;   ;; (setq awesome-tray-location-info-top " ↑")
-;;   )
+(use-package! awesome-tray
+  :init
+  (defface awesome-tray-green-face
+    '((((background light)) :foreground "#00a400" :bold nil)
+      (t :foreground "green3" :bold nil))
+    "Awesome tray green."
+    :group 'awesome-tray)
+  (defface awesome-tray-orange-face
+    '((((background light)) :foreground "#cc7700" :bold nil)
+      (t :foreground "#ff9500" :bold nil))
+    "Awesome tray orange."
+    :group 'awesome-tray)
+  (awesome-tray-mode 1)
+  :config
+  (add-hook 'after-change-major-mode-hook #'hide-mode-line-mode)
+  (global-anzu-mode +1)
+  (setq awesome-tray-active-modules '("buffer-name" "location" "mode-name"))
+  (setq awesome-tray-file-path-show-filename nil)
+  (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
+  (setq awesome-tray-location-format "(%l:%c)")
+  )
 
 ;; Hide the menu for as minimalistic a startup screen as possible.
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
@@ -370,20 +375,19 @@
 ;;   :ensure nil
 ;;   :load-path "~/.doom.d/lisp/aichat")
 
-(use-package blink-search
-  :ensure nil
-  :load-path "~/.doom.d/lisp/blink-search"
-  :config
-  (setq blink-search-enable-posframe nil
-        ;;blink-search-search-backends '("History" "Buffer List" "Recent File" "Find File" "Current Buffer" "Grep File" "IMenu")
-        blink-search-search-backends '("Buffer List" "Recent File" "Find File" "Current Buffer" "Grep File")
-        )
-  )
+;; (use-package blink-search
+;;   :ensure nil
+;;   :config
+;;   (setq blink-search-enable-posframe nil
+;;         ;;blink-search-search-backends '("History" "Buffer List" "Recent File" "Find File" "Current Buffer" "Grep File" "IMenu")
+;;         blink-search-search-backends '("Buffer List" "Recent File" "Find File" "Current Buffer" "Grep File")
+;;         )
+;;   )
 
 
 ;; (use-package lsp-bridge
 ;;   :ensure nil
-;;   :load-path "~/.doom.d/lisp/lsp-bridge")
+;;   )
 
 
 ;; (use-package highlight-indent-guides
@@ -409,9 +413,15 @@
 
 ;; (setq mouse-wheel-progressive-speed t)
 
-
-;; (use-package! vertico-posframe
-;;   :after vertico
-;;   :config (vertico-posframe-mode 1)
-;;   (setq vertico-posframe-border-width 1)
-;;   )
+;; 需要在init中开启vertico posframe选项
+(use-package! vertico-posframe
+  :after vertico
+  :config
+  (vertico-posframe-mode 1)
+  (setq vertico-posframe-border-width 1)
+  (add-hook 'doom-after-reload-hook #'posframe-delete-all)
+  ;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
+  (setq vertico-posframe-parameters '((left-fringe . 8)
+                                      (right-fringe . 8)))
+  (setq vertico-posframe-width 150)
+  )
