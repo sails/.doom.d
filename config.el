@@ -33,11 +33,8 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;;(setq doom-theme 'doom-one)
-;;(setq doom-theme 'sails-light)
-(setq doom-theme 'sails-light2)
+(setq doom-theme 'sails-light)
 (setq sails-light-brighter-comments t)
-(setq sails-light2-brighter-comments t)
-;; (setq doom-theme 'doom-one-light)
 ;; (setq doom-theme 'doom-nord-aurora)
 ;; (setq doom-one-light-brighter-comments t)
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
@@ -287,6 +284,7 @@
   (add-hook 'after-change-major-mode-hook #'hide-mode-line-mode)
   (global-anzu-mode +1)
   (setq awesome-tray-active-modules '("buffer-name" "location" "mode-name" "git"))
+  (setq awesome-tray-buffer-name-max-length 30)
   (setq awesome-tray-file-path-show-filename nil)
   (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
   (setq awesome-tray-location-format "(%l:%c)")

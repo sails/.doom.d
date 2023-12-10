@@ -1,21 +1,8 @@
-;;; sails-light2-theme.el --- inspired by Atom One Light -*- lexical-binding: t; no-byte-compile: t; -*-
-;;
-;; Added: July 31, 2017 (#96)
-;; Author: ztlevi <https://github.com/ztlevi>
-;; Maintainer: Henrik Lissner <https://github.com/hlissner>
-;; Source: https://github.com/atom/one-light-ui
-;;
-;;; Commentary:
-;;; Code:
-
+;;; sails-light2-theme.el --- inspired by Atom One Light -*- no-byte-compile: t; -*-
 (require 'doom-themes)
 
-
-;;
-;;; Variables
-
 (defgroup sails-light2-theme nil
-  "Options for the `sails-light2' theme."
+  "Options for doom-themes"
   :group 'doom-themes)
 
 (defcustom sails-light2-brighter-modeline nil
@@ -41,24 +28,21 @@ Can be an integer to determine the exact padding."
 (def-doom-theme sails-light2
   "A light theme inspired by Atom One Light."
 
-  ;; name        default256       16
+  ;; name        default   256       16
   ((bg         '("#ffffff" "white"   "white"        ))
-  ;;((bg         '("#fafafa" "white"   "white"        ))
-   (fg         '("#383a42" "#424242" "black"        ))
+   (fg         '("#000000" "#ffffff" "black"        ))
 
    ;; These are off-color variants of bg/fg, used primarily for `solaire-mode',
    ;; but can also be useful as a basis for subtle highlights (e.g. for hl-line
    ;; or region), especially when paired with the `doom-darken', `doom-lighten',
    ;; and `doom-blend' helper functions.
-   ;; (bg-alt     '("#f0f0f0" "white"   "white"        ))
-   (bg-alt     '("#ffffff" "white"   "white"        ))
-   (fg-alt     '("#c6c7c7" "#c7c7c7" "brightblack"  ))
+   (bg-alt     '("#fafafa" "white"   "white"        ))
+   (fg-alt     '("#383a42" "#424242" "brightblack"  ))
 
    ;; These should represent a spectrum from bg to fg, where base0 is a starker
    ;; bg and base8 is a starker fg. For example, if bg is light grey and fg is
    ;; dark grey, base0 should be white and base8 should be black.
-   (base0      '("#f0f0f0" "#f0f0f0" "white"        ))
-   ;; (base0      '("#ffffff" "#ffffff" "white"        ))
+   (base0      '("#ffffff" "#ffffff" "white"        ))
    (base1      '("#e7e7e7" "#e7e7e7" "brightblack"  ))
    (base2      '("#dfdfdf" "#dfdfdf" "brightblack"  ))
    (base3      '("#c6c7c7" "#c6c7c7" "brightblack"  ))
@@ -66,12 +50,13 @@ Can be an integer to determine the exact padding."
    (base5      '("#383a42" "#424242" "brightblack"  ))
    (base6      '("#202328" "#2e2e2e" "brightblack"  ))
    (base7      '("#1c1f24" "#1e1e1e" "brightblack"  ))
-   (base8      '("#1b2229" "black"   "black"        ))
+   (base8      '("#000000" "black"   "black"        ))
 
    (grey       base4)
    (red        '("#e45649" "#e45649" "red"          ))
    (orange     '("#da8548" "#dd8844" "brightred"    ))
-   (green      '("#50a14f" "#50a14f" "green"        ))
+   (green      '("#4C8A39" "#50a14f" "green"        ))
+   ;;(green      '("#529e4e" "#529e4e" "green"        ))
    (teal       '("#4db5bd" "#44b9b1" "brightgreen"  ))
    (yellow     '("#986801" "#986801" "yellow"       ))
    (blue       '("#4078f2" "#4078f2" "brightblue"   ))
@@ -88,7 +73,8 @@ Can be an integer to determine the exact padding."
    (vertical-bar   (doom-darken base2 0.1))
    (selection      dark-blue)
    (builtin        magenta)
-   (comments       (if sails-light2-brighter-comments green base0))
+   ;;(comments       (if sails-light2-brighter-comments cyan base4))
+   (comments       (if sails-light2-brighter-comments green base4))
    (doc-comments   (doom-darken comments 0.15))
    (constants      violet)
    (functions      magenta)
@@ -104,7 +90,7 @@ Can be an integer to determine the exact padding."
    (warning        yellow)
    (success        green)
    (vc-modified    orange)
-   (vc-added       green)
+   (vc-added       "#529e4e")
    (vc-deleted     red)
 
    ;; These are extra color variables used only in this theme; i.e. they aren't
@@ -128,11 +114,11 @@ Can be an integer to determine the exact padding."
 
   ;;;; Base theme face overrides
   (
-   ;; ((font-lock-comment-face &override)
-   ;;  :background (if sails-light2-brighter-comments base0))
+   ;;((font-lock-comment-face &override)
+   ;; :background (if sails-light2-brighter-comments base0))
    ((font-lock-doc-face &override) :slant 'italic)
-   ((line-number &override) :foreground (doom-lighten base4 0.15))
-   ((line-number-current-line &override) :foreground base8)
+   ((line-number &override) :foreground (doom-lighten base4 0.15) :slant 'normal)
+   ((line-number-current-line &override) :foreground base8 :slant 'normal)
    (mode-line
     :background modeline-bg :foreground modeline-fg
     :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg)))
@@ -161,6 +147,10 @@ Can be an integer to determine the exact padding."
    (helm-candidate-number :background blue :foreground bg)
    ;;;; lsp-mode
    (lsp-ui-doc-background      :background base0)
+   (lsp-face-highlight-textual
+    (&all   :weight 'bold)
+    (&light :background (doom-blend highlight bg 0.3) :foreground base0 :distant-foreground base8)
+    (&dark  :background (doom-blend highlight bg 0.3) :foreground base8 :distant-foreground base0))
    ;;;; magit
    (magit-blame-heading     :foreground orange :background bg-alt)
    (magit-diff-removed :foreground (doom-darken red 0.2) :background (doom-blend red bg 0.1))
@@ -173,11 +163,43 @@ Can be an integer to determine the exact padding."
    ;;;; outline <built-in>
    ((outline-1 &override) :foreground red)
    ((outline-2 &override) :foreground orange)
-   ;;;; org <built-in>
-   ((org-block &override) :background base1)
-   ((org-block-begin-line &override) :foreground fg :slant 'italic)
-   (org-ellipsis :underline nil :background bg     :foreground red)
-   ((org-quote &override) :background base1)
+   ;; ;; org <built-in>
+   ;; ((org-block &override) :background base1)
+   ;; ((org-block-begin-line &override) :foreground fg :slant 'italic)
+   ;; (org-ellipsis :underline nil :background bg     :foreground red)
+   ;; ((org-quote &override) :background base1)
+   (org-block            :background base0)
+   (org-level-1          :foreground base8 :weight 'bold :height 1.25)
+   (org-level-2          :foreground base6 :weight 'bold :height 1.1)
+   (org-level-3          :foreground base5 :bold bold :height 1.0)
+   (org-level-4          :foreground base4 :bold bold :height 1.0)
+   (org-ellipsis         :underline nil :background bg-alt     :foreground grey)
+   (org-quote            :background base1)
+   (org-checkbox-statistics-done :foreground base2 :weight 'normal)
+   (org-done nil)
+   (org-done :foreground green :weight 'normal)
+   (org-headline-done :foreground base3 :weight 'normal :strike-through t)
+   (org-date :foreground orange)
+   (org-code :foreground dark-blue)
+   (org-special-keyword :foreground base8 :underline t)
+   (org-document-title :foreground base8 :weight 'bold :height 1.5)
+   (org-document-info-keyword :foreground base4 :height 0.75)
+   (org-block-begin-line :foreground base4 :height 0.65)
+   (org-meta-line :foreground base4 :height 0.65)
+   (org-list-dt :foreground magenta)
+
+   (org-todo-keyword-faces
+    '(("TODO" :foreground "#7c7c75" :weight normal :underline t)
+      ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
+      ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
+      ("DONE" :foreground "#50a14f" :weight normal :underline t)
+      ("CANCELLED" :foreground "#ff6480" :weight normal :underline t)))
+
+   (org-priority-faces '((65 :foreground "#e45649")
+                         (66 :foreground "#da8548")
+                         (67 :foreground "#0098dd")))
+
+
    ;;;; posframe
    (ivy-posframe               :background base0)
    ;;;; selectrum
@@ -194,15 +216,31 @@ Can be an integer to determine the exact padding."
     :background modeline-bg-alt-inactive
     :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg-alt-inactive)))
    ;;;; web-mode
-   (web-mode-current-element-highlight-face :background dark-blue :foreground bg)
+   ;; (web-mode-current-element-highlight-face :background dark-blue :foreground bg)
    ;;;; wgrep <built-in>
    (wgrep-face :background base1)
    ;;;; whitespace
-   ((whitespace-tab &override)         :background (if (not (default-value 'indent-tabs-mode)) base0 'unspecified))
-   ((whitespace-indentation &override) :background (if (default-value 'indent-tabs-mode) base0 'unspecified)))
+   ((whitespace-tab &override)         :background (unless (default-value 'indent-tabs-mode) base0))
+   ((whitespace-indentation &override) :background (if (default-value 'indent-tabs-mode) base0)))
 
   ;;;; Base theme variable overrides-
   ()
   )
+
+(after! org
+  (setq
+   org-bullets-bullet-list '("⁖")
+   org-ellipsis " ... "
+   org-todo-keyword-faces
+   '(("TODO" :foreground "#7c7c75" :weight normal :underline t)
+     ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
+     ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
+     ("DONE" :foreground "#50a14f" :weight normal :underline t)
+     ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))
+   org-priority-faces '((65 :foreground "#e45649")
+                        (66 :foreground "#da8548")
+                        (67 :foreground "#0098dd"))
+   ))
+
 
 ;;; sails-light2-theme.el ends here
