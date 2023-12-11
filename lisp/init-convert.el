@@ -43,6 +43,17 @@
   (convert:replace-region start end 'convert:time-conv)
   )
 
+;; Unicode转换
+(defun convert:unibyte-to-string (text)
+  "Converts a region from Unicode escape sequences to Utf8 characters."
+  (decode-coding-string (string-as-unibyte (read (concat "\"" text "\""))) 'utf-8)
+  )
+(defun convert:unibyte-decode-region (start end)
+  "Convert decode unibyte for region START and END."
+  (interactive "r")
+  (convert:replace-region start end 'convert:unibyte-to-string)
+  )
+
 ;; url转换
 (defun convert:url-decode-string (url)
   "Convert decode URL."
