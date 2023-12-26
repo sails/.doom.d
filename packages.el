@@ -88,3 +88,7 @@
 (package! awesome-tray
   :recipe (:host github :repo "manateelazycat/awesome-tray"))
 (package! anzu)
+
+
+(package! standard-themes
+  :recipe (:host github :repo "protesilaos/standard-themes"))
