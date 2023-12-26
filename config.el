@@ -33,10 +33,11 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;;(setq doom-theme 'doom-one)
+;;(setq doom-theme 'doom-one-light)
+;;(setq doom-one-light-brighter-comments t)
 (setq doom-theme 'sails-light)
 (setq sails-light-brighter-comments t)
 ;; (setq doom-theme 'doom-nord-aurora)
-;; (setq doom-one-light-brighter-comments t)
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
 ;; (setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
 (setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
@@ -48,7 +49,6 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
-
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -110,8 +110,8 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.50)))
-           (frame-h (truncate (* monitor-h 0.85)))
+           (frame-w (truncate (* monitor-w 0.55)))
+           (frame-h (truncate (* monitor-h 0.90)))
 
 
            (a-left (truncate (/ (- monitor-w frame-w) 2))))
@@ -215,8 +215,8 @@
 ;; (setq ns-use-proxy-icon nil)
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
-                   (file-relative-name buffer-file-name (projectile-project-root))
-                   ;;(buffer-name)
+                   ;; (file-relative-name buffer-file-name (projectile-project-root))
+                   (buffer-name)
                  "%b"))))
 ;; 光亮当前行
 ;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
@@ -252,14 +252,23 @@
 
 (add-to-list 'doom-large-file-excluded-modes 'c++-mode)
 
-;; (use-package hide-mode-line
+;; (add-hook! '(completion-list-mode-hook Man-mode-hook prog-mode-hook)
+;;              #'hide-mode-line-mode)
+
+;; (use-package! hide-mode-line
 ;;   :ensure t
 ;;   :config
-;;   ;; (add-hook 'prog-mode #'hide-mode-line-mode)
-;;   ;; (add-hook 'go-mode-hook #'hide-mode-line-mode)
-;;   (global-hide-mode-line-mode)
+;;   (add-hook 'prog-mode-hook #'hide-mode-line-mode)
+;;   ;; (global-hide-mode-line-mode)
 ;;   )
 (global-hide-mode-line-mode)
+(add-hook 'prog-mode-hook #'hide-mode-line-mode)
+
+(use-package! anzu
+  :after-call isearch-mode
+  :config
+  (setq anzu-cons-mode-line-p nil)
+  (anzu-mode 1))
 
 (use-package! awesome-tray
   :init
@@ -281,9 +290,8 @@
 
   (awesome-tray-mode 1)
   :config
-  (add-hook 'after-change-major-mode-hook #'hide-mode-line-mode)
-  (global-anzu-mode +1)
-  (setq awesome-tray-active-modules '("buffer-name" "location" "mode-name" "git"))
+  ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name"))
+  (setq awesome-tray-active-modules '("anzu" "location" "mode-name"))
   (setq awesome-tray-buffer-name-max-length 30)
   (setq awesome-tray-file-path-show-filename nil)
   (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
@@ -428,5 +436,18 @@
   ;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
   (setq vertico-posframe-parameters '((left-fringe . 8)
                                       (right-fringe . 8)))
-  (setq vertico-posframe-width 150)
+  (setq vertico-posframe-width 200)
   )
+
+;; 临时fix format bug
+(use-package! apheleia)
+
+;; (use-package holo-layer
+;;   :load-path "~/.doom.d/lisp/holo-layer"
+;;   :config
+;;   (setq holo-layer-cursor-animation-type "jelly easing")
+;;   (setq holo-layer-enable-cursor-animation t)
+;;   (setq holo-layer-enable-indent-rainbow t)
+;;   (setq holo-layer-indent-colors '("#5BAB3C" "#4B713F" "#244E30" "#774C3E" "#1E588D" "#3B8155" "#396977" "#18362B" "#525169" "#0B2837"))
+;;   (holo-layer-enable)
+;;   )
