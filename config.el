@@ -287,7 +287,7 @@
       (t :foreground "#ff2d55" :bold nil))
     "Awesome tray red."
     :group 'awesome-tray)
-
+  (global-anzu-mode 1)
   (awesome-tray-mode 1)
   :config
   ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name"))
