@@ -25,7 +25,8 @@
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;ivy               ; a search engine for love and life
-       (vertico +icons +childframe)           ; the search engine of the future
+       ;;(vertico +icons +childframe)           ; the search engine of the future
+       (vertico +icons)
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -47,6 +48,7 @@
        ;;treemacs          ; a project drawer, like neotree but cooler
        ;;unicode           ; extended unicode support for various languages
        ;;(vc-gutter +pretty)
+       (vc-gutter +diff-hl)
        ;;vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        ;;window-select     ; visually switch windows
        workspaces        ; tab emulation, persistence & separate workspaces

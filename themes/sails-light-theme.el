@@ -131,8 +131,9 @@ Can be an integer to determine the exact padding."
    ;; ((font-lock-comment-face &override)
    ;;  :background (if sails-light-brighter-comments base0))
    ((font-lock-doc-face &override) :slant 'italic)
-   ((line-number &override) :foreground (doom-lighten base4 0.15))
-   ((line-number-current-line &override) :foreground base8)
+   ((line-number &override) :foreground (doom-lighten base4 0.15) :slant 'normal)
+   ;; ((line-number &override) :foreground (doom-lighten base4 0.15))
+   ((line-number-current-line &override) :foreground base8 :slant 'normal)
    (mode-line
     :background modeline-bg :foreground modeline-fg
     :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg)))

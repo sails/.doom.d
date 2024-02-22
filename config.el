@@ -261,8 +261,9 @@
 ;;   (add-hook 'prog-mode-hook #'hide-mode-line-mode)
 ;;   ;; (global-hide-mode-line-mode)
 ;;   )
-(global-hide-mode-line-mode)
-(add-hook 'prog-mode-hook #'hide-mode-line-mode)
+
+;; (global-hide-mode-line-mode)
+;; (add-hook 'prog-mode-hook #'hide-mode-line-mode)
 
 (use-package! anzu
   :after-call isearch-mode
@@ -270,34 +271,34 @@
   (setq anzu-cons-mode-line-p nil)
   (anzu-mode 1))
 
-(use-package! awesome-tray
-  :init
-  (defface awesome-tray-green-face
-    '((((background light)) :foreground "#00a400" :bold nil)
-      (t :foreground "green3" :bold nil))
-    "Awesome tray green."
-    :group 'awesome-tray)
-  (defface awesome-tray-orange-face
-    '((((background light)) :foreground "#cc7700" :bold nil)
-      (t :foreground "#ff9500" :bold nil))
-    "Awesome tray orange."
-    :group 'awesome-tray)
-  (defface awesome-tray-red-face
-    '((((background light)) :foreground "#cc2444" :bold nil)
-      (t :foreground "#ff2d55" :bold nil))
-    "Awesome tray red."
-    :group 'awesome-tray)
-  (global-anzu-mode 1)
-  (awesome-tray-mode 1)
-  :config
-  ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name"))
-  (setq awesome-tray-active-modules '("anzu" "location" "mode-name"))
-  (setq awesome-tray-buffer-name-max-length 30)
-  (setq awesome-tray-file-path-show-filename nil)
-  (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
-  (setq awesome-tray-location-format "(%l:%c)")
-  (setq awesome-tray-git-format "%s")
-  )
+;; (use-package! awesome-tray
+;;   :init
+;;   (defface awesome-tray-green-face
+;;     '((((background light)) :foreground "#00a400" :bold nil)
+;;       (t :foreground "green3" :bold nil))
+;;     "Awesome tray green."
+;;     :group 'awesome-tray)
+;;   (defface awesome-tray-orange-face
+;;     '((((background light)) :foreground "#cc7700" :bold nil)
+;;       (t :foreground "#ff9500" :bold nil))
+;;     "Awesome tray orange."
+;;     :group 'awesome-tray)
+;;   (defface awesome-tray-red-face
+;;     '((((background light)) :foreground "#cc2444" :bold nil)
+;;       (t :foreground "#ff2d55" :bold nil))
+;;     "Awesome tray red."
+;;     :group 'awesome-tray)
+;;   (global-anzu-mode 1)
+;;   (awesome-tray-mode 1)
+;;   :config
+;;   ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name"))
+;;   (setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name"))
+;;   (setq awesome-tray-buffer-name-max-length 30)
+;;   (setq awesome-tray-file-path-show-filename nil)
+;;   (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
+;;   (setq awesome-tray-location-format "(%l:%c)")
+;;   (setq awesome-tray-git-format "%s")
+;;   )
 
 ;; Hide the menu for as minimalistic a startup screen as possible.
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
@@ -427,17 +428,17 @@
 ;; (setq mouse-wheel-progressive-speed t)
 
 ;; 需要在init中开启vertico posframe选项
-(use-package! vertico-posframe
-  :after vertico
-  :config
-  (vertico-posframe-mode 1)
-  (setq vertico-posframe-border-width 1)
-  (add-hook 'doom-after-reload-hook #'posframe-delete-all)
-  ;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
-  (setq vertico-posframe-parameters '((left-fringe . 8)
-                                      (right-fringe . 8)))
-  (setq vertico-posframe-width 200)
-  )
+;; (use-package! vertico-posframe
+;;   :after vertico
+;;   :config
+;;   (vertico-posframe-mode 1)
+;;   (setq vertico-posframe-border-width 1)
+;;   (add-hook 'doom-after-reload-hook #'posframe-delete-all)
+;;   ;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
+;;   (setq vertico-posframe-parameters '((left-fringe . 8)
+;;                                       (right-fringe . 8)))
+;;   (setq vertico-posframe-width 200)
+;;   )
 
 ;; 临时fix format bug
 (use-package! apheleia)
