@@ -337,12 +337,23 @@
 
 (setq enable-remote-dir-locals t)
 
-;; (map! "M-n" #'forward-paragraph)
-;; (map! "M-p" #'backward-paragraph)
-(global-set-key (kbd "M-n")
-                (lambda () (interactive) (forward-line  10)))
-(global-set-key (kbd "M-p")
-                (lambda () (interactive) (forward-line -10)))
+(defun my-move-up ()
+  "Move up 10 lines."
+  (interactive)
+  (previous-line 10))
+
+(defun my-move-down ()
+  "Move down 10 lines."
+  (interactive)
+  (next-line 10))
+
+(global-set-key (kbd "M-p") 'my-move-up)
+(global-set-key (kbd "M-n") 'my-move-down)
+;; markdown中M-n绑定到了其它命令
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            (define-key markdown-mode-map (kbd "M-p") 'my-move-up)
+            (define-key markdown-mode-map (kbd "M-n") 'my-move-down)))
 
 ;; eglot提示在minibuffer会占用多行，让页面跳动，如果不占用多行，显示的内容又没有意义，所以关闭eldoc-mode
 ;; (setq eldoc-echo-area-use-multiline-p nil) ;; 不占用多行
