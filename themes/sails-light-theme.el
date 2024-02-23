@@ -88,7 +88,7 @@ Can be an integer to determine the exact padding."
    (vertical-bar   (doom-darken base2 0.1))
    (selection      dark-blue)
    (builtin        magenta)
-   (comments       (if sails-light-brighter-comments green base0))
+   (comments       (if sails-light-brighter-comments green base4))
    (doc-comments   (doom-darken comments 0.15))
    (constants      violet)
    (functions      magenta)

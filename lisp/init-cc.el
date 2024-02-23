@@ -61,6 +61,7 @@
                 :config
                 (remove-hook 'eglot-managed-mode-hook #'flycheck-eglot-mode)
                 )
+              ;; (eglot-inlay-hints-mode -1)
               )
 
             ;; (add-load-path! "~/.doom.d/lisp/lsp-bridge")

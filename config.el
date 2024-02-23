@@ -36,7 +36,7 @@
 ;;(setq doom-theme 'doom-one-light)
 ;;(setq doom-one-light-brighter-comments t)
 (setq doom-theme 'sails-light)
-(setq sails-light-brighter-comments t)
+;;(setq sails-light-brighter-comments t)
 ;; (setq doom-theme 'doom-nord-aurora)
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
 ;; (setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
