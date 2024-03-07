@@ -268,8 +268,7 @@
 (use-package! anzu
   :after-call isearch-mode
   :config
-  (setq anzu-cons-mode-line-p nil)
-  (anzu-mode 1))
+  (global-anzu-mode 1))
 
 ;; (use-package! awesome-tray
 ;;   :init
