@@ -36,6 +36,7 @@
                       "--completion-style=detailed"
                       "--enable-config"
                       "--header-insertion-decorators=0"))
+
               (set-lsp-priority! 'clangd 1)
               ;; (lsp-diagnostics-mode -1)
               ;; (flycheck-mode -1)
@@ -56,6 +57,9 @@
                                    "--completion-style=detailed"
                                    "--enable-config"
                                    "--header-insertion-decorators=0"))
+
+              ;; fix: 在if (){}回车会自动插入两行
+              (setq eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider))
               ;; 禁用flycheck-eglot-mode
               (use-package! flycheck-eglot
                 :config

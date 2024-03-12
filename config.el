@@ -409,9 +409,11 @@
 ;;   )
 
 
-;; (use-package lsp-bridge
-;;   :ensure nil
-;;   )
+;; (use-package! lsp-bridge
+;;   :config
+;;   (setq lsp-bridge-enable-with-tramp 1)
+;;   (setq lsp-bridge-enable-log nil)
+;;   (global-lsp-bridge-mode))
 
 
 ;; (use-package highlight-indent-guides
@@ -451,7 +453,7 @@
 ;;   )
 
 ;; 临时fix format bug
-(use-package! apheleia)
+;; (use-package! apheleia)
 
 ;; (use-package holo-layer
 ;;   :load-path "~/.doom.d/lisp/holo-layer"
