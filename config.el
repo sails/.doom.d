@@ -303,7 +303,7 @@
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
 ;; 光标
-(blink-cursor-mode t)
+;; (blink-cursor-mode t)
 
 ;; fringe-mode(左侧边缘宽度，有几种设置)
 ;; fringe-mode和vi-tilde-fringe-mode打开时,默认buffer尾部空白处会有波浪线
@@ -416,26 +416,26 @@
 ;;   (global-lsp-bridge-mode))
 
 
-;; (use-package highlight-indent-guides
-;;   :hook (prog-mode . highlight-indent-guides-mode)
-;;   :config
-;;   (setq highlight-indent-guides-method 'character
-;;         ;;highlight-indent-guides-character 9474
-;;         ;; Indent character samples: | ┆ ┊ ⁞
-;;         ;;highlight-indent-guides-character ?\┊
-;;         highlight-indent-guides-auto-character-face-perc 20
-;;         highlight-indent-guides-auto-enabled nil
-;;         ;; highlight-indent-guides-responsive 'top
-;;         )
-;;   ;; 文件单数列不显示缩进线(否则在c-google-style中public/private显示会太密集)
-;;   (defun highlight-indent-guides-custom-highlight (level responsive display)
-;;     (if (zerop (mod (current-column) 2))
-;;         nil
-;;       (highlight-indent-guides--highlighter-default level responsive display)))
-;;   (setq highlight-indent-guides-highlighter-function 'highlight-indent-guides-custom-highlight)
-;;   (set-face-attribute 'highlight-indent-guides-character-face nil
-;;                       :foreground "#9c9c9c")
-;;   )
+(use-package highlight-indent-guides
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :config
+  (setq highlight-indent-guides-method 'character
+        ;; highlight-indent-guides-character 9474
+        ;; Indent character samples: | ┆ ┊ ⁞ ⋮
+        highlight-indent-guides-character ?\┊
+        highlight-indent-guides-auto-character-face-perc 20
+        highlight-indent-guides-auto-enabled nil
+        highlight-indent-guides-responsive 'top
+        )
+  ;; 文件单数列不显示缩进线(否则在c-google-style中public/private显示会太密集)
+  (defun highlight-indent-guides-custom-highlight (level responsive display)
+    (if (zerop (mod (current-column) 2))
+        nil
+      (highlight-indent-guides--highlighter-default level responsive display)))
+  (setq highlight-indent-guides-highlighter-function 'highlight-indent-guides-custom-highlight)
+  (set-face-foreground 'highlight-indent-guides-character-face "#C0C0C0")
+  (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray")
+  )
 
 ;; (setq mouse-wheel-progressive-speed t)
 
@@ -453,7 +453,7 @@
 ;;   )
 
 ;; 临时fix format bug
-;; (use-package! apheleia)
+(use-package! apheleia)
 
 ;; (use-package holo-layer
 ;;   :load-path "~/.doom.d/lisp/holo-layer"
