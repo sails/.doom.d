@@ -222,6 +222,7 @@
 ;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
 
 (add-load-path! "~/.doom.d/lisp")
+(add-load-path! "~/.config/doom/lisp")
 (require 'init-convert)
 (require 'init-cc)
 (require 'init-shell)
