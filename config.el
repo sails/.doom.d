@@ -39,8 +39,19 @@
 ;;(setq sails-light-brighter-comments t)
 ;; (setq doom-theme 'doom-nord-aurora)
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
-;; (setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
-(setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
+;;(setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
+;;(setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
+(setq doom-font (font-spec :family "Source Code Pro" :size 12)
+      doom-big-font (font-spec :family "Source Code Pro" :size 13)
+      doom-variable-pitch-font (font-spec :family "Source Code Variable" :size 12)
+      doom-unicode-font (font-spec :family "JuliaMono")
+      )
+
+;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12)
+;;       doom-big-font (font-spec :family "JetBrains Mono" :size 13)
+;;       doom-variable-pitch-font (font-spec :family "Source Code Variable" :size 12)
+;;       doom-unicode-font (font-spec :family "JuliaMono")
+;;       )
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -110,7 +121,7 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.55)))
+           (frame-w (truncate (* monitor-w 0.50)))
            (frame-h (truncate (* monitor-h 0.90)))
 
 
@@ -215,8 +226,8 @@
 ;; (setq ns-use-proxy-icon nil)
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
-                   ;; (file-relative-name buffer-file-name (projectile-project-root))
-                   (buffer-name)
+                   (file-relative-name buffer-file-name (projectile-project-root))
+                   ;;(buffer-name)
                  "%b"))))
 ;; 光亮当前行
 ;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
@@ -262,42 +273,42 @@
 ;;   ;; (global-hide-mode-line-mode)
 ;;   )
 
-;; (global-hide-mode-line-mode)
-;; (add-hook 'prog-mode-hook #'hide-mode-line-mode)
+(global-hide-mode-line-mode)
+(add-hook 'prog-mode-hook #'hide-mode-line-mode)
 
 (use-package! anzu
   :after-call isearch-mode
   :config
   (global-anzu-mode 1))
 
-;; (use-package! awesome-tray
-;;   :init
-;;   (defface awesome-tray-green-face
-;;     '((((background light)) :foreground "#00a400" :bold nil)
-;;       (t :foreground "green3" :bold nil))
-;;     "Awesome tray green."
-;;     :group 'awesome-tray)
-;;   (defface awesome-tray-orange-face
-;;     '((((background light)) :foreground "#cc7700" :bold nil)
-;;       (t :foreground "#ff9500" :bold nil))
-;;     "Awesome tray orange."
-;;     :group 'awesome-tray)
-;;   (defface awesome-tray-red-face
-;;     '((((background light)) :foreground "#cc2444" :bold nil)
-;;       (t :foreground "#ff2d55" :bold nil))
-;;     "Awesome tray red."
-;;     :group 'awesome-tray)
-;;   (global-anzu-mode 1)
-;;   (awesome-tray-mode 1)
-;;   :config
-;;   ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name"))
-;;   (setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name"))
-;;   (setq awesome-tray-buffer-name-max-length 30)
-;;   (setq awesome-tray-file-path-show-filename nil)
-;;   (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
-;;   (setq awesome-tray-location-format "(%l:%c)")
-;;   (setq awesome-tray-git-format "%s")
-;;   )
+(use-package! awesome-tray
+  :init
+  (defface awesome-tray-green-face
+    '((((background light)) :foreground "#00a400" :bold nil)
+      (t :foreground "green3" :bold nil))
+    "Awesome tray green."
+    :group 'awesome-tray)
+  (defface awesome-tray-orange-face
+    '((((background light)) :foreground "#cc7700" :bold nil)
+      (t :foreground "#ff9500" :bold nil))
+    "Awesome tray orange."
+    :group 'awesome-tray)
+  (defface awesome-tray-red-face
+    '((((background light)) :foreground "#cc2444" :bold nil)
+      (t :foreground "#ff2d55" :bold nil))
+    "Awesome tray red."
+    :group 'awesome-tray)
+  (global-anzu-mode 1)
+  (awesome-tray-mode 1)
+  :config
+  ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name"))
+  (setq awesome-tray-active-modules '("anzu" "buffer-name" "location"))
+  (setq awesome-tray-buffer-name-max-length 30)
+  (setq awesome-tray-file-path-show-filename nil)
+  (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
+  (setq awesome-tray-location-format "(%l:%c)")
+  (setq awesome-tray-git-format "%s")
+  )
 
 ;; Hide the menu for as minimalistic a startup screen as possible.
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
@@ -416,26 +427,32 @@
 ;;   (global-lsp-bridge-mode))
 
 
-(use-package highlight-indent-guides
-  :hook (prog-mode . highlight-indent-guides-mode)
-  :config
-  (setq highlight-indent-guides-method 'character
-        ;; highlight-indent-guides-character 9474
-        ;; Indent character samples: | ┆ ┊ ⁞ ⋮
-        highlight-indent-guides-character ?\┊
-        highlight-indent-guides-auto-character-face-perc 20
-        highlight-indent-guides-auto-enabled nil
-        highlight-indent-guides-responsive 'top
-        )
-  ;; 文件单数列不显示缩进线(否则在c-google-style中public/private显示会太密集)
-  (defun highlight-indent-guides-custom-highlight (level responsive display)
-    (if (zerop (mod (current-column) 2))
-        nil
-      (highlight-indent-guides--highlighter-default level responsive display)))
-  (setq highlight-indent-guides-highlighter-function 'highlight-indent-guides-custom-highlight)
-  (set-face-foreground 'highlight-indent-guides-character-face "#C0C0C0")
-  (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray")
+;; (use-package highlight-indent-guides
+;;   :hook (prog-mode . highlight-indent-guides-mode)
+;;   :init
+;;   (setq highlight-indent-guides-method 'character
+;;         ;; highlight-indent-guides-character 9474
+;;         ;; Indent character samples: | ┆ ┊ ⁞ ⋮
+;;         highlight-indent-guides-character ?\┊
+;;         highlight-indent-guides-auto-character-face-perc 20
+;;         highlight-indent-guides-auto-enabled nil
+;;         ;; highlight-indent-guides-responsive 'top
+;;         )
+;;   ;; 文件单数列不显示缩进线(否则在c-google-style中public/private显示会太密集)
+;;   (defun highlight-indent-guides-custom-highlight (level responsive display)
+;;     (if (zerop (mod (current-column) 2))
+;;         nil
+;;       (highlight-indent-guides--highlighter-default level responsive display)))
+;;   (setq highlight-indent-guides-highlighter-function 'highlight-indent-guides-custom-highlight)
+
+;;   :config
+;;   (set-face-foreground 'highlight-indent-guides-character-face "#9c9c9c")
+;;   ;; (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray")
+;;   )
+(after! highlight-indent-guides
+  (setq highlight-indent-guides-responsive 'top)
   )
+
 
 ;; (setq mouse-wheel-progressive-speed t)
 
