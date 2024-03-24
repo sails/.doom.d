@@ -100,3 +100,6 @@
 ;;   (package! yasnippet))
 
 (package! apheleia)
+
+;; disable solaire for sails-light-theme more  beatiful
+(package! solaire-mode :disable t)
