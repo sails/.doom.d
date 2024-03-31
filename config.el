@@ -39,8 +39,14 @@
 ;;(setq sails-light-brighter-comments t)
 ;; (setq doom-theme 'doom-nord-aurora)
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
-;;(setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
+;; (setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
+;; (setq doom-font (font-spec :family "Fira Code" :size 12 :slant 'normal :weight 'normal))
+;; (setq doom-font (font-spec :family "Fira Code" :size 12))
+;; (setq doom-font (font-spec :family "Fira Code" :size 12)
+;;       doom-big-font (font-spec :family "Source Code Pro" :size 13)
+;;       doom-variable-pitch-font (font-spec :family "Source Code Variable" :size 12)
+;;       doom-unicode-font (font-spec :family "JuliaMono")
+;;       )
 (setq doom-font (font-spec :family "Source Code Pro" :size 12)
       doom-big-font (font-spec :family "Source Code Pro" :size 13)
       doom-variable-pitch-font (font-spec :family "Source Code Variable" :size 12)
@@ -274,42 +280,42 @@
 ;;   ;; (global-hide-mode-line-mode)
 ;;   )
 
-(global-hide-mode-line-mode)
-(add-hook 'prog-mode-hook #'hide-mode-line-mode)
+;; (global-hide-mode-line-mode)
+;; (add-hook 'prog-mode-hook #'hide-mode-line-mode)
 
 (use-package! anzu
   :after-call isearch-mode
   :config
   (global-anzu-mode 1))
 
-(use-package! awesome-tray
-  :init
-  (defface awesome-tray-green-face
-    '((((background light)) :foreground "#00a400" :bold nil)
-      (t :foreground "green3" :bold nil))
-    "Awesome tray green."
-    :group 'awesome-tray)
-  (defface awesome-tray-orange-face
-    '((((background light)) :foreground "#cc7700" :bold nil)
-      (t :foreground "#ff9500" :bold nil))
-    "Awesome tray orange."
-    :group 'awesome-tray)
-  (defface awesome-tray-red-face
-    '((((background light)) :foreground "#cc2444" :bold nil)
-      (t :foreground "#ff2d55" :bold nil))
-    "Awesome tray red."
-    :group 'awesome-tray)
-  (global-anzu-mode 1)
-  (awesome-tray-mode 1)
-  :config
-  ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name"))
-  (setq awesome-tray-active-modules '("anzu" "buffer-name" "location"))
-  (setq awesome-tray-buffer-name-max-length 30)
-  (setq awesome-tray-file-path-show-filename nil)
-  (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
-  (setq awesome-tray-location-format "(%l:%c)")
-  (setq awesome-tray-git-format "%s")
-  )
+;; (use-package! awesome-tray
+;;   :init
+;;   (defface awesome-tray-green-face
+;;     '((((background light)) :foreground "#00a400" :bold nil)
+;;       (t :foreground "green3" :bold nil))
+;;     "Awesome tray green."
+;;     :group 'awesome-tray)
+;;   (defface awesome-tray-orange-face
+;;     '((((background light)) :foreground "#cc7700" :bold nil)
+;;       (t :foreground "#ff9500" :bold nil))
+;;     "Awesome tray orange."
+;;     :group 'awesome-tray)
+;;   (defface awesome-tray-red-face
+;;     '((((background light)) :foreground "#cc2444" :bold nil)
+;;       (t :foreground "#ff2d55" :bold nil))
+;;     "Awesome tray red."
+;;     :group 'awesome-tray)
+;;   (global-anzu-mode 1)
+;;   (awesome-tray-mode 1)
+;;   :config
+;;   ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name"))
+;;   (setq awesome-tray-active-modules '("anzu" "buffer-name" "location"))
+;;   (setq awesome-tray-buffer-name-max-length 30)
+;;   (setq awesome-tray-file-path-show-filename nil)
+;;   (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
+;;   (setq awesome-tray-location-format "(%l:%c)")
+;;   (setq awesome-tray-git-format "%s")
+;;   )
 
 ;; Hide the menu for as minimalistic a startup screen as possible.
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
@@ -424,7 +430,9 @@
 ;; (use-package! lsp-bridge
 ;;   :config
 ;;   (setq lsp-bridge-enable-with-tramp 1)
-;;   (setq lsp-bridge-enable-log nil)
+;;   (setq lsp-bridge-enable-log 1)
+;;   (setq lsp-bridge-python-command "/usr/bin/python3")
+;;   (setq lsp-bridge-user-ssh-private-key "~/.ssh/dev_rsa")
 ;;   (global-lsp-bridge-mode))
 
 
@@ -450,9 +458,9 @@
 ;;   (set-face-foreground 'highlight-indent-guides-character-face "#9c9c9c")
 ;;   ;; (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray")
 ;;   )
-(after! highlight-indent-guides
-  (setq highlight-indent-guides-responsive 'top)
-  )
+;; (after! highlight-indent-guides
+;;   (setq highlight-indent-guides-responsive 'top)
+;;   )
 
 
 ;; (setq mouse-wheel-progressive-speed t)
@@ -482,3 +490,12 @@
 ;;   (setq holo-layer-indent-colors '("#5BAB3C" "#4B713F" "#244E30" "#774C3E" "#1E588D" "#3B8155" "#396977" "#18362B" "#525169" "#0B2837"))
 ;;   (holo-layer-enable)
 ;;   )
+
+;; tramp
+;; if remote server use zsh, need setting this at the top of .zshrc
+;; [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+(setq tramp-default-method "rsync")
+ ;; 增加压缩传输的文件起始大小
+(setq tramp-inline-compress-start-size (* 1024 8))
+ ;; 当文件大小超过 tramp-copy-size-limit 时，用 external methods(如 scp）来传输，从而大大提高拷贝效率。
+(setq tramp-copy-size-limit (* 1024 10))
