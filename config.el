@@ -36,7 +36,7 @@
 ;;(setq doom-theme 'doom-one-light)
 ;;(setq doom-one-light-brighter-comments t)
 (setq doom-theme 'sails-light)
-;;(setq sails-light-brighter-comments t)
+(setq sails-light-brighter-comments t)
 ;; (setq doom-theme 'doom-nord-aurora)
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
 ;; (setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
@@ -317,7 +317,10 @@
 (remove-hook 'text-mode-hook #'vi-tilde-fringe-mode)
 
 ;; 平滑滚动，但cpu占用很高
-(pixel-scroll-precision-mode 1)
+;;(pixel-scroll-precision-mode 1)
+;; scroll-margin lines of margin at the top and bottom of a window, default:0.
+;; when search words at the bottom of the screen, It's not easy to notice
+(setq scroll-margin 2)
 
 
 ;; 自动识别文件编码
@@ -454,17 +457,17 @@
 ;; (setq mouse-wheel-progressive-speed t)
 
 ;; 需要在init中开启vertico posframe选项
-;; (use-package! vertico-posframe
-;;   :after vertico
-;;   :config
-;;   (vertico-posframe-mode 1)
-;;   (setq vertico-posframe-border-width 1)
-;;   (add-hook 'doom-after-reload-hook #'posframe-delete-all)
-;;   ;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
-;;   (setq vertico-posframe-parameters '((left-fringe . 8)
-;;                                       (right-fringe . 8)))
-;;   (setq vertico-posframe-width 200)
-;;   )
+(use-package! vertico-posframe
+  :after vertico
+  :config
+  (vertico-posframe-mode 1)
+  (setq vertico-posframe-border-width 1)
+  (add-hook 'doom-after-reload-hook #'posframe-delete-all)
+  ;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
+  (setq vertico-posframe-parameters '((left-fringe . 8)
+                                      (right-fringe . 8)))
+  (setq vertico-posframe-width 200)
+  )
 
 ;; 临时fix format bug
 (use-package! apheleia)
