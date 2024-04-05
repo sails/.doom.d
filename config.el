@@ -115,8 +115,8 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.50)))
-           (frame-h (truncate (* monitor-h 0.90)))
+           (frame-w (truncate (* monitor-w 0.45)))
+           (frame-h (truncate (* monitor-h 0.85)))
 
 
            (a-left (truncate (/ (- monitor-w frame-w) 2))))
