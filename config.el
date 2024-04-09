@@ -40,9 +40,21 @@
 ;; (setq doom-theme 'doom-nord-aurora)
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
 ;; (setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
-(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular))
+;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular))
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12)
 ;;       doom-big-font (font-spec :family "JetBrains Mono" :size 13)
+;;       doom-variable-pitch-font (font-spec :family "Source Code Variable" :size 12)
+;;       doom-unicode-font (font-spec :family "JuliaMono")
+;;       )
+
+(setq doom-font (font-spec :family "Fira Code" :size 12)
+      doom-big-font (font-spec :family "Source Code Pro" :size 13)
+      doom-variable-pitch-font (font-spec :family "Source Code Variable" :size 12)
+      doom-unicode-font (font-spec :family "JuliaMono")
+      )
+
+;; (setq doom-font (font-spec :family "Source Code Pro" :size 12)
+;;       doom-big-font (font-spec :family "Source Code Pro" :size 12)
 ;;       doom-variable-pitch-font (font-spec :family "Source Code Variable" :size 12)
 ;;       doom-unicode-font (font-spec :family "JuliaMono")
 ;;       )
@@ -115,8 +127,8 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.45)))
-           (frame-h (truncate (* monitor-h 0.85)))
+           (frame-w (truncate (* monitor-w 0.55)))
+           (frame-h (truncate (* monitor-h 0.90)))
 
 
            (a-left (truncate (/ (- monitor-w frame-w) 2))))
@@ -221,7 +233,7 @@
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
                    (file-relative-name buffer-file-name (projectile-project-root))
-                   ;;(buffer-name)
+                   ;; (buffer-name)
                  "%b"))))
 ;; 光亮当前行
 ;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
@@ -317,11 +329,26 @@
 (remove-hook 'text-mode-hook #'vi-tilde-fringe-mode)
 
 ;; 平滑滚动，但cpu占用很高
-;;(pixel-scroll-precision-mode 1)
+(pixel-scroll-precision-mode 1)
 ;; scroll-margin lines of margin at the top and bottom of a window, default:0.
 ;; when search words at the bottom of the screen, It's not easy to notice
-(setq scroll-margin 2)
-
+;; (setq scroll-margin 2)
+;; 孩子搜索到的数据太靠边框
+(defadvice isearch-update (before my-isearch-update activate)
+  (sit-for 0)
+  (if (and
+       ;; not the scrolling command
+       (not (eq this-command 'isearch-other-control-char))
+       ;; not the empty string
+       (> (length isearch-string) 0)
+       ;; not the first key (to lazy highlight all matches w/o recenter)
+       (> (length isearch-cmds) 2)
+       ;; the point in within the given window boundaries
+       (let ((line (count-screen-lines (point) (window-start))))
+         (or (> line (* (/ (window-height) 4) 3))
+             (< line (* (/ (window-height) 9) 1)))))
+      (let ((recenter-position 0.3))
+        (recenter '(4)))))
 
 ;; 自动识别文件编码
 (unicad-mode 1)
@@ -457,17 +484,17 @@
 ;; (setq mouse-wheel-progressive-speed t)
 
 ;; 需要在init中开启vertico posframe选项
-(use-package! vertico-posframe
-  :after vertico
-  :config
-  (vertico-posframe-mode 1)
-  (setq vertico-posframe-border-width 1)
-  (add-hook 'doom-after-reload-hook #'posframe-delete-all)
-  ;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
-  (setq vertico-posframe-parameters '((left-fringe . 8)
-                                      (right-fringe . 8)))
-  (setq vertico-posframe-width 200)
-  )
+;; (use-package! vertico-posframe
+;;   :after vertico
+;;   :config
+;;   (vertico-posframe-mode 1)
+;;   (setq vertico-posframe-border-width 1)
+;;   (add-hook 'doom-after-reload-hook #'posframe-delete-all)
+;;   ;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
+;;   (setq vertico-posframe-parameters '((left-fringe . 8)
+;;                                       (right-fringe . 8)))
+;;   (setq vertico-posframe-width 200)
+;;   )
 
 ;; 临时fix format bug
 (use-package! apheleia)
