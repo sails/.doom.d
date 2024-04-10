@@ -68,6 +68,7 @@ Can be an integer to determine the exact padding."
    (base6      '("#202328" "#2e2e2e" "brightblack"  ))
    (base7      '("#1c1f24" "#1e1e1e" "brightblack"  ))
    (base8      '("#1b2229" "black"   "black"        ))
+   (base9      '("#7E848D" "7E848D"   "brightblack" ))
 
    (grey       base4)
    (red        '("#e45649" "#e45649" "red"          ))
@@ -134,8 +135,8 @@ Can be an integer to determine the exact padding."
    ;; ((font-lock-comment-face &override)
    ;;  :background (if sails-light-brighter-comments base0))
    ((font-lock-doc-face &override) :slant 'italic)
-   ((line-number &override) :foreground (doom-lighten base4 0.15) :slant 'normal)
-   ;; ((line-number &override) :foreground (doom-lighten base4 0.15))
+   ;; ((line-number &override) :foreground (doom-lighten base4 0.15) :slant 'normal)
+   ((line-number &override) :foreground base9 :slant 'normal)
    ((line-number-current-line &override) :foreground base8 :slant 'normal)
    (mode-line
     :background modeline-bg :foreground modeline-fg
