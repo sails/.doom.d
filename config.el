@@ -39,19 +39,19 @@
 (setq sails-light-brighter-comments t)
 ;; (setq doom-theme 'doom-nord-aurora)
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
-;; (setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
-;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular))
+;;(setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
+(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular))
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12)
 ;;       doom-big-font (font-spec :family "JetBrains Mono" :size 13)
 ;;       doom-variable-pitch-font (font-spec :family "Source Code Variable" :size 12)
 ;;       doom-unicode-font (font-spec :family "JuliaMono")
 ;;       )
 
-(setq doom-font (font-spec :family "Fira Code" :size 12)
-      doom-big-font (font-spec :family "Source Code Pro" :size 13)
-      doom-variable-pitch-font (font-spec :family "Source Code Variable" :size 12)
-      doom-unicode-font (font-spec :family "JuliaMono")
-      )
+;; (setq doom-font (font-spec :family "Fira Code" :size 12)
+;;       doom-big-font (font-spec :family "Source Code Pro" :size 13)
+;;       doom-variable-pitch-font (font-spec :family "Source Code Variable" :size 12)
+;;       doom-unicode-font (font-spec :family "JuliaMono")
+;;       )
 
 ;; (setq doom-font (font-spec :family "Source Code Pro" :size 12)
 ;;       doom-big-font (font-spec :family "Source Code Pro" :size 12)
@@ -127,7 +127,7 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.55)))
+           (frame-w (truncate (* monitor-w 0.50)))
            (frame-h (truncate (* monitor-h 0.90)))
 
 
@@ -455,9 +455,12 @@
 
 
 ;; (use-package highlight-indent-guides
+;;   :load-path "~/.doom.d/lisp/highlight-indent-guides"
 ;;   :hook (prog-mode . highlight-indent-guides-mode)
 ;;   :init
 ;;   (setq highlight-indent-guides-method 'character
+;;         ;;highlight-indent-guides-method (if (display-graphic-p) 'bitmap 'character)
+;;         highlight-indent-guides-bitmap-function #'highlight-indent-guides--bitmap-line
 ;;         ;; highlight-indent-guides-character 9474
 ;;         ;; Indent character samples: | ┆ ┊ ⁞ ⋮
 ;;         highlight-indent-guides-character ?\┊
@@ -475,9 +478,6 @@
 ;;   :config
 ;;   (set-face-foreground 'highlight-indent-guides-character-face "#9c9c9c")
 ;;   ;; (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray")
-;;   )
-;; (after! highlight-indent-guides
-;;   (setq highlight-indent-guides-responsive 'top)
 ;;   )
 
 
@@ -504,6 +504,7 @@
 ;;   :config
 ;;   (setq holo-layer-cursor-animation-type "jelly easing")
 ;;   (setq holo-layer-enable-cursor-animation t)
+;;   (setq holo-layer-python-command "/usr/bin/python3")
 ;;   (setq holo-layer-enable-indent-rainbow t)
 ;;   (setq holo-layer-indent-colors '("#5BAB3C" "#4B713F" "#244E30" "#774C3E" "#1E588D" "#3B8155" "#396977" "#18362B" "#525169" "#0B2837"))
 ;;   (holo-layer-enable)
