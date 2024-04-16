@@ -54,6 +54,18 @@
   (convert:replace-region start end 'convert:unibyte-to-string)
   )
 
+(defun convert::string-to-hex-escape (text)
+  "Convert a string to hexadecimal escape sequences."
+  (let* ((utf8-bytes (encode-coding-string text 'utf-8))
+         (hex-escape (mapconcat (lambda (char) (format "\\x%02x" char)) utf8-bytes "")))
+    hex-escape)
+  )
+(defun convert:unibyte-encode-region (start end)
+  "Convert encode unibyte for region START and END."
+  (interactive "r")
+  (convert:replace-region start end 'convert::string-to-hex-escape)
+  )
+
 ;; url转换
 (defun convert:url-decode-string (url)
   "Convert decode URL."
