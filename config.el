@@ -321,7 +321,7 @@
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
 ;; 光标
-;; (blink-cursor-mode t)
+(blink-cursor-mode t)
 
 ;; fringe-mode(左侧边缘宽度，有几种设置)
 ;; fringe-mode和vi-tilde-fringe-mode打开时,默认buffer尾部空白处会有波浪线
@@ -518,3 +518,13 @@
 (setq tramp-inline-compress-start-size (* 1024 8))
  ;; 当文件大小超过 tramp-copy-size-limit 时，用 external methods(如 scp）来传输，从而大大提高拷贝效率。
 (setq tramp-copy-size-limit (* 1024 10))
+
+
+;; 性能问题
+(after! diff-hl
+  (defadvice! +vc-gutter-define-thin-bitmaps-a (&rest args)
+    :override #'diff-hl-define-bitmaps
+    ;; 用'(center repeated)会导致在滚动时cpu异常高
+    ;; 224的二进制是11100000表示3，共有16个224表示 3x16 的位图
+    (define-fringe-bitmap 'diff-hl-bmp-middle [224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224] nil nil 'center)
+  ))
