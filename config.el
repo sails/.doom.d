@@ -504,8 +504,8 @@
 ;;   :config
 ;;   (setq holo-layer-cursor-animation-type "jelly easing")
 ;;   (setq holo-layer-enable-cursor-animation t)
-;;   (setq holo-layer-python-command "/usr/bin/python3")
 ;;   (setq holo-layer-enable-indent-rainbow t)
+;;   (setq holo-layer-python-command "/usr/bin/python3")
 ;;   (setq holo-layer-indent-colors '("#5BAB3C" "#4B713F" "#244E30" "#774C3E" "#1E588D" "#3B8155" "#396977" "#18362B" "#525169" "#0B2837"))
 ;;   (holo-layer-enable)
 ;;   )
@@ -521,10 +521,12 @@
 
 
 ;; 性能问题
+;; 用'(center repeated)会导致在滚动时cpu异常高
+;; 224的二进制是11100000表示3，共有16个224表示 3x16 的位图
+(setq bmp-middle-vector (make-vector 16 224))
 (after! diff-hl
-  (defadvice! +vc-gutter-define-thin-bitmaps-a (&rest args)
-    :override #'diff-hl-define-bitmaps
-    ;; 用'(center repeated)会导致在滚动时cpu异常高
-    ;; 224的二进制是11100000表示3，共有16个224表示 3x16 的位图
-    (define-fringe-bitmap 'diff-hl-bmp-middle [224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224] nil nil 'center)
-  ))
+  (define-fringe-bitmap 'diff-hl-bmp-middle bmp-middle-vector nil nil 'center)
+  )
+(after! git-gutter-fringe
+  (define-fringe-bitmap 'git-gutter-fr:added bmp-middle-vector nil nil 'center)
+  (define-fringe-bitmap 'git-gutter-fr:modified bmp-middle-vector nil nil 'center))

@@ -78,7 +78,7 @@
 (package! unicad)
 
 ;; lsp-bridge
-(package! posframe)
+;; (package! posframe)
 ;; (package! lsp-bridge
 ;;   :recipe (:host github :repo "manateelazycat/lsp-bridge"))
 
