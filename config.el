@@ -525,8 +525,10 @@
 ;; 224的二进制是11100000表示3，共有16个224表示 3x16 的位图
 (setq bmp-middle-vector (make-vector 16 224))
 (after! diff-hl
-  (define-fringe-bitmap 'diff-hl-bmp-middle bmp-middle-vector nil nil 'center)
-  )
+  (defadvice! +vc-gutter-define-thin-bitmaps-a (&rest args)
+    :override #'diff-hl-define-bitmaps
+    (define-fringe-bitmap 'diff-hl-bmp-middle bmp-middle-vector nil nil 'center)
+  ))
 (after! git-gutter-fringe
   (define-fringe-bitmap 'git-gutter-fr:added bmp-middle-vector nil nil 'center)
   (define-fringe-bitmap 'git-gutter-fr:modified bmp-middle-vector nil nil 'center))
