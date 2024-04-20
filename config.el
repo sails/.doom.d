@@ -445,13 +445,21 @@
 ;;   )
 
 
-;; (use-package! lsp-bridge
+;; (use-package lsp-bridge
+;;   :load-path "~/.doom.d/lisp/lsp-bridge"
+;;   :hook (prog-mode . global-lsp-bridge-mode)
 ;;   :config
-;;   (setq lsp-bridge-enable-with-tramp 1)
-;;   (setq lsp-bridge-enable-log 1)
-;;   (setq lsp-bridge-python-command "/usr/bin/python3")
-;;   (setq lsp-bridge-user-ssh-private-key "~/.ssh/dev_rsa")
-;;   (global-lsp-bridge-mode))
+;;   (setq lsp-bridge-enable-with-tramp 1
+;;         lsp-bridge-remote-start-automatically t
+;;         lsp-bridge-enable-log 1
+;;         lsp-bridge-python-command "/usr/bin/python3"
+;;         lsp-bridge-user-ssh-private-key "~/.ssh/dev_rsa"
+;;         )
+;;   ;; need add lsp_bridge.py in remote server execute PATH.
+;;   ;; if server not support rsa-sha2-512 rsa-sha2-256 when sshd version too old
+;;   ;; can set disabled_algorithms=dict(pubkeys=["rsa-sha2-512", "rsa-sha2-256"]
+;;   ;; in remote_file.py when call connect.
+;;   )
 
 
 ;; (use-package highlight-indent-guides
