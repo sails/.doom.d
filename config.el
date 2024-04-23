@@ -540,3 +540,7 @@
 (after! git-gutter-fringe
   (define-fringe-bitmap 'git-gutter-fr:added bmp-middle-vector nil nil 'center)
   (define-fringe-bitmap 'git-gutter-fr:modified bmp-middle-vector nil nil 'center))
+
+(require 'topsy)
+(add-hook 'prog-mode-hook #'topsy-mode)
+(add-hook 'magit-section-mode-hook #'topsy-mode)
