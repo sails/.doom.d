@@ -530,7 +530,7 @@
 
 ;; 性能问题
 ;; 用'(center repeated)会导致在滚动时cpu异常高
-;; 224的二进制是11100000表示3，共有16个224表示 3x16 的位图
+;; 224的二进制是11100000表示3，共有18个224表示 3x18 的位图
 (setq bmp-middle-vector (make-vector 18 224))
 (after! diff-hl
   (defadvice! +vc-gutter-define-thin-bitmaps-a (&rest args)
