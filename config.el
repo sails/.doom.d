@@ -127,7 +127,7 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.50)))
+           (frame-w (truncate (* monitor-w 0.52)))
            (frame-h (truncate (* monitor-h 0.90)))
 
 
@@ -531,7 +531,7 @@
 ;; 性能问题
 ;; 用'(center repeated)会导致在滚动时cpu异常高
 ;; 224的二进制是11100000表示3，共有16个224表示 3x16 的位图
-(setq bmp-middle-vector (make-vector 16 224))
+(setq bmp-middle-vector (make-vector 18 224))
 (after! diff-hl
   (defadvice! +vc-gutter-define-thin-bitmaps-a (&rest args)
     :override #'diff-hl-define-bitmaps
