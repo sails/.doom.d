@@ -37,7 +37,6 @@
 ;;(setq doom-one-light-brighter-comments t)
 (setq doom-theme 'sails-light)
 (setq sails-light-brighter-comments t)
-;; (setq doom-theme 'doom-nord-aurora)
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
 ;;(setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
 (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular))
@@ -127,7 +126,7 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.52)))
+           (frame-w (truncate (* monitor-w 0.50)))
            (frame-h (truncate (* monitor-h 0.90)))
 
 
@@ -236,7 +235,7 @@
                    ;; (buffer-name)
                  "%b"))))
 ;; 光亮当前行
-;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
+(remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
 
 (add-load-path! "~/.doom.d/lisp")
 (add-load-path! "~/.config/doom/lisp")
@@ -270,52 +269,55 @@
 
 (add-to-list 'doom-large-file-excluded-modes 'c++-mode)
 
-;; (add-hook! '(completion-list-mode-hook Man-mode-hook prog-mode-hook)
-;;              #'hide-mode-line-mode)
-
-;; (use-package! hide-mode-line
-;;   :ensure t
-;;   :config
-;;   (add-hook 'prog-mode-hook #'hide-mode-line-mode)
-;;   ;; (global-hide-mode-line-mode)
-;;   )
-
-;; (global-hide-mode-line-mode)
-;; (add-hook 'prog-mode-hook #'hide-mode-line-mode)
+(use-package! hide-mode-line
+  :config
+  (add-hook! '(text-mode-hook prog-mode-hook) #'hide-mode-line-mode)
+  (global-hide-mode-line-mode)
+  (setq hide-mode-line-excluded-modes '())  ;; 默认设置fundamental-mode会被排除，这里让它也可以隐藏
+  (defun my-delayed-hide-mode-setup ()
+    (run-at-time "0.1 sec" nil
+                 (lambda ()
+                   (hide-mode-line-mode)
+                   )))
+  (add-hook! '(magit-status-mode-hook magit-log-mode-hook helm-gtags-mode-hook) 'my-delayed-hide-mode-setup)
+  (defun my/hide-mode-line-after-helm-gtags-pop-stack (&rest _)
+    (hide-mode-line-mode 1))
+  (advice-add 'helm-gtags-pop-stack :after #'my/hide-mode-line-after-helm-gtags-pop-stack)
+  )
 
 (use-package! anzu
   :after-call isearch-mode
   :config
   (global-anzu-mode 1))
 
-;; (use-package! awesome-tray
-;;   :init
-;;   (defface awesome-tray-green-face
-;;     '((((background light)) :foreground "#00a400" :bold nil)
-;;       (t :foreground "green3" :bold nil))
-;;     "Awesome tray green."
-;;     :group 'awesome-tray)
-;;   (defface awesome-tray-orange-face
-;;     '((((background light)) :foreground "#cc7700" :bold nil)
-;;       (t :foreground "#ff9500" :bold nil))
-;;     "Awesome tray orange."
-;;     :group 'awesome-tray)
-;;   (defface awesome-tray-red-face
-;;     '((((background light)) :foreground "#cc2444" :bold nil)
-;;       (t :foreground "#ff2d55" :bold nil))
-;;     "Awesome tray red."
-;;     :group 'awesome-tray)
-;;   (global-anzu-mode 1)
-;;   (awesome-tray-mode 1)
-;;   :config
-;;   ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name"))
-;;   (setq awesome-tray-active-modules '("anzu" "buffer-name" "location"))
-;;   (setq awesome-tray-buffer-name-max-length 30)
-;;   (setq awesome-tray-file-path-show-filename nil)
-;;   (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
-;;   (setq awesome-tray-location-format "(%l:%c)")
-;;   (setq awesome-tray-git-format "%s")
-;;   )
+(use-package! awesome-tray
+  :init
+  (defface awesome-tray-green-face
+    '((((background light)) :foreground "#00a400" :bold nil)
+      (t :foreground "green3" :bold nil))
+    "Awesome tray green."
+    :group 'awesome-tray)
+  (defface awesome-tray-orange-face
+    '((((background light)) :foreground "#cc7700" :bold nil)
+      (t :foreground "#ff9500" :bold nil))
+    "Awesome tray orange."
+    :group 'awesome-tray)
+  (defface awesome-tray-red-face
+    '((((background light)) :foreground "#cc2444" :bold nil)
+      (t :foreground "#ff2d55" :bold nil))
+    "Awesome tray red."
+    :group 'awesome-tray)
+  (global-anzu-mode 1)
+  (awesome-tray-mode 1)
+  :config
+  (setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name"))
+  ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location"))
+  (setq awesome-tray-buffer-name-max-length 30)
+  (setq awesome-tray-file-path-show-filename nil)
+  (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
+  (setq awesome-tray-location-format "(%l:%c)")
+  (setq awesome-tray-git-format "%s")
+  )
 
 ;; Hide the menu for as minimalistic a startup screen as possible.
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
@@ -541,6 +543,5 @@
   (define-fringe-bitmap 'git-gutter-fr:added bmp-middle-vector nil nil 'center)
   (define-fringe-bitmap 'git-gutter-fr:modified bmp-middle-vector nil nil 'center))
 
-(require 'topsy)
-(add-hook 'prog-mode-hook #'topsy-mode)
-(add-hook 'magit-section-mode-hook #'topsy-mode)
+;; (require 'topsy)
+;; (add-hook 'prog-mode-hook #'topsy-mode)
