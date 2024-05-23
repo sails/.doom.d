@@ -234,8 +234,8 @@
                    (file-relative-name buffer-file-name (projectile-project-root))
                    ;; (buffer-name)
                  "%b"))))
-;; 光亮当前行
-(remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
+;;  高亮当前行
+;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
 
 (add-load-path! "~/.doom.d/lisp")
 (add-load-path! "~/.config/doom/lisp")
