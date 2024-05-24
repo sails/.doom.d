@@ -335,7 +335,7 @@
 ;; scroll-margin lines of margin at the top and bottom of a window, default:0.
 ;; when search words at the bottom of the screen, It's not easy to notice
 ;; (setq scroll-margin 2)
-;; 孩子搜索到的数据太靠边框
+;; 防止搜索到的数据太靠边框
 (defadvice isearch-update (before my-isearch-update activate)
   (sit-for 0)
   (if (and
