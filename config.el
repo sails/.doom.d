@@ -524,7 +524,6 @@
 ;; (add-hook 'prog-mode-hook #'topsy-mode)
 
 (use-package indent-bars
-  :ensure t
   :hook (prog-mode . indent-bars-mode)
   :config
   (setq
