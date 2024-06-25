@@ -15,7 +15,7 @@
 ;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
 ;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
 ;;   presentations or streaming.
-;; - `doom-unicode-font' -- for unicode glyphs
+;; - `doom-symbol-font' -- for symbols
 ;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
 ;;
 ;; See 'C-h v doom-font' for documentation and more examples of what they
@@ -32,31 +32,9 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-;;(setq doom-theme 'doom-one)
-;;(setq doom-theme 'doom-one-light)
-;;(setq doom-one-light-brighter-comments t)
+;; (setq doom-theme 'doom-one)
 (setq doom-theme 'sails-light)
-(setq sails-light-brighter-comments t)
-;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :slant 'normal :weight 'normal))
-;;(setq doom-font (font-spec :family "Menlo" :size 12 :slant 'normal :weight 'normal))
 (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular))
-;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12)
-;;       doom-big-font (font-spec :family "JetBrains Mono" :size 13)
-;;       doom-variable-pitch-font (font-spec :family "Source Code Variable" :size 12)
-;;       doom-unicode-font (font-spec :family "JuliaMono")
-;;       )
-
-;; (setq doom-font (font-spec :family "Fira Code" :size 12)
-;;       doom-big-font (font-spec :family "Source Code Pro" :size 13)
-;;       doom-variable-pitch-font (font-spec :family "Source Code Variable" :size 12)
-;;       doom-unicode-font (font-spec :family "JuliaMono")
-;;       )
-
-;; (setq doom-font (font-spec :family "Source Code Pro" :size 12)
-;;       doom-big-font (font-spec :family "Source Code Pro" :size 12)
-;;       doom-variable-pitch-font (font-spec :family "Source Code Variable" :size 12)
-;;       doom-unicode-font (font-spec :family "JuliaMono")
-;;       )
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -65,6 +43,7 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
+
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
@@ -126,8 +105,8 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.50)))
-           (frame-h (truncate (* monitor-h 0.90)))
+           (frame-w (truncate (* monitor-w 0.45)))
+           (frame-h (truncate (* monitor-h 0.84)))
 
 
            (a-left (truncate (/ (- monitor-w frame-w) 2))))
@@ -172,7 +151,6 @@
 (map! "C-c p f" #'projectile-find-file)
 (map! "C-x c i" #'helm-imenu)
 
-
 ;; 自动折行
 (setq-default truncate-lines nil)
 
@@ -190,6 +168,7 @@
 ;;         sql-mode         ; sqlformat is currently broken
 ;;         tex-mode         ; latexindent is broken
 ;;         latex-mode))
+
 
 ;; (add-hook 'rustic-mode-hook #'format-all-mode)
 
@@ -237,7 +216,6 @@
 ;;  高亮当前行
 ;; (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
 
-(add-load-path! "~/.doom.d/lisp")
 (add-load-path! "~/.config/doom/lisp")
 (require 'init-convert)
 (require 'init-cc)
@@ -487,8 +465,7 @@
 
 ;;   :config
 ;;   (set-face-foreground 'highlight-indent-guides-character-face "#9c9c9c")
-;;   ;; (set-face-foreground 'highlight-indent-guides-top-character-face "dimgray")
-;;   )
+;;    )
 
 
 ;; (setq mouse-wheel-progressive-speed t)
@@ -545,3 +522,20 @@
 
 ;; (require 'topsy)
 ;; (add-hook 'prog-mode-hook #'topsy-mode)
+
+(use-package indent-bars
+  :ensure t
+  :hook (prog-mode . indent-bars-mode)
+  :config
+  (setq
+   indent-bars-treesit-support t
+   indent-bars-prefer-character t
+   indent-bars-width-frac 0.1
+   indent-bars-starting-column 0
+   indent-bars-color '(highlight :face-bg t :blend 1)
+   indent-bars-highlight-current-depth '(:face default :blend 1) ;; 改变当前列颜色
+   indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 1)
+   ;;indent-bars-color-by-depth '(:palette ("red" "green" "orange" "cyan") :blend 1)
+   ;;indent-bars-color-by-depth '(:palette ("#D3D3D3") :blend 1)
+   )
+  )
