@@ -32,8 +32,13 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-;; (setq doom-theme 'doom-one)
+(setq doom-one-brighter-comments t)
+(setq doom-one-comment-bg nil)
+;;(setq doom-theme 'doom-one)
+
 (setq doom-theme 'sails-light)
+(setq sails-light-brighter-comments t)
+
 (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -106,7 +111,7 @@
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
            (frame-w (truncate (* monitor-w 0.45)))
-           (frame-h (truncate (* monitor-h 0.84)))
+           (frame-h (truncate (* monitor-h 0.85)))
 
 
            (a-left (truncate (/ (- monitor-w frame-w) 2))))
@@ -288,7 +293,7 @@
   (global-anzu-mode 1)
   (awesome-tray-mode 1)
   :config
-  (setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name"))
+  (setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name" "belong"))
   ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location"))
   (setq awesome-tray-buffer-name-max-length 30)
   (setq awesome-tray-file-path-show-filename nil)
@@ -426,7 +431,7 @@
 
 
 ;; (use-package lsp-bridge
-;;   :load-path "~/.doom.d/lisp/lsp-bridge"
+;;   :load-path "~/.config/doom/lisp/lsp-bridge"
 ;;   :hook (prog-mode . global-lsp-bridge-mode)
 ;;   :config
 ;;   (setq lsp-bridge-enable-with-tramp 1
@@ -487,7 +492,7 @@
 (use-package! apheleia)
 
 ;; (use-package holo-layer
-;;   :load-path "~/.doom.d/lisp/holo-layer"
+;;   :load-path "~/.config/doom/lisp/holo-layer"
 ;;   :config
 ;;   (setq holo-layer-cursor-animation-type "jelly easing")
 ;;   (setq holo-layer-enable-cursor-animation t)
@@ -516,25 +521,30 @@
     :override #'diff-hl-define-bitmaps
     (define-fringe-bitmap 'diff-hl-bmp-middle bmp-middle-vector nil nil 'center)
   ))
-(after! git-gutter-fringe
-  (define-fringe-bitmap 'git-gutter-fr:added bmp-middle-vector nil nil 'center)
-  (define-fringe-bitmap 'git-gutter-fr:modified bmp-middle-vector nil nil 'center))
 
-;; (require 'topsy)
-;; (add-hook 'prog-mode-hook #'topsy-mode)
+(require 'topsy)
+(add-hook 'c++-mode-hook #'topsy-mode)
 
 (use-package indent-bars
   :hook (prog-mode . indent-bars-mode)
   :config
+  ;; NOTE: emacs-plus on mac doens't support :stipple face
+  ;; https://github.com/d12frosted/homebrew-emacs-plus/issues/622
   (setq
-   indent-bars-treesit-support t
    indent-bars-prefer-character t
-   indent-bars-width-frac 0.1
+   indent-bars-width-frac 0.05
    indent-bars-starting-column 0
    indent-bars-color '(highlight :face-bg t :blend 1)
-   indent-bars-highlight-current-depth '(:face default :blend 1) ;; 改变当前列颜色
-   indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 1)
-   ;;indent-bars-color-by-depth '(:palette ("red" "green" "orange" "cyan") :blend 1)
-   ;;indent-bars-color-by-depth '(:palette ("#D3D3D3") :blend 1)
+   ;; indent-bars-highlight-current-depth '(:face default :blend 1) ;; 改变当前列颜色
+   ;; indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 1)
+   ;; indent-bars-color-by-depth '(:palette ("red" "green" "orange" "cyan") :blend 1)
+   indent-bars-color-by-depth '(:palette ("#9c9c9c") :blend 1)
    )
   )
+
+;; (use-package treesit-auto
+;;  :custom
+;;  (treesit-auto-install 'prompt)
+;;  :config
+;;  (treesit-auto-add-to-auto-mode-alist 'all)
+;;  (global-treesit-auto-mode))

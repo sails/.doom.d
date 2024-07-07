@@ -99,5 +99,11 @@
 ;; disable solaire for sails-light-theme more  beatiful
 (package! solaire-mode :disable t)
 
+(package! topsy
+  :recipe (:host github :repo "alphapapa/topsy.el"))
+
 (package! indent-bars
   :recipe (:host github :repo "jdtsmith/indent-bars"))
+
+
+;; (package! treesit-auto)
