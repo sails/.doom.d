@@ -512,18 +512,18 @@
 (setq tramp-copy-size-limit (* 1024 10))
 
 
-;; 性能问题
-;; 用'(center repeated)会导致在滚动时cpu异常高
-;; 224的二进制是11100000表示3，共有18个224表示 3x18 的位图
-(setq bmp-middle-vector (make-vector 18 224))
-(after! diff-hl
-  (defadvice! +vc-gutter-define-thin-bitmaps-a (&rest args)
-    :override #'diff-hl-define-bitmaps
-    (define-fringe-bitmap 'diff-hl-bmp-middle bmp-middle-vector nil nil 'center)
-  ))
+;; ;; 性能问题
+;; ;; 用'(center repeated)会导致在滚动时cpu异常高
+;; ;; 224的二进制是11100000表示3，共有18个224表示 3x18 的位图
+;; (setq bmp-middle-vector (make-vector 18 224))
+;; (after! diff-hl
+;;   (defadvice! +vc-gutter-define-thin-bitmaps-a (&rest args)
+;;     :override #'diff-hl-define-bitmaps
+;;     (define-fringe-bitmap 'diff-hl-bmp-middle bmp-middle-vector nil nil 'center)
+;;   ))
 
-(require 'topsy)
-(add-hook 'c++-mode-hook #'topsy-mode)
+;; (require 'topsy)
+;; (add-hook 'c++-mode-hook #'topsy-mode)
 
 (use-package indent-bars
   :hook (prog-mode . indent-bars-mode)
@@ -531,14 +531,15 @@
   ;; NOTE: emacs-plus on mac doens't support :stipple face
   ;; https://github.com/d12frosted/homebrew-emacs-plus/issues/622
   (setq
+   indent-bars-no-stipple-char ?┊
    indent-bars-prefer-character t
-   indent-bars-width-frac 0.05
+   indent-bars-width-frac 0.1
    indent-bars-starting-column 0
-   indent-bars-color '(highlight :face-bg t :blend 1)
-   ;; indent-bars-highlight-current-depth '(:face default :blend 1) ;; 改变当前列颜色
+   ;; indent-bars-color '(highlight :face-bg t :blend 1)
+   indent-bars-highlight-current-depth '(:face default :blend 0.5) ;; 改变当前列颜色
    ;; indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 1)
    ;; indent-bars-color-by-depth '(:palette ("red" "green" "orange" "cyan") :blend 1)
-   indent-bars-color-by-depth '(:palette ("#9c9c9c") :blend 1)
+   ;; indent-bars-color-by-depth '(:palette ("#9c9c9c") :blend 1)
    )
   )
 
@@ -548,3 +549,6 @@
 ;;  :config
 ;;  (treesit-auto-add-to-auto-mode-alist 'all)
 ;;  (global-treesit-auto-mode))
+
+;; emacs-mac bug https://github.com/railwaycat/homebrew-emacsmacport/issues/362
+;; (add-hook 'doom-after-init-hook (lambda () (tool-bar-mode 1) (tool-bar-mode 0)))
