@@ -94,7 +94,7 @@
   :recipe (:host github :repo "manateelazycat/awesome-tray"))
 (package! anzu)
 
-(package! apheleia)
+;; (package! apheleia)
 
 ;; disable solaire for sails-light-theme more  beatiful
 (package! solaire-mode :disable t)

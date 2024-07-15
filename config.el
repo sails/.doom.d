@@ -1,4 +1,4 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
@@ -21,7 +21,7 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -39,7 +39,9 @@
 (setq doom-theme 'sails-light)
 (setq sails-light-brighter-comments t)
 
-(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular))
+(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+     doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+;;(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'regular))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -110,7 +112,7 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.45)))
+           (frame-w (truncate (* monitor-w 0.5)))
            (frame-h (truncate (* monitor-h 0.85)))
 
 
@@ -188,8 +190,13 @@
 ;; (when (memq window-system '(mac ns x))
 ;;   (exec-path-from-shell-initialize))
 
-(global-set-key (kbd "C-x b") 'consult-buffer)
-;; (global-set-key (kbd "C-s") 'consult-line)
+
+(require 'consult)
+(after! consult
+  (global-set-key (kbd "C-x b") 'consult-buffer)
+  ;; (global-set-key (kbd "C-s") 'consult-line)
+  ;; 关闭consult-buffer的preview，在切换buffer时总是会先显示排在第一的文件内容，影响注意力
+  (consult-customize consult-buffer :preview-key nil))
 
 ;; completion ivy
 (after! ivy
@@ -229,7 +236,7 @@
 
 ;;doom uses it to highlight incorrect indentation in buffers and activates it default
 ;; (global-whitespace-mode nil)
-(advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
+;; (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
 
 ;; 大小写M-u,M-l
 (put 'upcase-region 'disabled nil)
@@ -476,20 +483,20 @@
 ;; (setq mouse-wheel-progressive-speed t)
 
 ;; 需要在init中开启vertico posframe选项
-;; (use-package! vertico-posframe
-;;   :after vertico
-;;   :config
-;;   (vertico-posframe-mode 1)
-;;   (setq vertico-posframe-border-width 1)
-;;   (add-hook 'doom-after-reload-hook #'posframe-delete-all)
-;;   ;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)
-;;   (setq vertico-posframe-parameters '((left-fringe . 8)
-;;                                       (right-fringe . 8)))
-;;   (setq vertico-posframe-width 200)
-;;   )
+(use-package! vertico-posframe
+ :after vertico
+ :config
+ (vertico-posframe-mode 1)
+ (setq vertico-posframe-border-width 1)
+ (add-hook 'doom-after-reload-hook #'posframe-delete-all)
+ (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)  ;; 默认在中间
+ (setq vertico-posframe-parameters '((left-fringe . 8)
+                                     (right-fringe . 8)))
+ (setq vertico-posframe-width 100)
+ )
 
 ;; 临时fix format bug
-(use-package! apheleia)
+;; (use-package! apheleia)
 
 ;; (use-package holo-layer
 ;;   :load-path "~/.config/doom/lisp/holo-layer"
@@ -512,15 +519,15 @@
 (setq tramp-copy-size-limit (* 1024 10))
 
 
-;; ;; 性能问题
-;; ;; 用'(center repeated)会导致在滚动时cpu异常高
-;; ;; 224的二进制是11100000表示3，共有18个224表示 3x18 的位图
-;; (setq bmp-middle-vector (make-vector 18 224))
-;; (after! diff-hl
-;;   (defadvice! +vc-gutter-define-thin-bitmaps-a (&rest args)
-;;     :override #'diff-hl-define-bitmaps
-;;     (define-fringe-bitmap 'diff-hl-bmp-middle bmp-middle-vector nil nil 'center)
-;;   ))
+;; 性能问题
+;; 用'(center repeated)会导致在滚动时cpu异常高
+;; 224的二进制是11100000表示3，共有18个224表示 3x18 的位图
+(setq bmp-middle-vector (make-vector 18 224))
+(after! diff-hl
+  (defadvice! +vc-gutter-define-thin-bitmaps-a (&rest args)
+    :override #'diff-hl-define-bitmaps
+    (define-fringe-bitmap 'diff-hl-bmp-middle bmp-middle-vector nil nil 'center)
+  ))
 
 ;; (require 'topsy)
 ;; (add-hook 'c++-mode-hook #'topsy-mode)
@@ -531,6 +538,7 @@
   ;; NOTE: emacs-plus on mac doens't support :stipple face
   ;; https://github.com/d12frosted/homebrew-emacs-plus/issues/622
   (setq
+   ;;indent-bars-no-stipple-char ?⎸  ;; |比较靠左的字符
    indent-bars-no-stipple-char ?┊
    indent-bars-prefer-character t
    indent-bars-width-frac 0.1
