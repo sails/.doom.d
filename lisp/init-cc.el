@@ -32,7 +32,7 @@
                       "--background-index"
                       "--clang-tidy"
                       "--all-scopes-completion"
-                      "--header-insertion=iwyu",
+                      "--header-insertion=iwyu"
                       "--completion-style=detailed"
                       "--enable-config"
                       "--header-insertion-decorators=0"))
@@ -53,7 +53,7 @@
                                    "--background-index"
                                    "--clang-tidy"
                                    "--all-scopes-completion"
-                                   "--header-insertion=iwyu",
+                                   "--header-insertion=iwyu"
                                    "--completion-style=detailed"
                                    "--enable-config"
                                    "--header-insertion-decorators=0"))
