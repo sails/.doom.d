@@ -39,8 +39,10 @@
 (setq doom-theme 'sails-light)
 (setq sails-light-brighter-comments t)
 
-(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular)
      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'regular))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -562,16 +564,11 @@
 ;; (add-hook 'doom-after-init-hook (lambda () (tool-bar-mode 1) (tool-bar-mode 0)))
 
 ;; show function in modeline
-(setq which-func-modes '(emacs-lisp-mode
-                         c-mode
-                         c++-mode
-                         python-mode
-                         ))
-(which-function-mode 1)
-;; 在head-line中显示
-;; (setq-default header-line-format
-;;               '((which-func-mode ("" which-func-format " "))))
-;; (setq mode-line-misc-info
-;;             ;; We remove Which Function Mode from the mode line, because it's mostly
-;;             ;; invisible here anyway.
-;;             (assq-delete-all 'which-func-mode mode-line-misc-info))
+;; which-function-mode 会影响打开文件的速度
+
+
+(setq ssh-deploy-verbose 0)
+
+;; (after! grip-mode
+;;   ;; first need brew install grip, and then build emacs with --with-xwidgets
+;;   (setq grip-preview-use-webkit t))
