@@ -315,7 +315,7 @@
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
 ;; 光标
-(blink-cursor-mode t)
+;; (blink-cursor-mode t)
 
 ;; fringe-mode(左侧边缘宽度，有几种设置)
 ;; fringe-mode和vi-tilde-fringe-mode打开时,默认buffer尾部空白处会有波浪线
@@ -324,40 +324,20 @@
 
 ;; 平滑滚动，但cpu占用很高
 (pixel-scroll-precision-mode 1)
+(setq pixel-scroll-precision-interpolate-page t)
+(defalias 'scroll-up-command 'pixel-scroll-interpolate-up)
+(defalias 'scroll-down-command 'pixel-scroll-interpolate-down)
 ;; scroll-margin lines of margin at the top and bottom of a window, default:0.
 ;; when search words at the bottom of the screen, It's not easy to notice
-;; (setq scroll-margin 2)
-;; 防止搜索到的数据太靠边框
-(defadvice isearch-update (before my-isearch-update activate)
-  (sit-for 0)
-  (if (and
-       ;; not the scrolling command
-       (not (eq this-command 'isearch-other-control-char))
-       ;; not the empty string
-       (> (length isearch-string) 0)
-       ;; not the first key (to lazy highlight all matches w/o recenter)
-       (> (length isearch-cmds) 2)
-       ;; the point in within the given window boundaries
-       (let ((line (count-screen-lines (point) (window-start))))
-         (or (> line (* (/ (window-height) 4) 3))
-             (< line (* (/ (window-height) 9) 1)))))
-      (let ((recenter-position 0.3))
-        (recenter '(4)))))
+(setq scroll-margin 5
+      scroll-conservatively 101
+      scroll-up-aggressively 0.01
+      scroll-down-aggressively 0.01
+      scroll-preserve-screen-position t
+      auto-window-vscroll nil)
 
 ;; 自动识别文件编码
 (unicad-mode 1)
-
-;; (use-package! magit
-;;   :config
-;;   ;;(setq magit-refresh-verbose 1)
-;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-untracked-files)
-;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-tags-header)
-;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-status-headers)
-;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-pushremote)
-;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-pushremote)
-;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpulled-from-upstream)
-;;   ;; (remove-hook 'magit-status-sections-hook 'magit-insert-unpushed-to-upstream-or-recent)
-;;   )
 
 ;; 透明
 ;; (set-frame-parameter (selected-frame) 'alpha '(95 100))
@@ -425,20 +405,6 @@
 ;;
 (setq ag-highlight-search t)
 
-;; (use-package aichat
-;;   :ensure nil
-;;   :load-path "~/.doom.d/lisp/aichat")
-
-;; (use-package blink-search
-;;   :ensure nil
-;;   :config
-;;   (setq blink-search-enable-posframe nil
-;;         ;;blink-search-search-backends '("History" "Buffer List" "Recent File" "Find File" "Current Buffer" "Grep File" "IMenu")
-;;         blink-search-search-backends '("Buffer List" "Recent File" "Find File" "Current Buffer" "Grep File")
-;;         )
-;;   )
-
-
 ;; (use-package lsp-bridge
 ;;   :load-path "~/.config/doom/lisp/lsp-bridge"
 ;;   :hook (prog-mode . global-lsp-bridge-mode)
@@ -456,32 +422,6 @@
 ;;   )
 
 
-;; (use-package highlight-indent-guides
-;;   :load-path "~/.doom.d/lisp/highlight-indent-guides"
-;;   :hook (prog-mode . highlight-indent-guides-mode)
-;;   :init
-;;   (setq highlight-indent-guides-method 'character
-;;         ;;highlight-indent-guides-method (if (display-graphic-p) 'bitmap 'character)
-;;         highlight-indent-guides-bitmap-function #'highlight-indent-guides--bitmap-line
-;;         ;; highlight-indent-guides-character 9474
-;;         ;; Indent character samples: | ┆ ┊ ⁞ ⋮
-;;         highlight-indent-guides-character ?\┊
-;;         highlight-indent-guides-auto-character-face-perc 20
-;;         highlight-indent-guides-auto-enabled nil
-;;         ;; highlight-indent-guides-responsive 'top
-;;         )
-;;   ;; 文件单数列不显示缩进线(否则在c-google-style中public/private显示会太密集)
-;;   (defun highlight-indent-guides-custom-highlight (level responsive display)
-;;     (if (zerop (mod (current-column) 2))
-;;         nil
-;;       (highlight-indent-guides--highlighter-default level responsive display)))
-;;   (setq highlight-indent-guides-highlighter-function 'highlight-indent-guides-custom-highlight)
-
-;;   :config
-;;   (set-face-foreground 'highlight-indent-guides-character-face "#9c9c9c")
-;;    )
-
-
 ;; (setq mouse-wheel-progressive-speed t)
 
 ;; 需要在init中开启vertico posframe选项
@@ -496,20 +436,6 @@
 ;;                                      (right-fringe . 8)))
 ;;  (setq vertico-posframe-width 100)
 ;;  )
-
-;; 临时fix format bug
-;; (use-package! apheleia)
-
-;; (use-package holo-layer
-;;   :load-path "~/.config/doom/lisp/holo-layer"
-;;   :config
-;;   (setq holo-layer-cursor-animation-type "jelly easing")
-;;   (setq holo-layer-enable-cursor-animation t)
-;;   (setq holo-layer-enable-indent-rainbow t)
-;;   (setq holo-layer-python-command "/usr/bin/python3")
-;;   (setq holo-layer-indent-colors '("#5BAB3C" "#4B713F" "#244E30" "#774C3E" "#1E588D" "#3B8155" "#396977" "#18362B" "#525169" "#0B2837"))
-;;   (holo-layer-enable)
-;;   )
 
 ;; tramp
 ;; if remote server use zsh, need setting this at the top of .zshrc
@@ -572,3 +498,11 @@
 ;; (after! grip-mode
 ;;   ;; first need brew install grip, and then build emacs with --with-xwidgets
 ;;   (setq grip-preview-use-webkit t))
+
+(defun my-lsp-format-region-advice (&rest _args)
+  "Advice function to run after `lsp-format-region` to deactivate the mark."
+  ;; 取消区域标记
+  (deactivate-mark))
+
+;; 添加 advice 到 lsp-format-region 的 :after 钩子
+(advice-add 'lsp-format-region :after #'my-lsp-format-region-advice)

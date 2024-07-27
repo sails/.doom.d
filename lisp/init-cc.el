@@ -43,7 +43,8 @@
               (setq lsp-modeline-diagnostics-enable nil)
               (setq lsp-enable-file-watchers nil)
               (setq lsp-lens-enable nil)  ;; 导致cpu100%
-              ;; (setq lsp-diagnostics-provider :none)
+              (setq lsp-diagnostics-provider :none)
+              (setq lsp-headerline-breadcrumb-segments '(symbols))
               )
             (after! eglot
               :config
