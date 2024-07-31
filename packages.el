@@ -88,8 +88,8 @@
 ;;                  :build (:not compile))))
 
 (package! blink-search
-  :recipe (:host github :repo "manateelazycat/blink-search"))
-
+  :recipe (:host github :repo "manateelazycat/blink-search"
+           :files ("*.el" "*.py" "core/*.py" "backend" "icons")))
 (package! awesome-tray
   :recipe (:host github :repo "manateelazycat/awesome-tray"))
 (package! anzu)
@@ -99,11 +99,10 @@
 ;; disable solaire for sails-light-theme more  beatiful
 (package! solaire-mode :disable t)
 
-(package! topsy
-  :recipe (:host github :repo "alphapapa/topsy.el"))
+;; (package! topsy
+;;   :recipe (:host github :repo "alphapapa/topsy.el"))
 
 (package! indent-bars
   :recipe (:host github :repo "jdtsmith/indent-bars"))
-
 
 ;; (package! treesit-auto)
