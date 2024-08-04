@@ -106,3 +106,7 @@
   :recipe (:host github :repo "jdtsmith/indent-bars"))
 
 ;; (package! treesit-auto)
+
+;; emacs-mac smooth scroll
+;; (package! ultra-scroll-mac
+;;   :recipe (:host github :repo "jdtsmith/ultra-scroll-mac"))

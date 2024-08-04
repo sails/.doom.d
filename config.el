@@ -40,10 +40,10 @@
 (setq sails-light-brighter-comments t)
 
 (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular)
-     doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-;;(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'regular))
+;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'regular))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -221,7 +221,9 @@
       large-hscroll-threshold 1000
       syntax-wholeline-max 1000)
 
-;; (setq ns-use-proxy-icon nil)
+;; 设置titlebar与编辑框不同颜色
+(set-frame-parameter nil 'ns-transparent-titlebar nil)
+(setq ns-use-proxy-icon nil)
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
                    (file-relative-name buffer-file-name (projectile-project-root))
@@ -325,16 +327,38 @@
 ;; 平滑滚动，但cpu占用很高
 (pixel-scroll-precision-mode 1)
 (setq pixel-scroll-precision-interpolate-page t)
+;; 鼠标滚轮平滑滚动
 (defalias 'scroll-up-command 'pixel-scroll-interpolate-up)
 (defalias 'scroll-down-command 'pixel-scroll-interpolate-down)
-;; scroll-margin lines of margin at the top and bottom of a window, default:0.
 ;; when search words at the bottom of the screen, It's not easy to notice
-(setq scroll-margin 5
-      scroll-conservatively 101
-      scroll-up-aggressively 0.01
-      scroll-down-aggressively 0.01
-      scroll-preserve-screen-position t
-      auto-window-vscroll nil)
+;; 防止搜索到的数据太靠边框
+(defadvice isearch-update (before my-isearch-update activate)
+  (sit-for 0)
+  (if (and
+       ;; not the scrolling command
+       (not (eq this-command 'isearch-other-control-char))
+       ;; not the empty string
+       (> (length isearch-string) 0)
+       ;; not the first key (to lazy highlight all matches w/o recenter)
+       (> (length isearch-cmds) 2)
+       ;; the point in within the given window boundaries
+       (let ((line (count-screen-lines (point) (window-start))))
+         (or (> line (* (/ (window-height) 4) 3))
+             (< line (* (/ (window-height) 9) 1)))))
+      (let ((recenter-position 0.3))
+        (recenter '(4)))))
+;; scroll-margin lines of margin at the top and bottom of a window, default:0.
+(setq scroll-margin 0
+      scroll-conservatively 101)
+
+;; only for emacs-mac
+;; (use-package ultra-scroll-mac
+;;   :if (eq window-system 'mac)
+;;   :init
+;;   (setq scroll-conservatively 101 ; important!
+;;         scroll-margin 0)
+;;   :config
+;;   (ultra-scroll-mac-mode 1))
 
 ;; 自动识别文件编码
 (unicad-mode 1)
@@ -440,7 +464,7 @@
 ;; tramp
 ;; if remote server use zsh, need setting this at the top of .zshrc
 ;; [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
-(setq tramp-default-method "rsync")
+;; (setq tramp-default-method "rsync")
  ;; 增加压缩传输的文件起始大小
 (setq tramp-inline-compress-start-size (* 1024 8))
  ;; 当文件大小超过 tramp-copy-size-limit 时，用 external methods(如 scp）来传输，从而大大提高拷贝效率。
@@ -450,16 +474,17 @@
 ;; 性能问题
 ;; 用'(center repeated)会导致在滚动时cpu异常高
 ;; 224的二进制是11100000表示3，共有18个224表示 3x18 的位图
-(setq bmp-middle-vector (make-vector 18 224))
-(after! diff-hl
-  (defadvice! +vc-gutter-define-thin-bitmaps-a (&rest args)
-    :override #'diff-hl-define-bitmaps
-    (define-fringe-bitmap 'diff-hl-bmp-middle bmp-middle-vector nil nil 'center)
-  ))
+;; (setq bmp-middle-vector (make-vector 18 224))
+;; (after! diff-hl
+;;   (defadvice! +vc-gutter-define-thin-bitmaps-a (&rest args)
+;;     :override #'diff-hl-define-bitmaps
+;;     (define-fringe-bitmap 'diff-hl-bmp-middle bmp-middle-vector nil nil 'center)
+;;   ))
 
 ;; (require 'topsy)
 ;; (add-hook 'c++-mode-hook #'topsy-mode)
 
+;; emacs-plus
 (use-package indent-bars
   :hook (prog-mode . indent-bars-mode)
   :config
@@ -478,6 +503,18 @@
    ;; indent-bars-color-by-depth '(:palette ("#9c9c9c") :blend 1)
    )
   )
+
+;; emacs-mac
+;; (use-package indent-bars
+;;   :hook (prog-mode . indent-bars-mode)
+;;   :config
+;;   ;; NOTE: emacs-plus on mac doens't support :stipple face
+;;   ;; https://github.com/d12frosted/homebrew-emacs-plus/issues/622
+;;   (setq
+;;    indent-bars-width-frac 0.1
+;;    indent-bars-starting-column 0
+;;    )
+;;   )
 
 ;; (use-package treesit-auto
 ;;  :custom
