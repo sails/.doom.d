@@ -221,8 +221,10 @@
       large-hscroll-threshold 1000
       syntax-wholeline-max 1000)
 
-;; 设置titlebar与编辑框不同颜色
-(set-frame-parameter nil 'ns-transparent-titlebar nil)
+;; 在doom中默认titlebar与编辑框是相同颜色，但显得头轻脚重，这里设置成不同颜色
+(defun my-ns-transparent-titlebar-advice (&rest _args)
+  (set-frame-parameter nil 'ns-transparent-titlebar nil))
+(advice-add 'ns-auto-titlebar-set-frame :after 'my-ns-transparent-titlebar-advice)
 (setq ns-use-proxy-icon nil)
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
