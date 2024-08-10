@@ -36,14 +36,17 @@
 (setq doom-one-comment-bg nil)
 ;;(setq doom-theme 'doom-one)
 
-(setq doom-theme 'sails-light)
-(setq sails-light-brighter-comments t)
+;; (setq doom-theme 'sails-light)
+;; (setq sails-light-brighter-comments t)
+(setq sails-light2-brighter-comments t)
+(setq doom-theme 'sails-light2)
 
-(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular)
-      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+
+;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular)
+;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'regular))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -114,7 +117,7 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.5)))
+           (frame-w (truncate (* monitor-w 0.55)))
            (frame-h (truncate (* monitor-h 0.85)))
 
 

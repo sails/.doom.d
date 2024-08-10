@@ -51,11 +51,13 @@ Can be an integer to determine the exact padding."
    (base6      '("#202328" "#2e2e2e" "brightblack"  ))
    (base7      '("#1c1f24" "#1e1e1e" "brightblack"  ))
    (base8      '("#000000" "black"   "black"        ))
+   (base9      '("#7E848D" "7E848D"   "brightblack" ))
 
    (grey       base4)
    (red        '("#e45649" "#e45649" "red"          ))
    (orange     '("#da8548" "#dd8844" "brightred"    ))
-   (green      '("#4C8A39" "#50a14f" "green"        ))
+   (green      '("#50a14f" "#50a14f" "green"        ))
+   (green2      '("#008000" "#008000" "green"        ))
    ;;(green      '("#529e4e" "#529e4e" "green"        ))
    (teal       '("#4db5bd" "#44b9b1" "brightgreen"  ))
    (yellow     '("#986801" "#986801" "yellow"       ))
@@ -74,7 +76,7 @@ Can be an integer to determine the exact padding."
    (selection      dark-blue)
    (builtin        magenta)
    ;;(comments       (if sails-light2-brighter-comments cyan base4))
-   (comments       (if sails-light2-brighter-comments green base4))
+   (comments       (if sails-light2-brighter-comments green2 base4))
    (doc-comments   (doom-darken comments 0.15))
    (constants      violet)
    (functions      magenta)
@@ -117,7 +119,7 @@ Can be an integer to determine the exact padding."
    ;;((font-lock-comment-face &override)
    ;; :background (if sails-light2-brighter-comments base0))
    ((font-lock-doc-face &override) :slant 'italic)
-   ((line-number &override) :foreground (doom-lighten base4 0.15) :slant 'normal)
+   ((line-number &override) :foreground base9 :slant 'normal)
    ((line-number-current-line &override) :foreground base8 :slant 'normal)
    (mode-line
     :background modeline-bg :foreground modeline-fg
@@ -126,7 +128,7 @@ Can be an integer to determine the exact padding."
     :background modeline-bg-inactive :foreground modeline-fg-alt
     :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg-inactive)))
    (mode-line-emphasis
-    :foreground (if sails-light2-brighter-modeline base8 highlight))
+    :foreground (if sails-light2-brighter-modeline base9 highlight))
    (shadow :foreground base4)
    (tooltip :background base1 :foreground fg)
 
