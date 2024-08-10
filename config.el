@@ -46,7 +46,14 @@
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light))
+(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light)
+      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
+;; 中文字体配置
+(defun init-cjk-fonts()
+  (dolist (charset '(kana han cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font)
+      charset (font-spec :family "PingFang SC" :size 12))))
+(add-hook 'doom-init-ui-hook 'init-cjk-fonts)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
