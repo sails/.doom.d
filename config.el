@@ -39,7 +39,8 @@
 ;; (setq doom-theme 'sails-light)
 ;; (setq sails-light-brighter-comments t)
 (setq sails-light2-brighter-comments t)
-(setq doom-theme 'sails-light2)
+;;(setq doom-theme 'sails-light2)
+(setq doom-theme 'sails-light3)
 
 
 ;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular)
@@ -544,7 +545,7 @@
 ;; 当使用lsp +eglot时which-function-mode会影响打开文件的速度，像是需要等eglot解析完成才能打开
 ;; 有时还会报which-func-ff-hook error ... jsonrpc-error-message . "Timed out"，才能打开
 ;; 但在lsp-mode中不会,应该是没有用lsp-mode的数据，lsp-mode还没有解析完，函数已经能正常显示
-(which-function-mode 1)
+;; (which-function-mode 1)
 
 (setq ssh-deploy-verbose 0)
 
@@ -570,4 +571,4 @@
 ;;   )
 
 
-;; (setq-default cursor-type 'bar)
+(setq-default cursor-type 'bar)

@@ -97,6 +97,14 @@
  `(highlight-doxygen-type       ((t :foreground "SteelBlue")))
  `(highlight-doxygen-variable   ((t :foreground "gold4")))
 
+ '(diff-hl-insert ((t (:foreground "#529E4E"))))
+ '(diff-hl-change ((t (:foreground "#b81a1f"))))
+ '(diff-hl-delete ((t (:foreground "#dbba3f"))))
+
+ `(git-gutter-fr:added ((t :foreground "#237f3f")))
+ `(git-gutter-fr:deleted ((t :foreground "#b81a1f")))
+ `(git-gutter-fr:modified ((t :foreground "#dbba3f")))
+
  `(tree-sitter-hl-face:function              ((t :foreground "black")))
  `(tree-sitter-hl-face:function.call         ((t :foreground "black")))
  `(tree-sitter-hl-face:function.builtin      ((t :foreground "#808080")))
