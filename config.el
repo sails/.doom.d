@@ -48,6 +48,11 @@
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light)
       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
+
+(when IS-MAC
+  ;; 启用细线平滑
+  (setq ns-use-thin-smoothing t)
+  )
 ;; 中文字体配置
 (defun init-cjk-fonts()
   (dolist (charset '(kana han cjk-misc bopomofo))
@@ -124,8 +129,8 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.55)))
-           (frame-h (truncate (* monitor-h 0.85)))
+           (frame-w (truncate (* monitor-w 0.58)))
+           (frame-h (truncate (* monitor-h 0.90)))
 
 
            (a-left (truncate (/ (- monitor-w frame-w) 2))))
@@ -252,7 +257,7 @@
 
 ;;doom uses it to highlight incorrect indentation in buffers and activates it default
 ;; (global-whitespace-mode nil)
-;; (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
+(advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
 
 ;; 大小写M-u,M-l
 (put 'upcase-region 'disabled nil)
@@ -275,21 +280,21 @@
 
 (add-to-list 'doom-large-file-excluded-modes 'c++-mode)
 
-;; (use-package! hide-mode-line
-;;   :config
-;;   (add-hook! '(text-mode-hook prog-mode-hook) #'hide-mode-line-mode)
-;;   (global-hide-mode-line-mode)
-;;   (setq hide-mode-line-excluded-modes '())  ;; 默认设置fundamental-mode会被排除，这里让它也可以隐藏
-;;   (defun my-delayed-hide-mode-setup ()
-;;     (run-at-time "0.1 sec" nil
-;;                  (lambda ()
-;;                    (hide-mode-line-mode)
-;;                    )))
-;;   (add-hook! '(magit-status-mode-hook magit-log-mode-hook helm-gtags-mode-hook) 'my-delayed-hide-mode-setup)
-;;   (defun my/hide-mode-line-after-helm-gtags-pop-stack (&rest _)
-;;     (hide-mode-line-mode 1))
-;;   (advice-add 'helm-gtags-pop-stack :after #'my/hide-mode-line-after-helm-gtags-pop-stack)
-;;   )
+(use-package! hide-mode-line
+  :config
+  (add-hook! '(text-mode-hook prog-mode-hook) #'hide-mode-line-mode)
+  (global-hide-mode-line-mode)
+  (setq hide-mode-line-excluded-modes '())  ;; 默认设置fundamental-mode会被排除，这里让它也可以隐藏
+  (defun my-delayed-hide-mode-setup ()
+    (run-at-time "0.1 sec" nil
+                 (lambda ()
+                   (hide-mode-line-mode)
+                   )))
+  (add-hook! '(magit-status-mode-hook magit-log-mode-hook helm-gtags-mode-hook) 'my-delayed-hide-mode-setup)
+  (defun my/hide-mode-line-after-helm-gtags-pop-stack (&rest _)
+    (hide-mode-line-mode 1))
+  (advice-add 'helm-gtags-pop-stack :after #'my/hide-mode-line-after-helm-gtags-pop-stack)
+  )
 
 (use-package! anzu
   :after-call isearch-mode
@@ -503,16 +508,13 @@
   ;; NOTE: emacs-plus on mac doens't support :stipple face
   ;; https://github.com/d12frosted/homebrew-emacs-plus/issues/622
   (setq
-   ;;indent-bars-no-stipple-char ?⎸  ;; |比较靠左的字符
-   indent-bars-no-stipple-char ?┊
+   ;;indent-bars-pattern " . . ."
    indent-bars-prefer-character t
+   indent-bars-no-stipple-char ?┊  ;; | ⎸
    indent-bars-width-frac 0.1
    indent-bars-starting-column 0
    ;; indent-bars-color '(highlight :face-bg t :blend 1)
-   indent-bars-highlight-current-depth '(:face default :blend 0.5) ;; 改变当前列颜色
-   ;; indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 1)
-   ;; indent-bars-color-by-depth '(:palette ("red" "green" "orange" "cyan") :blend 1)
-   ;; indent-bars-color-by-depth '(:palette ("#9c9c9c") :blend 1)
+   indent-bars-highlight-current-depth '(:face default :blend 0.2) ;; 改变当前列颜色
    )
   )
 
@@ -557,3 +559,15 @@
 
 ;; 添加 advice 到 lsp-format-region 的 :after 钩子
 (advice-add 'lsp-format-region :after #'my-lsp-format-region-advice)
+
+;; (use-package holo-layer
+;;   :load-path "~/.config/doom/lisp/holo-layer"
+;;   :config
+;;   (setq holo-layer-enable-cursor-animation t)
+;;   ;; (setq holo-layer-enable-indent-rainbow t)
+;;   (setq holo-layer-python-command "/usr/bin/python3")
+;;   (holo-layer-enable)
+;;   )
+
+
+;; (setq-default cursor-type 'bar)
