@@ -338,6 +338,9 @@
 (blink-cursor-mode t)
 ;; 样式
 (setq-default cursor-type 'bar)
+;; 设置不在text区域的鼠标样式 (‘arrow’, ‘text’, ‘hand’, ‘vdrag’, ‘hdrag’, ‘nhdrag’, ‘modeline’, ‘hourglass’)
+(setq void-text-area-pointer 'text)
+
 
 ;; fringe-mode(左侧边缘宽度，有几种设置)
 ;; fringe-mode和vi-tilde-fringe-mode打开时,默认buffer尾部空白处会有波浪线
