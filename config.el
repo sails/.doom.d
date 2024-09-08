@@ -131,7 +131,7 @@
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
            (frame-w (truncate (* monitor-w 0.58)))
-           (frame-h (truncate (* monitor-h 0.90)))
+           (frame-h (truncate (* monitor-h 0.85)))
 
 
            (a-left (truncate (/ (- monitor-w frame-w) 2))))
@@ -335,7 +335,9 @@
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
 ;; 光标
-;; (blink-cursor-mode t)
+(blink-cursor-mode t)
+;; 样式
+(setq-default cursor-type 'bar)
 
 ;; fringe-mode(左侧边缘宽度，有几种设置)
 ;; fringe-mode和vi-tilde-fringe-mode打开时,默认buffer尾部空白处会有波浪线
@@ -569,6 +571,3 @@
 ;;   (setq holo-layer-python-command "/usr/bin/python3")
 ;;   (holo-layer-enable)
 ;;   )
-
-
-(setq-default cursor-type 'bar)
