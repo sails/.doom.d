@@ -12,8 +12,8 @@
  ;; 左右边框颜色
  '(fringe  ((t :background "#FFFFFF")))
  ;; mode-line 颜色
- ;; `(mode-line          ((t :background "#F8F8F8" :foreground "dimgray" :box ( :line-width -1 :style released-button))))
- ;; `(mode-line-inactive ((t :background "#F8F8F8" :foreground "dimgray" :box ( :line-width -1 :style released-button))))
+ `(mode-line          ((t :background "#F8F8F8" :foreground "dimgray" :box ( :line-width -1 :style released-button))))
+ `(mode-line-inactive ((t :background "#F8F8F8" :foreground "dimgray" :box ( :line-width -1 :style released-button))))
  ;; 选中区域
  '(region ((t (:background "#ADD6FF" ))))
  ;; 高亮，比如高亮buffer中与当前光标所在单词相同的内容
