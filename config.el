@@ -176,6 +176,9 @@
 (map! "C-c p f" #'projectile-find-file)
 (map! "C-x c i" #'helm-imenu)
 
+(map! "M-c" #'kill-ring-save)
+(map! "M-v" #'yank)
+
 ;; 自动折行
 (setq-default truncate-lines nil)
 
@@ -302,34 +305,34 @@
   :config
   (global-anzu-mode 1))
 
-;; (use-package! awesome-tray
-;;   :init
-;;   (defface awesome-tray-green-face
-;;     '((((background light)) :foreground "#00a400" :bold nil)
-;;       (t :foreground "green3" :bold nil))
-;;     "Awesome tray green."
-;;     :group 'awesome-tray)
-;;   (defface awesome-tray-orange-face
-;;     '((((background light)) :foreground "#cc7700" :bold nil)
-;;       (t :foreground "#ff9500" :bold nil))
-;;     "Awesome tray orange."
-;;     :group 'awesome-tray)
-;;   (defface awesome-tray-red-face
-;;     '((((background light)) :foreground "#cc2444" :bold nil)
-;;       (t :foreground "#ff2d55" :bold nil))
-;;     "Awesome tray red."
-;;     :group 'awesome-tray)
-;;   (global-anzu-mode 1)
-;;   (awesome-tray-mode 1)
-;;   :config
-;;   (setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name" "belong"))
-;;   ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location"))
-;;   (setq awesome-tray-buffer-name-max-length 30)
-;;   (setq awesome-tray-file-path-show-filename nil)
-;;   (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
-;;   (setq awesome-tray-location-format "(%l:%c)")
-;;   (setq awesome-tray-git-format "%s")
-;;   )
+(use-package! awesome-tray
+  :init
+  (defface awesome-tray-green-face
+    '((((background light)) :foreground "#00a400" :bold nil)
+      (t :foreground "green3" :bold nil))
+    "Awesome tray green."
+    :group 'awesome-tray)
+  (defface awesome-tray-orange-face
+    '((((background light)) :foreground "#cc7700" :bold nil)
+      (t :foreground "#ff9500" :bold nil))
+    "Awesome tray orange."
+    :group 'awesome-tray)
+  (defface awesome-tray-red-face
+    '((((background light)) :foreground "#cc2444" :bold nil)
+      (t :foreground "#ff2d55" :bold nil))
+    "Awesome tray red."
+    :group 'awesome-tray)
+  (global-anzu-mode 1)
+  (awesome-tray-mode 1)
+  :config
+  (setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name" "belong"))
+  ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location"))
+  (setq awesome-tray-buffer-name-max-length 30)
+  (setq awesome-tray-file-path-show-filename nil)
+  (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
+  (setq awesome-tray-location-format "(%l:%c)")
+  (setq awesome-tray-git-format "%s")
+  )
 
 ;; Hide the menu for as minimalistic a startup screen as possible.
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
@@ -338,6 +341,8 @@
 (blink-cursor-mode t)
 ;; 样式
 (setq-default cursor-type 'bar)
+;;(add-hook 'eshell-mode-hook '(lambda () (setq cursor-type 't)))
+;;(add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 't)))
 ;; 设置不在text区域的鼠标样式 (‘arrow’, ‘text’, ‘hand’, ‘vdrag’, ‘hdrag’, ‘nhdrag’, ‘modeline’, ‘hourglass’)
 (setq void-text-area-pointer 'text)
 
