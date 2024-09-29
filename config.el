@@ -39,8 +39,8 @@
 ;; (setq doom-theme 'sails-light)
 ;; (setq sails-light-brighter-comments t)
 (setq sails-light2-brighter-comments t)
-;;(setq doom-theme 'sails-light2)
-(setq doom-theme 'sails-light3)
+(setq doom-theme 'sails-light2)
+;; (setq doom-theme 'sails-light3)
 
 
 ;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular)
@@ -241,10 +241,10 @@
       syntax-wholeline-max 1000)
 
 ;; 在doom中默认titlebar与编辑框是相同颜色，但显得头轻脚重，这里设置成不同颜色
-(defun my-ns-transparent-titlebar-advice (&rest _args)
-  (set-frame-parameter nil 'ns-transparent-titlebar nil))
-(advice-add 'ns-auto-titlebar-set-frame :after 'my-ns-transparent-titlebar-advice)
-(setq ns-use-proxy-icon nil)
+;; (defun my-ns-transparent-titlebar-advice (&rest _args)
+;;   (set-frame-parameter nil 'ns-transparent-titlebar nil))
+;; (advice-add 'ns-auto-titlebar-set-frame :after 'my-ns-transparent-titlebar-advice)
+;;(setq ns-use-proxy-icon nil)
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
                    (file-relative-name buffer-file-name (projectile-project-root))
@@ -340,7 +340,7 @@
 ;; 光标
 (blink-cursor-mode t)
 ;; 样式
-(setq-default cursor-type 'bar)
+;;(setq-default cursor-type 'bar)
 ;;(add-hook 'eshell-mode-hook '(lambda () (setq cursor-type 't)))
 ;;(add-hook 'minibuffer-setup-hook '(lambda () (setq cursor-type 't)))
 ;; 设置不在text区域的鼠标样式 (‘arrow’, ‘text’, ‘hand’, ‘vdrag’, ‘hdrag’, ‘nhdrag’, ‘modeline’, ‘hourglass’)
@@ -477,17 +477,17 @@
 ;; (setq mouse-wheel-progressive-speed t)
 
 ;; 需要在init中开启vertico posframe选项
-;; (use-package! vertico-posframe
-;;  :after vertico
-;;  :config
-;;  (vertico-posframe-mode 1)
-;;  (setq vertico-posframe-border-width 1)
-;;  (add-hook 'doom-after-reload-hook #'posframe-delete-all)
-;;  (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)  ;; 默认在中间
-;;  (setq vertico-posframe-parameters '((left-fringe . 8)
-;;                                      (right-fringe . 8)))
-;;  (setq vertico-posframe-width 100)
-;;  )
+(use-package! vertico-posframe
+ :after vertico
+ :config
+ (vertico-posframe-mode 1)
+ (setq vertico-posframe-border-width 1)
+ (add-hook 'doom-after-reload-hook #'posframe-delete-all)
+ ;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)  ;; 默认在中间
+ (setq vertico-posframe-parameters '((left-fringe . 8)
+                                     (right-fringe . 8)))
+ (setq vertico-posframe-width 120)
+ )
 
 ;; tramp
 ;; if remote server use zsh, need setting this at the top of .zshrc
@@ -513,33 +513,19 @@
 ;; (add-hook 'c++-mode-hook #'topsy-mode)
 
 ;; emacs-plus
-(use-package indent-bars
-  :hook (prog-mode . indent-bars-mode)
+(use-package! indent-bars
   :config
   ;; NOTE: emacs-plus on mac doens't support :stipple face
   ;; https://github.com/d12frosted/homebrew-emacs-plus/issues/622
   (setq
-   ;;indent-bars-pattern " . . ."
-   indent-bars-prefer-character t
+   ;; indent-bars-prefer-character t
    indent-bars-no-stipple-char ?┊  ;; | ⎸
    indent-bars-width-frac 0.1
-   indent-bars-starting-column 0
-   ;; indent-bars-color '(highlight :face-bg t :blend 1)
+   ;; indent-bars-starting-column 0
+   indent-bars-color '("DimGray" :face-bg t :blend 1)
    indent-bars-highlight-current-depth '(:face default :blend 0.2) ;; 改变当前列颜色
    )
   )
-
-;; emacs-mac
-;; (use-package indent-bars
-;;   :hook (prog-mode . indent-bars-mode)
-;;   :config
-;;   ;; NOTE: emacs-plus on mac doens't support :stipple face
-;;   ;; https://github.com/d12frosted/homebrew-emacs-plus/issues/622
-;;   (setq
-;;    indent-bars-width-frac 0.1
-;;    indent-bars-starting-column 0
-;;    )
-;;   )
 
 ;; (use-package treesit-auto
 ;;  :custom

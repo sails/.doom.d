@@ -102,9 +102,6 @@
 ;; (package! topsy
 ;;   :recipe (:host github :repo "alphapapa/topsy.el"))
 
-(package! indent-bars
-  :recipe (:host github :repo "jdtsmith/indent-bars"))
-
 ;; (package! treesit-auto)
 
 ;; emacs-mac smooth scroll
