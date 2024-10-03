@@ -32,14 +32,14 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-one-brighter-comments t)
-(setq doom-one-comment-bg nil)
-;;(setq doom-theme 'doom-one)
+;; (setq doom-one-brighter-comments t)
+;; (setq doom-one-comment-bg nil)
+;; (setq doom-theme 'doom-one)
 
-;; (setq doom-theme 'sails-light)
-;; (setq sails-light-brighter-comments t)
-(setq sails-light2-brighter-comments t)
-(setq doom-theme 'sails-light2)
+(setq doom-theme 'sails-light)
+(setq sails-light-brighter-comments t)
+;; (setq sails-light2-brighter-comments t)
+;; (setq doom-theme 'sails-light2)
 ;; (setq doom-theme 'sails-light3)
 
 
@@ -284,55 +284,55 @@
 
 (add-to-list 'doom-large-file-excluded-modes 'c++-mode)
 
-(use-package! hide-mode-line
-  :config
-  (add-hook! '(text-mode-hook prog-mode-hook) #'hide-mode-line-mode)
-  (global-hide-mode-line-mode)
-  (setq hide-mode-line-excluded-modes '())  ;; 默认设置fundamental-mode会被排除，这里让它也可以隐藏
-  (defun my-delayed-hide-mode-setup ()
-    (run-at-time "0.1 sec" nil
-                 (lambda ()
-                   (hide-mode-line-mode)
-                   )))
-  (add-hook! '(magit-status-mode-hook magit-log-mode-hook helm-gtags-mode-hook) 'my-delayed-hide-mode-setup)
-  (defun my/hide-mode-line-after-helm-gtags-pop-stack (&rest _)
-    (hide-mode-line-mode 1))
-  (advice-add 'helm-gtags-pop-stack :after #'my/hide-mode-line-after-helm-gtags-pop-stack)
-  )
+;; (use-package! hide-mode-line
+;;   :config
+;;   (add-hook! '(text-mode-hook prog-mode-hook) #'hide-mode-line-mode)
+;;   (global-hide-mode-line-mode)
+;;   (setq hide-mode-line-excluded-modes '())  ;; 默认设置fundamental-mode会被排除，这里让它也可以隐藏
+;;   (defun my-delayed-hide-mode-setup ()
+;;     (run-at-time "0.1 sec" nil
+;;                  (lambda ()
+;;                    (hide-mode-line-mode)
+;;                    )))
+;;   (add-hook! '(magit-status-mode-hook magit-log-mode-hook helm-gtags-mode-hook) 'my-delayed-hide-mode-setup)
+;;   (defun my/hide-mode-line-after-helm-gtags-pop-stack (&rest _)
+;;     (hide-mode-line-mode 1))
+;;   (advice-add 'helm-gtags-pop-stack :after #'my/hide-mode-line-after-helm-gtags-pop-stack)
+;;   )
 
 (use-package! anzu
   :after-call isearch-mode
   :config
   (global-anzu-mode 1))
 
-(use-package! awesome-tray
-  :init
-  (defface awesome-tray-green-face
-    '((((background light)) :foreground "#00a400" :bold nil)
-      (t :foreground "green3" :bold nil))
-    "Awesome tray green."
-    :group 'awesome-tray)
-  (defface awesome-tray-orange-face
-    '((((background light)) :foreground "#cc7700" :bold nil)
-      (t :foreground "#ff9500" :bold nil))
-    "Awesome tray orange."
-    :group 'awesome-tray)
-  (defface awesome-tray-red-face
-    '((((background light)) :foreground "#cc2444" :bold nil)
-      (t :foreground "#ff2d55" :bold nil))
-    "Awesome tray red."
-    :group 'awesome-tray)
-  (global-anzu-mode 1)
-  (awesome-tray-mode 1)
-  :config
-  (setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name" "belong"))
-  ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location"))
-  (setq awesome-tray-buffer-name-max-length 30)
-  (setq awesome-tray-file-path-show-filename nil)
-  (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
-  (setq awesome-tray-location-format "(%l:%c)")
-  (setq awesome-tray-git-format "%s")
-  )
+;; (use-package! awesome-tray
+;;   :init
+;;   (defface awesome-tray-green-face
+;;     '((((background light)) :foreground "#00a400" :bold nil)
+;;       (t :foreground "green3" :bold nil))
+;;     "Awesome tray green."
+;;     :group 'awesome-tray)
+;;   (defface awesome-tray-orange-face
+;;     '((((background light)) :foreground "#cc7700" :bold nil)
+;;       (t :foreground "#ff9500" :bold nil))
+;;     "Awesome tray orange."
+;;     :group 'awesome-tray)
+;;   (defface awesome-tray-red-face
+;;     '((((background light)) :foreground "#cc2444" :bold nil)
+;;       (t :foreground "#ff2d55" :bold nil))
+;;     "Awesome tray red."
+;;     :group 'awesome-tray)
+;;   (global-anzu-mode 1)
+;;   (awesome-tray-mode 1)
+;;   :config
+;;   (setq awesome-tray-active-modules '("anzu" "buffer-name" "location" "mode-name" "belong"))
+;;   ;;(setq awesome-tray-active-modules '("anzu" "buffer-name" "location"))
+;;   (setq awesome-tray-buffer-name-max-length 30)
+;;   (setq awesome-tray-file-path-show-filename nil)
+;;   (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
+;;   (setq awesome-tray-location-format "(%l:%c)")
+;;   (setq awesome-tray-git-format "%s")
+;;   )
 
 ;; Hide the menu for as minimalistic a startup screen as possible.
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
@@ -483,7 +483,7 @@
  (vertico-posframe-mode 1)
  (setq vertico-posframe-border-width 1)
  (add-hook 'doom-after-reload-hook #'posframe-delete-all)
- ;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)  ;; 默认在中间
+ (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)  ;; 默认在中间
  (setq vertico-posframe-parameters '((left-fringe . 8)
                                      (right-fringe . 8)))
  (setq vertico-posframe-width 120)
@@ -520,10 +520,10 @@
   (setq
    ;; indent-bars-prefer-character t
    indent-bars-no-stipple-char ?┊  ;; | ⎸
-   indent-bars-width-frac 0.1
+   ;; indent-bars-width-frac 0.1
    ;; indent-bars-starting-column 0
-   indent-bars-color '("DimGray" :face-bg t :blend 1)
-   indent-bars-highlight-current-depth '(:face default :blend 0.2) ;; 改变当前列颜色
+   ;; indent-bars-color '("grey" :face-bg t :blend 1)
+   ;; indent-bars-highlight-current-depth '(:face default :blend 0.2) ;; 改变当前列颜色
    )
   )
 
