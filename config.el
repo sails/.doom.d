@@ -170,8 +170,8 @@
 ;; 代码折叠
 ;; (global-set-key (kbd "C-=") 'hs-show-block)
 ;; (global-set-key (kbd "C--") 'hs-hide-block)
-(map! "C-=" #'hs-show-block
-      "C--" #'hs-hide-block)
+(map! "C-=" #'+fold/open
+      "C--" #'+fold/close)
 
 (map! "C-c p f" #'projectile-find-file)
 (map! "C-x c i" #'helm-imenu)
@@ -483,7 +483,7 @@
  (vertico-posframe-mode 1)
  (setq vertico-posframe-border-width 1)
  (add-hook 'doom-after-reload-hook #'posframe-delete-all)
- (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)  ;; 默认在中间
+ ;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)  ;; 默认在中间
  (setq vertico-posframe-parameters '((left-fringe . 8)
                                      (right-fringe . 8)))
  (setq vertico-posframe-width 120)
@@ -541,7 +541,7 @@
 ;; 当使用lsp +eglot时which-function-mode会影响打开文件的速度，像是需要等eglot解析完成才能打开
 ;; 有时还会报which-func-ff-hook error ... jsonrpc-error-message . "Timed out"，才能打开
 ;; 但在lsp-mode中不会,应该是没有用lsp-mode的数据，lsp-mode还没有解析完，函数已经能正常显示
-;; (which-function-mode 1)
+(which-function-mode 1)
 
 (setq ssh-deploy-verbose 0)
 
