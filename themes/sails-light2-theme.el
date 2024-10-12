@@ -223,7 +223,10 @@ Can be an integer to determine the exact padding."
    (wgrep-face :background base1)
    ;;;; whitespace
    ((whitespace-tab &override)         :background (unless (default-value 'indent-tabs-mode) base0))
-   ((whitespace-indentation &override) :background (if (default-value 'indent-tabs-mode) base0)))
+   ((whitespace-indentation &override) :background (if (default-value 'indent-tabs-mode) base0))
+   ;; cursor
+   (cursor :background "#000000")
+   )
 
   ;;;; Base theme variable overrides-
   ()
