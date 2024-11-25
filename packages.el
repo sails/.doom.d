@@ -107,3 +107,10 @@
 ;; emacs-mac smooth scroll
 ;; (package! ultra-scroll-mac
 ;;   :recipe (:host github :repo "jdtsmith/ultra-scroll-mac"))
+
+;; theme
+(package! color-theme-sanityinc-tomorrow)
+(package! modus-themes)
+
+(package! ef-themes
+  :recipe (:host nil :repo "https://git.sr.ht/~protesilaos/ef-themes"))

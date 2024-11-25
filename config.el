@@ -36,12 +36,11 @@
 ;; (setq doom-one-comment-bg nil)
 ;; (setq doom-theme 'doom-one)
 
-(setq doom-theme 'sails-light)
-(setq sails-light-brighter-comments t)
-;; (setq sails-light2-brighter-comments t)
-;; (setq doom-theme 'sails-light2)
+;; (setq doom-theme 'sails-light)
+;; (setq sails-light-brighter-comments t)
+(setq sails-light2-brighter-comments t)
+(setq doom-theme 'sails-light2)
 ;; (setq doom-theme 'sails-light3)
-
 
 ;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
@@ -486,7 +485,8 @@
  ;; (setq vertico-posframe-poshandler #'posframe-poshandler-frame-top-center)  ;; 默认在中间
  (setq vertico-posframe-parameters '((left-fringe . 8)
                                      (right-fringe . 8)))
- (setq vertico-posframe-width 120)
+ (setq vertico-posframe-min-width 150)
+ ;; (setq vertico-posframe-width 150)
  )
 
 ;; tramp
