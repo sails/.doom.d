@@ -105,10 +105,10 @@
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'none))
 
-;; (when (display-graphic-p)
-;;   (setq doom-modeline-height 2)
-;;   (setq doom-modeline-icon nil)
-;; )
+(when (display-graphic-p)
+  (setq doom-modeline-height 2)
+  ;; (setq doom-modeline-icon nil)
+)
 (setq doom-modeline-buffer-file-name-style 'buffer-mame)
 ;; (setq doom-modeline-major-mode-icon t)
 
@@ -412,8 +412,24 @@
 ;; markdown中M-n绑定到了其它命令
 (add-hook 'markdown-mode-hook
           (lambda ()
+            (setq markdown-css-paths '
+                  ("~/workspace/markdown-css/github-markdown.min.css"
+                   "~/workspace/markdown-css/github.min.css"))
+            ;; always open the preview window at the right
+            (setq markdown-split-window-direction 'right)
+            ;; Enable code block syntax highlighting
+
+            (setq markdown-fontify-code-blocks-natively t)
+            ;; Enable obsidian's syntax highlighting
+            (setq markdown-enable-highlighting-syntax t)
             (define-key markdown-mode-map (kbd "M-p") 'my-move-up)
             (define-key markdown-mode-map (kbd "M-n") 'my-move-down)))
+
+(setq markdown-xwidget-command nil
+      markdown-xwidget-github-theme "light"
+      markdown-xwidget-mermaid-theme "default"
+      markdown-xwidget-code-block-theme "default")
+
 
 ;; eglot提示在minibuffer会占用多行，让页面跳动，如果不占用多行，显示的内容又没有意义，所以关闭eldoc-mode
 ;; (setq eldoc-echo-area-use-multiline-p nil) ;; 不占用多行
@@ -565,3 +581,6 @@
 ;;   (setq holo-layer-python-command "/usr/bin/python3")
 ;;   (holo-layer-enable)
 ;;   )
+
+;; 在跳转出现helm候选列表时，鼠标经常会位于候选列表中，让其处于选中状态，出现误导
+(setq helm-allow-mouse nil)
