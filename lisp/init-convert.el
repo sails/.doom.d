@@ -109,6 +109,45 @@
   (base64-decode-region start end)
   )
 
+;; decimal-to-binary
+(defun convert::decimal-to-binary (str)
+  "Convert a DECIMAL number to its binary representation as a string."
+  (let ((binary "") (decimal (string-to-number str)))
+    (while (> decimal 0)
+      (setq binary (concat (number-to-string (% decimal 2)) binary))
+      (setq decimal (/ decimal 2)))
+    (if (string= binary "")
+        "0"
+      binary)))
+
+(defun convert:decimal-to-binary-region (start end)
+  "Convert decimal for region START and END."
+  (interactive "r")
+  (convert:replace-region start end 'convert::decimal-to-binary)
+  )
+
+;; binary-to-decimal
+(defun convert::binary-to-decimal (binary-str)
+  "Convert a binary string BINARY-STR to its decimal representation.
+If BINARY-STR is not a valid binary string, signal an error."
+  (if (string-match-p "\\`[01]+\\'" binary-str)
+      (let ((decimal 0)
+            (len (length binary-str)))
+        (dotimes (i len)
+          (let ((bit (substring binary-str (- len i 1) (- len i))))
+            (if (string= bit "1")
+                (setq decimal (+ decimal (expt 2 i))))))
+        (number-to-string decimal))
+    (error "Invalid binary string: %s" binary-str)))
+
+(defun convert:binary-to-decimal-region (start end)
+  "Convert binary for region START and END."
+  (interactive "r")
+  (convert:replace-region start end 'convert::binary-to-decimal)
+  )
+
+
+
 (provide 'init-convert)
 
 ;;; init-convert.el ends here
