@@ -534,8 +534,15 @@
   ;; NOTE: emacs-plus on mac doens't support :stipple face
   ;; https://github.com/d12frosted/homebrew-emacs-plus/issues/622
   (setq
+   indent-bars-prefer-character nil
+   indent-bars-color '(highlight :face-bg t :blend 0.5)
+   indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 1)
+   indent-bars-pattern " . . . . ." ; play with the number of dots for your usual font size
+   indent-bars-width-frac 0.1
+   indent-bars-pad-frac 0.1
+   ;; character设置
    ;; indent-bars-prefer-character t
-   indent-bars-no-stipple-char ?┊  ;; | ⎸
+   ;; indent-bars-no-stipple-char ?┊  ;; | ⎸
    ;; indent-bars-width-frac 0.1
    ;; indent-bars-starting-column 0
    ;; indent-bars-color '("grey" :face-bg t :blend 1)
