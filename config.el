@@ -129,7 +129,7 @@
            (monitor-w (nth 2 (frame-monitor-workarea frame)))
            (monitor-h (nth 3 (frame-monitor-workarea frame)))
 
-           (frame-w (truncate (* monitor-w 0.70)))
+           (frame-w (truncate (* monitor-w 0.618)))
            (frame-h (truncate (* monitor-h 0.90)))
 
 
@@ -240,9 +240,9 @@
       syntax-wholeline-max 1000)
 
 ;; 在doom中默认titlebar与编辑框是相同颜色，但显得头轻脚重，这里设置成不同颜色
-;; (defun my-ns-transparent-titlebar-advice (&rest _args)
-;;   (set-frame-parameter nil 'ns-transparent-titlebar nil))
-;; (advice-add 'ns-auto-titlebar-set-frame :after 'my-ns-transparent-titlebar-advice)
+(defun my-ns-transparent-titlebar-advice (&rest _args)
+  (set-frame-parameter nil 'ns-transparent-titlebar nil))
+(advice-add 'ns-auto-titlebar-set-frame :after 'my-ns-transparent-titlebar-advice)
 ;;(setq ns-use-proxy-icon nil)
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
@@ -258,9 +258,16 @@
 (require 'init-shell)
 (require 'init-exec-path)
 
-;;doom uses it to highlight incorrect indentation in buffers and activates it default
-;; (global-whitespace-mode nil)
-(advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
+(setq whitespace-line-column 120
+      whitespace-style
+      '(face indentation tabs tab-mark spaces space-mark newline newline-mark
+        trailing lines-tail)
+      whitespace-display-mappings
+      '((tab-mark ?\t [?› ?\t])
+        ;; (newline-mark ?\n [?¬ ?\n])
+        (space-mark ?\  [?·] [?.])))
+
+;; (add-hook 'prog-mode-hook 'whitespace-mode)
 
 ;; 大小写M-u,M-l
 (put 'upcase-region 'disabled nil)
@@ -535,11 +542,11 @@
   ;; https://github.com/d12frosted/homebrew-emacs-plus/issues/622
   (setq
    indent-bars-prefer-character nil
-   indent-bars-color '(highlight :face-bg t :blend 0.5)
+   indent-bars-color '(highlight :face-bg t :blend 0.3)
    indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 1)
-   indent-bars-pattern " . . . . ." ; play with the number of dots for your usual font size
    indent-bars-width-frac 0.1
    indent-bars-pad-frac 0.1
+   indent-bars-highlight-current-depth '(:face default :blend 0.3) ;; 改变当前列颜色
    ;; character设置
    ;; indent-bars-prefer-character t
    ;; indent-bars-no-stipple-char ?┊  ;; | ⎸
