@@ -68,12 +68,6 @@
     (add-hook 'eglot-managed-mode-hook (lambda () (eglot-inlay-hints-mode -1)))
     )
 
-  ;; (add-load-path! "~/.doom.d/lisp/lsp-bridge")
-  ;; (require 'lsp-bridge)
-  ;; (setq lsp-bridge-c-lsp-server "clangd")
-  ;; (setq acm-enable-tabnine-helper nil)
-  ;; (global-lsp-bridge-mode)
-
   ;; 可以很方便的在头文件与cpp文件中切换
   (local-set-key
    (kbd "C-x j") 'projectile-find-other-file)

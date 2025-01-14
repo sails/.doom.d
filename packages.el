@@ -112,9 +112,6 @@
 (package! color-theme-sanityinc-tomorrow)
 (package! modus-themes)
 
-(package! ef-themes
-  :recipe (:host nil :repo "https://git.sr.ht/~protesilaos/ef-themes"))
-
 (package! markdown-xwidget
   :recipe (:host github
            :repo "cfclrk/markdown-xwidget"

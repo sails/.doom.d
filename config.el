@@ -43,11 +43,11 @@
 ;; (setq doom-theme 'sails-light3)
 
 ;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular)
-;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
 (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light)
       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
+;; (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12 :weight 'light)
+;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
 
 (when IS-MAC
   ;; 启用细线平滑
@@ -108,6 +108,7 @@
 (when (display-graphic-p)
   (setq doom-modeline-height 2)
   ;; (setq doom-modeline-icon nil)
+  ;; (setq doom-modeline-major-mode-icon t)
 )
 (setq doom-modeline-buffer-file-name-style 'buffer-mame)
 ;; (setq doom-modeline-major-mode-icon t)
@@ -462,7 +463,7 @@
         ;; docstrings-non-ascii-quotes
         ;; suspicious
         ))
-
+(setq warning-minimum-level :error)
 
 ;; 分配一定量的内存后会触发一次gc
 ;; 在超过1000行的c++文件上滚动时，会发现偶尔卡住，可以通过下garbage-collection-messages来查看是否发起了gc回收
@@ -486,6 +487,7 @@
 ;;   (setq lsp-bridge-enable-with-tramp 1
 ;;         lsp-bridge-remote-start-automatically t
 ;;         lsp-bridge-enable-log 1
+;;         lsp-bridge-enable-diagnostics nil
 ;;         lsp-bridge-python-command "/usr/bin/python3"
 ;;         lsp-bridge-user-ssh-private-key "~/.ssh/dev_rsa"
 ;;         )
@@ -493,6 +495,7 @@
 ;;   ;; if server not support rsa-sha2-512 rsa-sha2-256 when sshd version too old
 ;;   ;; can set disabled_algorithms=dict(pubkeys=["rsa-sha2-512", "rsa-sha2-256"]
 ;;   ;; in remote_file.py when call connect.
+;;   (which-function-mode 1)
 ;;   )
 
 
@@ -543,10 +546,8 @@
   (setq
    indent-bars-prefer-character nil
    indent-bars-color '(highlight :face-bg t :blend 0.3)
-   indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 1)
-   indent-bars-width-frac 0.1
-   indent-bars-pad-frac 0.1
-   indent-bars-highlight-current-depth '(:face default :blend 0.3) ;; 改变当前列颜色
+   indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 0.5)
+   indent-bars-highlight-current-depth '(:blend 1)
    ;; character设置
    ;; indent-bars-prefer-character t
    ;; indent-bars-no-stipple-char ?┊  ;; | ⎸
@@ -571,7 +572,10 @@
 ;; 当使用lsp +eglot时which-function-mode会影响打开文件的速度，像是需要等eglot解析完成才能打开
 ;; 有时还会报which-func-ff-hook error ... jsonrpc-error-message . "Timed out"，才能打开
 ;; 但在lsp-mode中不会,应该是没有用lsp-mode的数据，lsp-mode还没有解析完，函数已经能正常显示
-;; (which-function-mode 1)
+(after! lsp-mode
+  :config
+  (which-function-mode 1)
+)
 
 (setq ssh-deploy-verbose 0)
 

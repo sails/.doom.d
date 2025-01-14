@@ -226,6 +226,9 @@ Can be an integer to determine the exact padding."
    ((whitespace-indentation &override) :background (if (default-value 'indent-tabs-mode) base0))
    ;; cursor
    (cursor :background "#000000")
+
+   (nerd-icons-completion-dir-face :foreground orange)
+   (all-the-icons-dired-dir-face    :foreground orange)
    )
 
   ;;;; Base theme variable overrides-
