@@ -44,10 +44,10 @@
 
 ;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
-(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light)
-      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
-;; (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12 :weight 'light)
+;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12 :weight 'light)
+      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
 
 (when IS-MAC
   ;; 启用细线平滑
@@ -395,8 +395,8 @@
 ;;   :config
 ;;   (ultra-scroll-mac-mode 1))
 
-;; 自动识别文件编码
-(unicad-mode 1)
+;; 自动识别文件编码（有时反而不准）
+;; (unicad-mode 1)
 
 ;; 透明
 ;; (set-frame-parameter (selected-frame) 'alpha '(95 100))
@@ -602,3 +602,11 @@
 
 ;; 在跳转出现helm候选列表时，鼠标经常会位于候选列表中，让其处于选中状态，出现误导
 (setq helm-allow-mouse nil)
+
+
+
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
