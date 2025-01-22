@@ -382,18 +382,17 @@
              (< line (* (/ (window-height) 9) 1)))))
       (let ((recenter-position 0.3))
         (recenter '(4)))))
+
 ;; scroll-margin lines of margin at the top and bottom of a window, default:0.
 (setq scroll-margin 0
       scroll-conservatively 101)
 
-;; only for emacs-mac
-;; (use-package ultra-scroll-mac
-;;   :if (eq window-system 'mac)
-;;   :init
-;;   (setq scroll-conservatively 101 ; important!
-;;         scroll-margin 0)
-;;   :config
-;;   (ultra-scroll-mac-mode 1))
+(use-package ultra-scroll
+  :init
+  (setq scroll-conservatively 101 ; important!
+        scroll-margin 0)
+  :config
+  (ultra-scroll-mode 1))
 
 ;; 自动识别文件编码（有时反而不准）
 ;; (unicad-mode 1)
@@ -603,10 +602,8 @@
 ;; 在跳转出现helm候选列表时，鼠标经常会位于候选列表中，让其处于选中状态，出现误导
 (setq helm-allow-mouse nil)
 
-
-
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(setq default-buffer-file-coding-system 'utf-8)
+;; (prefer-coding-system 'utf-8)
+;; (set-default-coding-systems 'utf-8)
+;; (set-terminal-coding-system 'utf-8)
+;; (set-keyboard-coding-system 'utf-8)
+;; (setq default-buffer-file-coding-system 'utf-8)

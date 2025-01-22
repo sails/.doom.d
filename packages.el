@@ -92,6 +92,7 @@
            :files ("*.el" "*.py" "core/*.py" "backend" "icons")))
 (package! awesome-tray
   :recipe (:host github :repo "manateelazycat/awesome-tray"))
+
 (package! anzu)
 
 ;; (package! apheleia)
@@ -116,3 +117,7 @@
   :recipe (:host github
            :repo "cfclrk/markdown-xwidget"
            :files (:defaults "resources")))
+
+
+(package! ultra-scroll
+  :recipe (:host github :repo "jdtsmith/ultra-scroll"))
