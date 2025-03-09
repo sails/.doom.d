@@ -40,6 +40,8 @@ Can be an integer to determine the exact padding."
 
 (def-doom-theme sails-light
   "A light theme inspired by Atom One Light."
+  :family 'doom-one
+  :background-mode 'light
 
   ;; name        default256       16
   ((bg         '("#ffffff" "white"   "white"        ))
@@ -204,7 +206,12 @@ Can be an integer to determine the exact padding."
    (wgrep-face :background base1)
    ;;;; whitespace
    ((whitespace-tab &override)         :background (if (not (default-value 'indent-tabs-mode)) base0 'unspecified))
-   ((whitespace-indentation &override) :background (if (default-value 'indent-tabs-mode) base0 'unspecified)))
+   ((whitespace-indentation &override) :background (if (default-value 'indent-tabs-mode) base0 'unspecified))
+
+   (nerd-icons-completion-dir-face :foreground "#459CFE")
+   (all-the-icons-dired-dir-face    :foreground "#459CFE")
+  
+   )
 
   ;;;; Base theme variable overrides-
   ()

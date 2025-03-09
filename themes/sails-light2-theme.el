@@ -5,12 +5,12 @@
   "Options for doom-themes"
   :group 'doom-themes)
 
-(defcustom sails-light2-brighter-modeline nil
+(defcustom sails-light-brighter-modeline nil
   "If non-nil, more vivid colors will be used to style the mode-line."
   :group 'sails-light2-theme
   :type 'boolean)
 
-(defcustom sails-light2-brighter-comments nil
+(defcustom sails-light-brighter-comments nil
   "If non-nil, comments will be highlighted in more vivid colors."
   :group 'sails-light2-theme
   :type 'boolean)
@@ -27,6 +27,8 @@ Can be an integer to determine the exact padding."
 
 (def-doom-theme sails-light2
   "A light theme inspired by Atom One Light."
+  :family 'doom-one
+  :background-mode 'light
 
   ;; name        default   256       16
   ((bg         '("#ffffff" "white"   "white"        ))
@@ -75,8 +77,8 @@ Can be an integer to determine the exact padding."
    (vertical-bar   (doom-darken base2 0.1))
    (selection      dark-blue)
    (builtin        magenta)
-   ;;(comments       (if sails-light2-brighter-comments cyan base4))
-   (comments       (if sails-light2-brighter-comments green2 base4))
+   ;;(comments       (if sails-light-brighter-comments cyan base4))
+   (comments       (if sails-light-brighter-comments green2 base4))
    (doc-comments   (doom-darken comments 0.15))
    (constants      violet)
    (functions      magenta)
@@ -100,11 +102,11 @@ Can be an integer to determine the exact padding."
    (modeline-fg              fg)
    (modeline-fg-alt          (doom-blend
                               violet base4
-                              (if sails-light2-brighter-modeline 0.5 0.2)))
-   (modeline-bg              (if sails-light2-brighter-modeline
+                              (if sails-light-brighter-modeline 0.5 0.2)))
+   (modeline-bg              (if sails-light-brighter-modeline
                                  (doom-darken base2 0.05)
                                base1))
-   (modeline-bg-alt          (if sails-light2-brighter-modeline
+   (modeline-bg-alt          (if sails-light-brighter-modeline
                                  (doom-darken base2 0.1)
                                base2))
    (modeline-bg-inactive     (doom-darken bg 0.1))
@@ -117,7 +119,7 @@ Can be an integer to determine the exact padding."
   ;;;; Base theme face overrides
   (
    ;;((font-lock-comment-face &override)
-   ;; :background (if sails-light2-brighter-comments base0))
+   ;; :background (if sails-light-brighter-comments base0))
    ((font-lock-doc-face &override) :slant 'italic)
    ((line-number &override) :foreground base9 :slant 'normal)
    ((line-number-current-line &override) :foreground base8 :slant 'normal)
@@ -128,7 +130,7 @@ Can be an integer to determine the exact padding."
     :background modeline-bg-inactive :foreground modeline-fg-alt
     :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg-inactive)))
    (mode-line-emphasis
-    :foreground (if sails-light2-brighter-modeline base9 highlight))
+    :foreground (if sails-light-brighter-modeline base9 highlight))
    (shadow :foreground base4)
    (tooltip :background base1 :foreground fg)
 
@@ -139,7 +141,7 @@ Can be an integer to determine the exact padding."
    (css-property             :foreground green)
    (css-selector             :foreground blue)
    ;;;; doom-modeline
-   (doom-modeline-bar :background (if sails-light2-brighter-modeline modeline-bg highlight))
+   (doom-modeline-bar :background (if sails-light-brighter-modeline modeline-bg highlight))
    ;;;; ediff <built-in>
    (ediff-current-diff-A        :foreground red   :background (doom-lighten red 0.8))
    (ediff-current-diff-B        :foreground green :background (doom-lighten green 0.8))

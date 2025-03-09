@@ -58,7 +58,7 @@
 
 (package! eshell-toggle)
 ;; (package! consult)
-;; (package! vterm-toggle)
+(package! vterm-toggle)
 ;; (package! ag)
 ;; (package! rg)
 ;; ag/(do ag)->edit->commit

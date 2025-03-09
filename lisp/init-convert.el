@@ -147,6 +147,42 @@ If BINARY-STR is not a valid binary string, signal an error."
   )
 
 
+(defun convert::json-compact (json-str)
+  "使用 jq 将 JSON 字符串压缩为单行"
+  (with-temp-buffer
+    (insert json-str)
+    (let ((exit-code (shell-command-on-region
+                      (point-min) (point-max)
+                      "jq -c ."  ; -c 表示压缩输出
+                      (current-buffer) t)))
+      (if (eq exit-code 0)
+          (buffer-string)  ; 返回压缩后的 JSON
+        (error "JSON 压缩失败: 请检查 JSON 语法或 jq 是否安装")))))
+
+(defun convert::json-compact-region (start end)
+  "使用 jq 将选中的 JSON 区域压缩为单行"
+  (interactive "r")
+  (convert:replace-region start end 'convert::json-compact)
+  )
+
+(defun convert::json-pretty-print (json-str)
+  "将 JSON 字符串美化格式化"
+  (require 'json)  ; 确保加载 JSON 库
+  (condition-case err
+      (let ((json-encoding-pretty-print t)    ; 启用美化输出
+            (json-encoding-default-indentation "  "))  ; 缩进 2 空格
+        (with-temp-buffer
+          (insert json-str)
+          (goto-char (point-min))
+          (let ((json-data (json-read)))      ; 解析 JSON
+            (json-encode json-data))))        ; 重新编码（带美化）
+    (error (error "JSON 美化失败: 无效的 JSON 语法 (%s)" (error-message-string err)))))
+
+(defun convert::json-pretty-print-region (start end)
+  "美化选中的 JSON 区域"
+  (interactive "r")
+  (convert:replace-region start end 'convert::json-pretty-print)
+  )
 
 (provide 'init-convert)
 

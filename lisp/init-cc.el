@@ -11,9 +11,6 @@
 (defun my-c-mode-func ()
   (google-set-c-style)
 
-  ;; firestarter
-  (firestarter-mode)
-
   (setenv "GTAGSFORCECPP" "1")
 
   (add-hook 'c-mode-hook 'helm-gtags-mode)
@@ -75,12 +72,16 @@
    (kbd "C-c o j") 'projectile-find-other-file)
   )
 
-(quickrun-add-command "c++/c11"
-  '((:command . "g++")
-    (:exec    . ("%c -std=c++11 %o -o %e %s"
-                 "%e %a"))
-    (:remove  . ("%e")))
-  :default "c++")
+(use-package! quickrun
+  :defer t
+  :custom
+  (quickrun-add-command "c++/c11"
+    '((:command . "g++")
+      (:exec    . ("%c -std=c++11 %o -o %e %s"
+                   "%e %a"))
+      (:remove  . ("%e")))
+    :default "c++")
+)
 
 (add-hook 'c-mode-common-hook 'my-c-mode-func)
 

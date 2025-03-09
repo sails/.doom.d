@@ -36,11 +36,9 @@
 ;; (setq doom-one-comment-bg nil)
 ;; (setq doom-theme 'doom-one)
 
-;; (setq doom-theme 'sails-light)
-;; (setq sails-light-brighter-comments t)
-(setq sails-light2-brighter-comments t)
-(setq doom-theme 'sails-light2)
-;; (setq doom-theme 'sails-light3)
+(setq sails-light-brighter-comments t)
+(setq doom-theme 'sails-light)
+;; (setq doom-theme 'sails-light2)
 
 ;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
@@ -212,12 +210,16 @@
 ;;   (exec-path-from-shell-initialize))
 
 
-(require 'consult)
-(after! consult
-  (global-set-key (kbd "C-x b") 'consult-buffer)
-  ;; (global-set-key (kbd "C-s") 'consult-line)
+(use-package! consult
+  :defer t
+  :bind (
+         ("C-x b" . consult-buffer)
+         ;; ("C-s" . consult-line)
+         )
+  :config
   ;; 关闭consult-buffer的preview，在切换buffer时总是会先显示排在第一的文件内容，影响注意力
-  (consult-customize consult-buffer :preview-key nil))
+  (consult-customize consult-buffer :preview-key nil)
+  )
 
 ;; completion ivy
 (after! ivy
@@ -226,7 +228,7 @@
   (setq ivy-virtual-abbreviate 'abbreviate))
 
 ;; flyecheck默认关闭
-(setq flycheck-checker-error-threshold 5000)
+;; (setq flycheck-checker-error-threshold 5000)
 (add-hook 'prog-mode-hook
           (lambda ()
             (flycheck-mode -1)
@@ -244,7 +246,7 @@
 (defun my-ns-transparent-titlebar-advice (&rest _args)
   (set-frame-parameter nil 'ns-transparent-titlebar nil))
 (advice-add 'ns-auto-titlebar-set-frame :after 'my-ns-transparent-titlebar-advice)
-;;(setq ns-use-proxy-icon nil)
+(setq ns-use-proxy-icon nil)
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
                    (file-relative-name buffer-file-name (projectile-project-root))
