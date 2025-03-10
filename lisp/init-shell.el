@@ -18,6 +18,8 @@
 (map! "M-j" #'vterm-toggle-cd)
 (add-hook 'vterm-mode-hook
           (lambda ()
+            (hide-mode-line-mode)
+            (setq vterm-kill-buffer-on-exit t)
             ;; 当打开vterm后M-j替换eshell中的快捷键
             (define-key vterm-mode-map (kbd "M-j")        #'vterm-toggle-cd)
             ;; cd到当前buffer的目录
@@ -30,6 +32,14 @@
               (define-key vterm-mode-map (kbd "C-c j")   #'vterm-toggle-insert-cd)
               )
             ))
+
+;; ;; doom +vterm/toggle
+;; (map! "M-j" #'+vterm/toggle)
+;; (add-hook 'vterm-mode-hook
+;;           (lambda ()
+;;             (define-key vterm-mode-map (kbd "M-j")        #'+vterm/toggle)
+;;             )
+;;           )
 
 (provide 'init-shell)
 ;;; init-shell.el ends here
