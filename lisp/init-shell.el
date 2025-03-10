@@ -19,7 +19,8 @@
 (add-hook 'vterm-mode-hook
           (lambda ()
             (hide-mode-line-mode)
-            (setq vterm-kill-buffer-on-exit t)
+            ;; (setq vterm-kill-buffer-on-exit t)
+            (setq confirm-kill-processes nil)
             ;; 当打开vterm后M-j替换eshell中的快捷键
             (define-key vterm-mode-map (kbd "M-j")        #'vterm-toggle-cd)
             ;; cd到当前buffer的目录
