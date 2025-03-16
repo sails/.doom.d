@@ -577,6 +577,17 @@
   :config
   (which-function-mode 1)
 )
+(after! eglot
+  :config
+  ;; List of major modes where Which Function mode is inactive till Imenu is used
+  ;; when it is used with Eglot, and the language server takes a
+  ;; long time to send the information, use this option to delay
+  ;; activation of Which Function until Imenu is used for the first time
+  (setq which-func-non-auto-modes '(c++-mode
+                                    go-mode
+                                    rust-mode))
+  (which-function-mode 1)
+  )
 
 (setq ssh-deploy-verbose 0)
 
