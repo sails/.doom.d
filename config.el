@@ -569,16 +569,10 @@
 ;; emacs-mac bug https://github.com/railwaycat/homebrew-emacsmacport/issues/362
 ;; (add-hook 'doom-after-init-hook (lambda () (tool-bar-mode 1) (tool-bar-mode 0)))
 
-;; show function in modeline
-;; 当使用lsp +eglot时which-function-mode会影响打开文件的速度，像是需要等eglot解析完成才能打开
-;; 有时还会报which-func-ff-hook error ... jsonrpc-error-message . "Timed out"，才能打开
-;; 但在lsp-mode中不会,应该是没有用lsp-mode的数据，lsp-mode还没有解析完，函数已经能正常显示
-(after! lsp-mode
-  :config
-  (which-function-mode 1)
-)
+(which-function-mode 1)
 (after! eglot
   :config
+  ;; 当使用lsp +eglot时which-function-mode会影响打开文件的速度，像是需要等eglot解析完成才能打开
   ;; List of major modes where Which Function mode is inactive till Imenu is used
   ;; when it is used with Eglot, and the language server takes a
   ;; long time to send the information, use this option to delay
@@ -586,7 +580,6 @@
   (setq which-func-non-auto-modes '(c++-mode
                                     go-mode
                                     rust-mode))
-  (which-function-mode 1)
   )
 
 (setq ssh-deploy-verbose 0)
