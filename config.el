@@ -613,3 +613,14 @@
 ;; (set-terminal-coding-system 'utf-8)
 ;; (set-keyboard-coding-system 'utf-8)
 ;; (setq default-buffer-file-coding-system 'utf-8)
+
+(after! magit
+  ;; Stop magit complaining about too-long summary lines
+  (setq git-commit-style-convention-checks
+        (remove 'overlong-summary-line git-commit-style-convention-checks))
+  ;; Show timestamps rather than relative dates
+  (setq magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
+  ;; Try to speed up status buffer refreshes
+  (remove-hook 'magit-status-headers-hook 'magit-insert-tags-header)
+  ;; (setq magit-refresh-verbose t)
+  )
