@@ -40,7 +40,9 @@
 (setq doom-theme 'sails-light)
 ;; (setq doom-theme 'sails-light2)
 
-;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'regular)
+;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
+;; (setq doom-font (font-spec :family "Monaco" :size 12 :weight 'regular)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
@@ -117,29 +119,31 @@
 ;; 高效的选中region
 (global-set-key (kbd "C-x m") 'er/expand-region)
 
-;; (pushnew! initial-frame-alist '(width . 100) '(height . 55))
-;; 设置窗口位置
-(defun my/frame-recenter (&optional frame)
-  (interactive)
-  (unless (eq 'maximised (frame-parameter nil 'fullscreen))
-    (let* ((frame (or (and (boundp 'frame)
-                           frame)
-                      (selected-frame)))
-           (monitor-w (nth 2 (frame-monitor-workarea frame)))
-           (monitor-h (nth 3 (frame-monitor-workarea frame)))
+;; 保存窗口大小和位置
+(setq initial-frame-alist '((top . 100) (left . 100) (width . 100) (height . 40)))
+(setq default-frame-alist initial-frame-alist)
+;; 自动保存和恢复窗口大小和位置
+(defvar my/frame-geometry-file "~/.config/emacs/frame-geometry")
 
-           (frame-w (truncate (* monitor-w 0.618)))
-           (frame-h (truncate (* monitor-h 0.90)))
-
-
-           (a-left (truncate (/ (- monitor-w frame-w) 2))))
-
-      (set-frame-position (selected-frame) a-left 0)
-      (set-frame-size (selected-frame) (truncate frame-w)  (truncate frame-h) t)
-      )))
-
-(add-hook 'after-init-hook #'my/frame-recenter)
-(add-hook 'after-make-frame-functions #'my/frame-recenter)
+(defun my/save-frame-geometry ()
+  "Save the current frame's geometry to a file."
+  (let ((frame (selected-frame)))
+    (with-temp-file my/frame-geometry-file
+      (insert
+       (format
+        "(setq initial-frame-alist '((top . %d) (left . %d) (width . %d) (height . %d)))\n"
+        (frame-parameter frame 'top)
+        (frame-parameter frame 'left)
+        (frame-parameter frame 'width)
+        (frame-parameter frame 'height))))))
+(defun my/load-frame-geometry ()
+  "Load the frame geometry from a file."
+  (when (file-exists-p my/frame-geometry-file)
+    (load-file my/frame-geometry-file)))
+;; 启动时加载
+(my/load-frame-geometry)
+;; 退出时保存
+(add-hook 'kill-emacs-hook #'my/save-frame-geometry)
 
 ;; 复制当前buffer name
 (defun copy-file-name(choice)
@@ -246,7 +250,7 @@
 (defun my-ns-transparent-titlebar-advice (&rest _args)
   (set-frame-parameter nil 'ns-transparent-titlebar nil))
 (advice-add 'ns-auto-titlebar-set-frame :after 'my-ns-transparent-titlebar-advice)
-(setq ns-use-proxy-icon nil)
+;; (setq ns-use-proxy-icon nil)
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
                    (file-relative-name buffer-file-name (projectile-project-root))
@@ -289,7 +293,7 @@
   )
 
 ;; 设置cache文件数50w,如果太小，会在重启后清理，导致每次启动后运行projectile都需要重建
-(setq doom-projectile-cache-limit 500000)
+(setq doom-projectile-cache-limit 1000000)
 
 (add-to-list 'doom-large-file-excluded-modes 'c++-mode)
 
@@ -365,8 +369,9 @@
 (pixel-scroll-precision-mode 1)
 (setq pixel-scroll-precision-interpolate-page t)
 ;; 鼠标滚轮平滑滚动
-(defalias 'scroll-up-command 'pixel-scroll-interpolate-up)
-(defalias 'scroll-down-command 'pixel-scroll-interpolate-down)
+;; (defalias 'scroll-up-command 'pixel-scroll-interpolate-up)
+;; (defalias 'scroll-down-command 'pixel-scroll-interpolate-down)
+
 ;; when search words at the bottom of the screen, It's not easy to notice
 ;; 防止搜索到的数据太靠边框
 (defadvice isearch-update (before my-isearch-update activate)
@@ -385,19 +390,19 @@
       (let ((recenter-position 0.3))
         (recenter '(4)))))
 
-;; scroll-margin lines of margin at the top and bottom of a window, default:0.
-(setq scroll-margin 0
-      scroll-conservatively 101)
+;; ;; scroll-margin lines of margin at the top and bottom of a window, default:0.
+;; (setq scroll-margin 0
+;;       scroll-conservatively 101)
 
-(use-package ultra-scroll
-  :init
-  (setq scroll-conservatively 101 ; important!
-        scroll-margin 0)
-  :config
-  (ultra-scroll-mode 1))
+;; (use-package ultra-scroll
+;;   :init
+;;   (setq scroll-conservatively 101 ; important!
+;;         scroll-margin 0)
+;;   :config
+;;   (ultra-scroll-mode 1))
 
 ;; 自动识别文件编码（有时反而不准）
-;; (unicad-mode 1)
+(unicad-mode 1)
 
 ;; 透明
 ;; (set-frame-parameter (selected-frame) 'alpha '(95 100))
@@ -623,4 +628,6 @@
   ;; Try to speed up status buffer refreshes
   (remove-hook 'magit-status-headers-hook 'magit-insert-tags-header)
   ;; (setq magit-refresh-verbose t)
+  ;; for large projects, the git operations to regenerate the cache are too slow.
+  (remove-hook 'magit-post-refresh-hook '+magit-invalidate-projectile-cache-h)
   )
