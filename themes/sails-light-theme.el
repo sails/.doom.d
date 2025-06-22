@@ -159,6 +159,10 @@ Can be an integer to determine the exact padding."
    (css-selector             :foreground blue)
    ;;;; doom-modeline
    (doom-modeline-bar :background (if sails-light-brighter-modeline modeline-bg highlight))
+   (doom-modeline-buffer-file :weight 'normal)
+   (doom-modeline-buffer-modified :weight 'normal)
+   (doom-modeline-buffer-major-mode :weight 'normal)
+   (doom-modeline-vcs-default :weight 'normal)
    ;;;; ediff <built-in>
    (ediff-current-diff-A        :foreground red   :background (doom-lighten red 0.8))
    (ediff-current-diff-B        :foreground green :background (doom-lighten green 0.8))

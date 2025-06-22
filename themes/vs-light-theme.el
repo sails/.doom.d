@@ -1,308 +1,154 @@
-;;; vs-light-theme.el --- Visual Studio IDE light theme
-
-;; Copyright (C) 2019-2024  Shen, Jen-Chieh
-
-;; Author: Jen-Chieh Shen
-;; URL: https://github.com/emacs-vs/vs-light-theme
-;; Version: 1.0
-;; Package-Requires: ((emacs "24.1"))
-
-;; This file is NOT part of GNU Emacs.
-
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+;;; vs-light-theme.el --- VSCode Light+ style Doom theme -*- lexical-binding: t; no-byte-compile: t; -*-
+;;
+;; Author: ChatGPT
+;; Inspired by VSCode Light+ and Doom themes
+;;
 ;;; Commentary:
+;;  A light theme for Doom Emacs, closely mimicking VSCode Light+.
 ;;
-;; Visual Studio IDE light theme.
-;;
-
 ;;; Code:
 
-(deftheme vs-light
-  "Visual Studio IDE light theme.")
+(require 'doom-themes)
 
-(defconst vs-light-theme-graphic-p (display-graphic-p)
-  "Non-nil if graphic mode.")
+(defgroup vs-light-theme nil
+  "Options for the `sails-light' theme."
+  :group 'doom-themes)
 
-(custom-theme-set-faces
- 'vs-light
- `(default                      ((t (:background "#ffffff" :foreground "#000000"))))
- `(font-lock-builtin-face       ((t (:foreground "#0C6EEF"))))
- `(font-lock-comment-face       ((t (:foreground "olive drab"))))
- `(font-lock-negation-char-face ((t (:foreground "#2B91AF"))))
- `(font-lock-reference-face     ((t (:foreground "#2B91AF"))))
- `(font-lock-constant-face      ((t (:foreground "#2B91AF"))))
- `(font-lock-doc-face           ((t (:foreground "olive drab"))))
- `(font-lock-function-name-face ((t (:foreground "#74534B"))))
- `(font-lock-keyword-face       ((t (:foreground "#0000FF"))))
- `(font-lock-preprocessor-face  ((t (:foreground "#808080"))))
- `(font-lock-string-face        ((t (:foreground "#B21515"))))
- `(font-lock-type-face          ((t (:foreground "#2B91AF"))))
- `(font-lock-variable-name-face ((t (:foreground "#000000"))))
+(defcustom sails-light-padded-modeline doom-themes-padded-modeline
+  "If non-nil, adds a 4px padding to the mode-line.
+Can be an integer to determine the exact padding."
+  :group 'vs-light-theme
+  :type '(choice integer boolean))
 
- `(header-line ((t (:background "#F6F6F6" :foreground "#000000"))))
+(def-doom-theme sails-light
+  "A light theme inspired by VSCode Light+."
+  :background-mode 'light
 
- `(mode-line          ((t :box ( :line-width -1 :style released-button))))
- `(mode-line-inactive ((t :box ( :line-width -1 :style released-button))))
+  ((bg         '("#ffffff" "white"   "white"))
+   (fg         '("#333333" "#333333" "black"))
+   (bg-alt     '("#f3f3f3" "white"   "white"))
+   (fg-alt     '("#2d2d2d" "#2d2d2d" "brightblack"))
+   (base0      '("#ffffff" "#ffffff" "white"))
+   (base1      '("#f3f3f3" "#f3f3f3" "brightblack"))
+   (base2      '("#e5e5e5" "#e5e5e5" "brightblack"))
+   (base3      '("#d4d4d4" "#d4d4d4" "brightblack"))
+   (base4      '("#bfbfbf" "#bfbfbf" "brightblack"))
+   (base5      '("#333333" "#333333" "brightblack"))
+   (base6      '("#2d2d2d" "#2d2d2d" "brightblack"))
+   (base7      '("#1e1e1e" "#1e1e1e" "brightblack"))
+   (base8      '("#000000" "black"   "black"))
+   (grey       base4)
+   (red        '("#e51400" "#e51400" "red"))
+   (orange     '("#b89500" "#b89500" "brightred"))
+   (green      '("#008000" "#008000" "green"))
+   (teal       '("#008080" "#008080" "brightgreen"))
+   (yellow     '("#b89500" "#b89500" "yellow"))
+   (blue       '("#0000ff" "#0000ff" "brightblue"))
+   (dark-blue  '("#001080" "#001080" "blue"))
+   (magenta    '("#af00db" "#af00db" "magenta"))
+   (violet     '("#68217a" "#68217a" "brightmagenta"))
+   (cyan       '("#267f99" "#267f99" "brightcyan"))
+   (dark-cyan  '("#0451a5" "#0451a5" "cyan"))
+   (highlight      blue)
+   (vertical-bar   base2)
+   (selection      '("#ADD6FF" "#ADD6FF" "lightblue"))
+   (builtin        blue)
+   (comments       green)
+   (doc-comments   (doom-lighten green 0.2))
+   (constants      '("#098658" "#098658" "green"))
+   (functions      '("#795E26" "#795E26" "brown"))
+   (keywords       blue)
+   (methods        '("#795E26" "#795E26" "brown"))
+   (operators      blue)
+   (type           cyan)
+   (strings        '("#A31515" "#A31515" "red"))
+   (variables      base5)
+   (numbers        '("#098658" "#098658" "green"))
+   (region         '("#ADD6FF" "#ADD6FF" "lightblue"))
+   (error          red)
+   (warning        orange)
+   (success        '("#098658" "#098658" "green"))
+   (vc-modified    orange)
+   (vc-added       green)
+   (vc-deleted     red)
+   (modeline-fg              fg)
+   (modeline-fg-alt          base4)
+   (modeline-bg              base2)
+   (modeline-bg-alt          base1)
+   (modeline-bg-inactive     base1)
+   (modeline-bg-alt-inactive base0)
+   (-modeline-pad
+    (when sails-light-padded-modeline
+      (if (integerp sails-light-padded-modeline) sails-light-padded-modeline 4))))
 
- `(cursor  ((t :background "#A3A3A3")))
- `(hl-line ((t :background ,(if vs-light-theme-graphic-p "#F1F1F1" "#99C9EF"))))
- `(region  ((t :background "#ADD6FF")))
- `(fringe  ((t :background "#FFFFFF")))
+  (
+   ;; 基础
+   (default :background "#ffffff" :foreground "#333333")
+   (fringe :background "#ffffff")
+   (region :background "#ADD6FF")
+   (hl-line :background "#f3f3f3")
+   (cursor :background "#000000")
+   (shadow :foreground "#bfbfbf")
+   (minibuffer-prompt :foreground "#0000FF" :weight 'bold)
 
- `(completions-annotations ((t :inherit (shadow))))
- `(completions-common-part ((t :foreground "#223fbf" :weight bold)))
+   ;; 行号
+   (line-number :foreground "#237893" :background "#ffffff")
+   (line-number-current-line :foreground "#000000" :background "#e5f3ff" :weight 'normal)
 
- `(highlight ((t :background ,(if vs-light-theme-graphic-p "#99C9EF" "#363636"))))
+   ;; modeline
+   (mode-line :background "#E5E5E5" :foreground "#333333"
+              :box (if -modeline-pad `(:line-width ,-modeline-pad :color "#E5E5E5")))
+   (mode-line-inactive :background "#F3F3F3" :foreground "#bfbfbf"
+                       :box (if -modeline-pad `(:line-width ,-modeline-pad :color "#F3F3F3")))
 
- `(line-number              ((t ( :background "#FFFFFF" :foreground "#2B91AF"))))
- `(line-number-current-line ((t ( :background "#FFFFFF"
-                                  :foreground ,(if vs-light-theme-graphic-p
-                                                   "#2B91AF"
-                                                 "#5C8794")))))
+   ;; 语法高亮
+   (font-lock-comment-face :foreground "#008000" :slant 'italic)
+   (font-lock-doc-face :foreground "#008000" :slant 'italic)
+   (font-lock-keyword-face :foreground "#0000FF" :weight 'normal)
+   (font-lock-builtin-face :foreground "#A31515") ; for <iostream> etc
+   (font-lock-function-name-face :foreground "#795E26" :weight 'normal)
+   (font-lock-type-face :foreground "#267f99" :weight 'normal)
+   (font-lock-string-face :foreground "#A31515")
+   (font-lock-constant-face :foreground "#098658")
+   (font-lock-number-face :foreground "#098658")
+   (font-lock-variable-name-face :foreground "#333333")
+   (font-lock-preprocessor-face :foreground "#AF00DB" :weight 'normal)
+   (font-lock-warning-face :foreground "#b89500" :weight 'bold)
 
- `(fill-column-indicator ((t :foreground "#AA4242")))
+   ;; 选区和高亮
+   (isearch :background "#FFFACD" :foreground "#333333")
+   (lazy-highlight :background "#E5E5E5" :foreground "#333333")
+   (highlight :background "#ADD6FF" :foreground "#333333")
 
- `(show-paren-match ,(if vs-light-theme-graphic-p
-                         `((t :box ( :line-width (-1 . -1) :style released-button
-                                     :color "#A4A4A4")))
-                       `((t :background "#0055FF"))))
+   ;; 其他
+   (vertical-border :foreground "#E5E5E5")
+   (tooltip :background "#F3F3F3" :foreground "#333333")
+   (success :foreground "#098658" :weight 'bold)
+   (error :foreground "#e51400" :weight 'bold)
+   (warning :foreground "#b89500" :weight 'bold)
 
- `(show-eof-mode-marker-face ((t :background "#ECECFB" :foreground "#7A6C7F")))
+   ;; Org/Markdown/Outline
+   (org-block :background "#F3F3F3")
+   (org-block-begin-line :foreground "#237893" :slant 'italic)
+   (org-ellipsis :foreground "#0000FF" :underline nil)
+   (markdown-code-face :background "#F3F3F3")
+   (outline-1 :foreground "#0000FF" :weight 'bold)
+   (outline-2 :foreground "#795E26")
+   (outline-3 :foreground "#267f99")
+   (outline-4 :foreground "#A31515")
+   (outline-5 :foreground "#098658")
+   (outline-6 :foreground "#AF00DB")
+   (outline-7 :foreground "#b89500")
+   (outline-8 :foreground "#008000")
+   )
+  ()
+  )
 
- `(highlight-indent-guides-odd-face             ((t :foreground "#D0D0D0")))
- `(highlight-indent-guides-even-face            ((t :foreground "#D0D0D0")))
- `(highlight-indent-guides-character-face       ((t :foreground "#D0D0D0")))
- `(highlight-indent-guides-top-odd-face         ((t :foreground "#D0D0D0")))
- `(highlight-indent-guides-top-even-face        ((t :foreground "#D0D0D0")))
- `(highlight-indent-guides-top-character-face   ((t :foreground "#D0D0D0")))
- `(highlight-indent-guides-stack-odd-face       ((t :foreground "#D0D0D0")))
- `(highlight-indent-guides-stack-even-face      ((t :foreground "#D0D0D0")))
- `(highlight-indent-guides-stack-character-face ((t :foreground "#D0D0D0")))
+(font-lock-add-keywords
+ 'c++-mode
+ '(("\\b[0-9]+\\b" . 'my/vscode-number-face)))
+(defface my/vscode-number-face
+  '((t :foreground "#098658" :weight normal))
+  "VSCode Light+ style number face.")
 
- `(highlight-doxygen-comment    ((t :background "#ffffff")))
- `(highlight-doxygen-code-block ((t :background "grey85")))
- `(highlight-doxygen-command    ((t :foreground "SlateGray")))
- `(highlight-doxygen-type       ((t :foreground "SteelBlue")))
- `(highlight-doxygen-variable   ((t :foreground "gold4")))
-
- '(diff-hl-insert ((t (:foreground "#529E4E"))))
- '(diff-hl-change ((t (:foreground "#b81a1f"))))
- '(diff-hl-delete ((t (:foreground "#dbba3f"))))
-
- `(git-gutter-fr:added ((t :foreground "#237f3f")))
- `(git-gutter-fr:deleted ((t :foreground "#b81a1f")))
- `(git-gutter-fr:modified ((t :foreground "#dbba3f")))
-
- `(tree-sitter-hl-face:function              ((t :foreground "black")))
- `(tree-sitter-hl-face:function.call         ((t :foreground "black")))
- `(tree-sitter-hl-face:function.builtin      ((t :foreground "#808080")))
- `(tree-sitter-hl-face:function.special      ((t :foreground "#808080")))
- `(tree-sitter-hl-face:function.macro        ((t :foreground "#808080")))
- `(tree-sitter-hl-face:method                ((t :foreground "black")))
- `(tree-sitter-hl-face:method.call           ((t :foreground "black")))
- `(tree-sitter-hl-face:type                  ((t :foreground "#2B91AF")))
- `(tree-sitter-hl-face:type.parameter        ((t :foreground "black")))
- `(tree-sitter-hl-face:type.argument         ((t :foreground "black")))
- `(tree-sitter-hl-face:type.builtin          ((t :foreground "#0000FF")))
- `(tree-sitter-hl-face:type.super            ((t :foreground "#17A0FB")))
- `(tree-sitter-hl-face:constructor           ((t :foreground "black")))
- `(tree-sitter-hl-face:variable              ((t :foreground "#000000")))
- `(tree-sitter-hl-face:variable.parameter    ((t :foreground "#808080")))
- `(tree-sitter-hl-face:variable.builtin      ((t :foreground "#0C6EEF")))
- `(tree-sitter-hl-face:variable.special      ((t :foreground "#6F008A")))
- `(tree-sitter-hl-face:property              ((t :foreground "#2F4F4F")))
- `(tree-sitter-hl-face:property.definition   ((t :foreground "#2F4F4F")))
- `(tree-sitter-hl-face:comment               ((t :foreground "olive drab")))
- `(tree-sitter-hl-face:doc                   ((t :foreground "olive drab")))
- `(tree-sitter-hl-face:string                ((t :foreground "#B21515")))
- `(tree-sitter-hl-face:string.special        ((t :foreground "#B21515")))
- `(tree-sitter-hl-face:escape                ((t :foreground "#B21515")))
- `(tree-sitter-hl-face:embedded              ((t :foreground "#B21515")))
- `(tree-sitter-hl-face:keyword               ((t :foreground "#0000FF")))
- `(tree-sitter-hl-face:operator              ((t :foreground "#020000")))
- `(tree-sitter-hl-face:label                 ((t :foreground "#808080")))
- `(tree-sitter-hl-face:constant              ((t :foreground "#6F008A")))
- `(tree-sitter-hl-face:constant.builtin      ((t :foreground "#0000FF")))
- `(tree-sitter-hl-face:number                ((t :foreground "black")))
- `(tree-sitter-hl-face:boolean               ((t :foreground "#0000FF")))
- `(tree-sitter-hl-face:repeat                ((t :foreground "#0000FF")))
- `(tree-sitter-hl-face:conditional           ((t :foreground "#0000FF")))
- `(tree-sitter-hl-face:conditional.ternary   ((t :foreground "#0000FF")))
- `(tree-sitter-hl-face:exception             ((t :foreground "#0000FF")))
- `(tree-sitter-hl-face:punctuation           ((t :foreground "#020000")))
- `(tree-sitter-hl-face:punctuation.bracket   ((t :foreground "#020000")))
- `(tree-sitter-hl-face:punctuation.delimiter ((t :foreground "#020000")))
- `(tree-sitter-hl-face:punctuation.special   ((t :foreground "#020000")))
- `(tree-sitter-hl-face:tag                   ((t :foreground "#800000")))
- `(tree-sitter-hl-face:attribute             ((t :foreground "#808080")))
- `(tree-sitter-hl-face:noise                 ((t :foreground "#808080")))
-
- `(ts-fold-replacement-face ((t :foreground "#808080" :box (:line-width (-1 . -1) :style pressed-button))))
- `(ts-fold-fringe-face      ((t :foreground "#919191")))
-
- `(treesit-fold-replacement-face ((t :foreground "#808080" :box (:line-width (-1 . -1) :style pressed-button))))
- `(treesit-fold-fringe-face      ((t :foreground "#919191")))
-
- `(company-tooltip-annotation       ((t :foreground "#41474D")))
- `(company-fuzzy-annotation-face    ((t :foreground "#5E85AB")))
- `(company-preview                  ((t :foreground "dark gray" :underline t)))
- `(company-preview-common           ((t (:inherit company-preview))))
- `(company-tooltip                  ((t :background "#F5F5F5" :foreground "black")))
- `(company-tooltip-selection        ((t :background "#D6EBFF" :foreground "black")))
- `(company-tooltip-common           ((((type x)) (:inherit company-tooltip :weight bold))
-                                     (t (:background "#F5F5F5" :foreground "#0066BF"))))
- `(company-tooltip-common-selection ((((type x)) (:inherit company-tooltip-selection :weight bold))
-                                     (t (:background "#D6EBFF" :foreground "#0066BF"))))
- `(company-scrollbar-bg             ((t :background "#F5F5F5")))
- `(company-scrollbar-fg             ((t :background "#C2C3C9")))
-
- `(corfu-default     ((t :background "#F5F5F5" :foreground "black")))
- `(corfu-current     ((t :background "#D6EBFF" :foreground "black")))
- `(corfu-bar         ((t :background "#D6EBFF" :foreground "black")))
- `(corfu-annotations ((t :foreground "#41474D")))
- `(corfu-popupinfo   ((t :background "#E9EAED" :foreground "#1E1E1E")))
-
- `(popup-tip-face ((t :background "#E9EAED" :foreground "#1E1E1E")))
-
- `(flx-highlight-face ((t :foreground "#223fbf" :weight bold)))
-
- `(ahs-plugin-default-face           ((t :background "#E2E6D6" :box (:line-width (-1 . -1) :style pressed-button :color "#525D68"))))
- `(ahs-plugin-default-face-unfocused ((t :background "#F1F2EE" :box (:line-width (-1 . -1) :style pressed-button :color "#525D68"))))
- `(ahs-face                          ((t :background "#E2E6D6" :box (:line-width (-1 . -1) :style pressed-button :color "#525D68"))))
- `(ahs-definition-face               ((t :background "#E2E6D6" :box (:line-width (-1 . -1) :style pressed-button :color "#525D68"))))
- `(ahs-face-unfocused                ((t :background "#F1F2EE" :box (:line-width (-1 . -1) :style pressed-button :color "#525D68"))))
- `(ahs-definition-face-unfocused     ((t :background "#F1F2EE" :box (:line-width (-1 . -1) :style pressed-button :color "#525D68"))))
-
- `(tab-line     ((t :background "#D3D3D3")))
- `(tab-line-tab ((t :background "#D3D3D3")))
-
- `(centaur-tabs-display-line               ((t :background "#D3D3D3" :box nil :overline nil :underline nil)))
- `(centaur-tabs-default                    ((t :background "#D3D3D3")))
- `(centaur-tabs-unselected                 ((t :background "#E8E8E8" :foreground "grey40")))
- `(centaur-tabs-selected                   ((t :background "#F0F0F0" :foreground "black")))
- `(centaur-tabs-unselected-modified        ((t :background "#E8E8E8" :foreground "grey40")))
- `(centaur-tabs-selected-modified          ((t :background "#F0F0F0" :foreground "black")))
- `(centaur-tabs-modified-marker-unselected ((t :background "#E8E8E8" :foreground "grey40")))
- `(centaur-tabs-modified-marker-selected   ((t :background "#F0F0F0" :foreground "black")))
-
- `(dashboard-text-banner       ((t :foreground "black")))
- `(dashboard-banner-logo-title ((t :foreground "#616161")))
- `(dashboard-heading           ((t :foreground "#727272")))
- `(dashboard-items-face        ((t :foreground "#1475B7")))
-
- `(yascroll:thumb-fringe    ((t :background "#C2C3C9" :foreground "#C2C3C9")))
- `(yascroll:thumb-text-area ((t :background "#C2C3C9" :foreground "#C2C3C9")))
-
- `(region-occurrences-highlighter-face ((t :background "#8FBEE3")))
-
- `(whitespace-indentation ((t :background "grey20" :foreground "aquamarine3")))
- `(whitespace-trailing    ((t :background "grey20" :foreground "red")))
-
- `(highlight-numbers-number ((t :foreground "#0B8658")))
-
- `(modablist-select-face ((t :box (:line-width (-1 . -1) :color "#65A7E2" :style nil))))
- `(modablist-insert-face ((t :background "#565136" :box (:line-width (-1 . -1) :color "#65A7E2" :style nil))))
-
- `(lsp-flycheck-info-unnecessary-face    ((t :inherit flycheck-info    :foreground "#858585")))
- `(lsp-flycheck-warning-unnecessary-face ((t :inherit flycheck-warning :foreground "#858585")))
- `(lsp-flycheck-error-unnecessary-face   ((t :inherit flycheck-error   :foreground "#858585")))
-
- `(lsp-inlay-hint-face           ((t :background "#ECECFB" :foreground "#7A6C7F")))
- `(lsp-inlay-hint-type-face      ((t :background "#ECECFB" :foreground "#7A6C7F")))
- `(lsp-inlay-hint-parameter-face ((t :background "#ECECFB" :foreground "#7A6C7F")))
-
- `(dap-ui-breakpoint-verified-fringe ((t :foreground "#E71F2D")))
- `(breakpoint-disabled               ((t :foreground "#C55159")))
-
- `(diff-hl-insert ((t :background "#107C10")))
- `(diff-hl-delete ((t :background "#B01414")))
- `(diff-hl-change ((t :background "#0077D4")))
-
- `(rjsx-tag              ((t (:foreground "#87CEFA"))))
- `(rjsx-attr             ((t (:foreground "#EEDD82"))))
- `(rjsx-text             ((t (:inherit default))))
- `(rjsx-tag-bracket-face ((t (:inherit web-mode-html-attr-name-face))))
-
- `(markdown-markup-face           ((t :foreground "#7EA728" :background "#ffffff")))
- `(markdown-code-face             ((t :foreground "#2B2B2B" :background "#F5F5F5" :extend t :inherit nil)))
- `(markdown-list-face             ((t :foreground "gold3")))
- `(markdown-table-face            ((t :foreground "#35B0FC" :background "#ffffff")))
- `(markdown-header-face           ((t :foreground "#6EA0E6" :background "#ffffff")))
- `(markdown-header-delimiter-face ((t :foreground "#6EA0E6" :background "#ffffff")))
- `(markdown-metadata-key-face     ((t :foreground "#0000FF")))
- `(markdown-metadata-value-face   ((t :foreground "#D2D2D2")))
-
- `(org-block   ((t :foreground "#000000" :background "#2B2B2B" :extend t :inherit nil)))
- `(org-level-1 ((t :foreground "#4ec9b0")))
- `(org-level-2 ((t :foreground "#9cdcfe")))
- `(org-level-3 ((t :foreground "#569cd6")))
- `(org-level-4 ((t :foreground "#dcdcaa")))
- `(org-level-5 ((t :foreground "#c586c0")))
- `(org-level-6 ((t :foreground "#ce9178")))
- `(org-level-7 ((t :foreground "#d7ba7d")))
- `(org-level-8 ((t :foreground "#d16969")))
-
- `(web-mode-doctype-face            ((t :foreground "Pink3")))
- `(web-mode-comment-face            ((t :foreground "olive drab")))
- `(web-mode-block-comment-face      ((t :foreground "olive drab")))
- `(web-mode-html-tag-bracket-face   ((t :foreground "#800052")))
- `(web-mode-html-tag-face           ((t :foreground "#800000")))
- `(web-mode-html-attr-name-face     ((t :foreground "#FF0000")))
- `(web-mode-html-attr-equal-face    ((t :foreground "#000000")))
- `(web-mode-html-attr-value-face    ((t :foreground "#0000FF")))
- `(web-mode-css-selector-tag-face   ((t :foreground "#88004A")))
- `(web-mode-css-selector-class-face ((t :foreground "#80004A")))
- `(web-mode-css-property-name-face  ((t :foreground "#FF0000")))
-
- `(nxml-processing-instruction-target    ((t :foreground "#800000")))
- `(nxml-processing-instruction-delimiter ((t :foreground "#80765E")))
- `(nxml-namespace-attribute-xmlns        ((t :foreground "#FF0000")))
- `(nxml-namespace-attribute-prefix       ((t :foreground "#FF0000")))
- `(nxml-element-local-name               ((t :foreground "#800000")))
- `(nxml-attribute-local-name             ((t :foreground "#FF0000")))
- `(nxml-tag-delimiter                    ((t :foreground "#800052")))
- `(nxml-text                             ((t :foreground "#000000")))
-
- `(define-it-pop-tip-color ((t :background "#E9EAED")))
-
- `(preview-it-background ((t :background "#E9EAED")))
- )
-
-(custom-theme-set-variables
- 'vs-light
- `(centaur-tabs-background-color "#D3D3D3")
- ;; coverlay overlays
- `(coverlay:tested-line-background-color   "#E1FFE1")
- `(coverlay:untested-line-background-color "LavenderBlush")
- `(jcs-poptip-background-color "#E9EAED")
- `(jcs-poptip-foreground-color "#1E1E1E")
- `(cogru-tip-background-color "#E9EAED")
- `(cogru-tip-foreground-color "#1E1E1E"))
-
-;;;###autoload
-(when load-file-name
-  (add-to-list 'custom-theme-load-path
-               (file-name-as-directory (file-name-directory load-file-name))))
-
-;;;###autoload
-(defun vs-light-theme ()
-  "Load Visual Studio light theme."
-  (interactive)
-  (load-theme 'vs-light t))
-
-(provide-theme 'vs-light)
-
-(provide 'vs-light-theme)
 ;;; vs-light-theme.el ends here

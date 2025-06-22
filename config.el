@@ -35,19 +35,22 @@
 ;; (setq doom-one-brighter-comments t)
 ;; (setq doom-one-comment-bg nil)
 ;; (setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-one-light)
 
 (setq sails-light-brighter-comments t)
 (setq doom-theme 'sails-light)
 ;; (setq doom-theme 'sails-light2)
+;; (setq doom-theme 'sails-light3)
 
-;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
+(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
+(setq-default line-spacing 1)  ;; 行间距，整数以像素为单位
 ;; (setq doom-font (font-spec :family "Monaco" :size 12 :weight 'regular)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12 :weight 'light)
-      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
+;; (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12 :weight 'light)
+;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
 
 (when IS-MAC
   ;; 启用细线平滑
@@ -247,9 +250,9 @@
       syntax-wholeline-max 1000)
 
 ;; 在doom中默认titlebar与编辑框是相同颜色，但显得头轻脚重，这里设置成不同颜色
-(defun my-ns-transparent-titlebar-advice (&rest _args)
-  (set-frame-parameter nil 'ns-transparent-titlebar nil))
-(advice-add 'ns-auto-titlebar-set-frame :after 'my-ns-transparent-titlebar-advice)
+;; (defun my-ns-transparent-titlebar-advice (&rest _args)
+;;   (set-frame-parameter nil 'ns-transparent-titlebar nil))
+;; (advice-add 'ns-auto-titlebar-set-frame :after 'my-ns-transparent-titlebar-advice)
 ;; (setq ns-use-proxy-icon nil)
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
@@ -631,3 +634,17 @@
   ;; for large projects, the git operations to regenerate the cache are too slow.
   (remove-hook 'magit-post-refresh-hook '+magit-invalidate-projectile-cache-h)
   )
+
+;;fix the issue where line numbers are briefly shown and then disappear when opening magit-status
+(add-hook! magit-mode (display-line-numbers-mode -1))
+
+;; To remove the bold effect, place the cursor on the bolded code and press M-x describe-face (or SPC h f).
+;; Emacs will tell you the name of the face currently used for that character.
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (set-face-attribute 'button nil :weight 'normal)
+            (set-face-attribute 'font-lock-preprocessor-face nil :weight 'normal)
+            ))
+
+;; doom default enable highlight-numbers-mode for number bold in code
+(remove-hook 'prog-mode-hook #'highlight-numbers-mode)
