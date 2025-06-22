@@ -45,17 +45,15 @@ Can be an integer to determine the exact padding."
 
   ;; name        default256       16
   ((bg         '("#ffffff" "white"   "white"        ))
-  ;;((bg         '("#fafafa" "white"   "white"        ))
-   (fg         '("#383a42" "#424242" "black"        ))
+   (fg         '("#333333" "#333333" "black"))
 
    ;; These are off-color variants of bg/fg, used primarily for `solaire-mode',
    ;; but can also be useful as a basis for subtle highlights (e.g. for hl-line
    ;; or region), especially when paired with the `doom-darken', `doom-lighten',
    ;; and `doom-blend' helper functions.
    ;; close solaire-mode will better looking
-   (bg-alt     '("#f0f0f0" "white"   "white"        ))
-   ;;(bg-alt     '("#ffffff" "white"   "white"        ))
-   (fg-alt     '("#c6c7c7" "#c7c7c7" "brightblack"  ))
+   (bg-alt     '("#f3f3f3" "white"   "white"))
+   (fg-alt     '("#2d2d2d" "#2d2d2d" "brightblack"))
 
    ;; These should represent a spectrum from bg to fg, where base0 is a starker
    ;; bg and base8 is a starker fg. For example, if bg is light grey and fg is
