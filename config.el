@@ -225,7 +225,7 @@
          )
   :config
   ;; 关闭consult-buffer的preview，在切换buffer时总是会先显示排在第一的文件内容，影响注意力
-  (consult-customize consult-buffer :preview-key nil)
+  ;; (consult-customize consult-buffer :preview-key nil)
   )
 
 ;; completion ivy
@@ -296,7 +296,7 @@
   )
 
 ;; 设置cache文件数50w,如果太小，会在重启后清理，导致每次启动后运行projectile都需要重建
-(setq doom-projectile-cache-limit 1000000)
+;; (setq doom-projectile-cache-limit 1000000)
 
 (add-to-list 'doom-large-file-excluded-modes 'c++-mode)
 
@@ -347,7 +347,6 @@
 ;;   (setq awesome-tray-file-path-show-filename nil)
 ;;   (setq awesome-tray-file-path-truncated-name-length 5) ;; default 1
 ;;   (setq awesome-tray-location-format "(%l:%c)")
-;;   (setq awesome-tray-git-format "%s")
 ;;   )
 
 ;; Hide the menu for as minimalistic a startup screen as possible.
@@ -405,7 +404,7 @@
 ;;   (ultra-scroll-mode 1))
 
 ;; 自动识别文件编码（有时反而不准）
-(unicad-mode 1)
+;; (unicad-mode 1)
 
 ;; 透明
 ;; (set-frame-parameter (selected-frame) 'alpha '(95 100))
@@ -616,12 +615,6 @@
 ;; 在跳转出现helm候选列表时，鼠标经常会位于候选列表中，让其处于选中状态，出现误导
 (setq helm-allow-mouse nil)
 
-;; (prefer-coding-system 'utf-8)
-;; (set-default-coding-systems 'utf-8)
-;; (set-terminal-coding-system 'utf-8)
-;; (set-keyboard-coding-system 'utf-8)
-;; (setq default-buffer-file-coding-system 'utf-8)
-
 (after! magit
   ;; Stop magit complaining about too-long summary lines
   (setq git-commit-style-convention-checks
@@ -631,8 +624,6 @@
   ;; Try to speed up status buffer refreshes
   (remove-hook 'magit-status-headers-hook 'magit-insert-tags-header)
   ;; (setq magit-refresh-verbose t)
-  ;; for large projects, the git operations to regenerate the cache are too slow.
-  (remove-hook 'magit-post-refresh-hook '+magit-invalidate-projectile-cache-h)
   )
 
 ;;fix the issue where line numbers are briefly shown and then disappear when opening magit-status

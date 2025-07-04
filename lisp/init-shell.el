@@ -1,16 +1,8 @@
 ;;; lisp/init-shell.el -*- lexical-binding: t; -*-
 
-;; ;; eshell-toggle
-(use-package! eshell-toggle
-  :ensure t
-  :commands (eshell-toggle)
-  :bind (("M-j" . eshell-toggle))
-  )
-(add-hook 'eshell-mode-hook
-          (lambda ()
-            ;;  关闭company，自动补全反而会让多次输入回车，影响速度
-            (company-mode -1)
-            ))
+;; eshell-toggle
+(map! "M-j" #'eshell-toggle)
+(add-hook! 'eshell-mode-hook (company-mode -1))  ;; 关闭company，自动补全反而会让多次输入回车，影响速度
 
 ;; vterm-toggle
 ;; 使用vterm-toggle，而不是使用doom的vterm配置，因为它可以方便实现cd到当前目前文件目录
