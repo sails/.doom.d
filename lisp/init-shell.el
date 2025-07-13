@@ -2,7 +2,8 @@
 
 ;; eshell-toggle
 (map! "M-j" #'eshell-toggle)
-(add-hook! 'eshell-mode-hook (company-mode -1))  ;; 关闭company，自动补全反而会让多次输入回车，影响速度
+;; doom eshell打开速度非常慢，在init.el中关闭它
+;; (add-hook! 'eshell-mode-hook (company-mode -1))  ;; 关闭company，自动补全反而会让多次输入回车，影响速度
 
 ;; vterm-toggle
 ;; 使用vterm-toggle，而不是使用doom的vterm配置，因为它可以方便实现cd到当前目前文件目录

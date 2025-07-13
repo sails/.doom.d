@@ -1,4 +1,4 @@
-;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
@@ -21,7 +21,7 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -35,15 +35,17 @@
 ;; (setq doom-one-brighter-comments t)
 ;; (setq doom-one-comment-bg nil)
 ;; (setq doom-theme 'doom-one)
-;; (setq doom-theme 'doom-one-light)
 
 (setq sails-light-brighter-comments t)
 (setq doom-theme 'sails-light)
-;; (setq doom-theme 'sails-light2)
-;; (setq doom-theme 'sails-light3)
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
 
 (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
+      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12)
+      )
 (setq-default line-spacing 1)  ;; 行间距，整数以像素为单位
 ;; (setq doom-font (font-spec :family "Monaco" :size 12 :weight 'regular)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
@@ -58,14 +60,10 @@
   )
 ;; 中文字体配置
 (defun init-cjk-fonts()
-  (dolist (charset '(kana han cjk-misc bopomofo))
+  (dolist (charset '(kana han cjk-misc bopomofo))  ;; kana 日文假名,han 中文,cjk-misc中日韩相关杂项,bopomofo 台湾中文
     (set-fontset-font (frame-parameter nil 'font)
       charset (font-spec :family "PingFang SC" :size 12))))
 (add-hook 'doom-init-ui-hook 'init-cjk-fonts)
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -104,9 +102,11 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+
 (when IS-MAC
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'none))
+
 
 (when (display-graphic-p)
   (setq doom-modeline-height 2)
@@ -639,3 +639,8 @@
 
 ;; doom default enable highlight-numbers-mode for number bold in code
 (remove-hook 'prog-mode-hook #'highlight-numbers-mode)
+
+(after! go-translate
+  (setq gt-langs '(en zh))
+  (setq gt-default-translator (gt-translator :engines (gt-youdao-dict-engine)))
+  )

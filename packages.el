@@ -3,7 +3,6 @@
 
 ;; To install a package with Doom you must declare them here and run 'doom sync'
 ;; on the command line, then restart Emacs for the changes to take effect -- or
-;; use 'M-x doom/reload'.
 
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
@@ -50,26 +49,16 @@
 ;; (unpin! t)
 
 
-(package! ef-themes
-  :recipe (:host github :repo "protesilaos/ef-themes"))
-;; (package! ef-themes)
-
 (package! exec-path-from-shell)
 
 (package! eshell-toggle)
 ;; (package! consult)
-(package! vterm-toggle)
-;; (package! ag)
-;; (package! rg)
+;; (package! vterm-toggle)
 ;; ag/(do ag)->edit->commit
 ;; helm-resume 可复用打开上次搜索列表
 ;; C-j 打开文件不关闭搜索列表
 (package! helm-ag)
 (package! helm-gtags)
-;; ivy occur
-;; (package! citre)
-(package! firestarter)
-
 (package! google-c-style)
 ;; (package! ccls)
 
@@ -90,6 +79,7 @@
 (package! blink-search
   :recipe (:host github :repo "manateelazycat/blink-search"
            :files ("*.el" "*.py" "core/*.py" "backend" "icons")))
+
 (package! awesome-tray
   :recipe (:host github :repo "manateelazycat/awesome-tray"))
 
@@ -105,10 +95,6 @@
 
 ;; (package! treesit-auto)
 
-;; emacs-mac smooth scroll
-;; (package! ultra-scroll-mac
-;;   :recipe (:host github :repo "jdtsmith/ultra-scroll-mac"))
-
 ;; theme
 (package! color-theme-sanityinc-tomorrow)
 (package! modus-themes)
@@ -119,5 +105,5 @@
            :files (:defaults "resources")))
 
 
-(package! ultra-scroll
-  :recipe (:host github :repo "jdtsmith/ultra-scroll"))
+(package! go-translate
+  :recipe (:host github :repo "lorniu/go-translate"))

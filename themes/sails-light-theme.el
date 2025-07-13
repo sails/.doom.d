@@ -1,12 +1,5 @@
 ;;; sails-light-theme.el --- inspired by Atom One Light -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;
-;; Added: July 31, 2017 (#96)
-;; Author: ztlevi <https://github.com/ztlevi>
-;; Maintainer: Henrik Lissner <https://github.com/hlissner>
-;; Source: https://github.com/atom/one-light-ui
-;;
-;;; Commentary:
-;;; Code:
 
 (require 'doom-themes)
 
@@ -44,8 +37,8 @@ Can be an integer to determine the exact padding."
   :background-mode 'light
 
   ;; name        default256       16
-  ((bg         '("#ffffff" "white"   "white"        ))
-   (fg         '("#333333" "#333333" "black"))
+  ((bg         '("#fafafa" "white"   "white"        ))
+   (fg         '("#2d2d2d" "#2d2d2d" "black"))
 
    ;; These are off-color variants of bg/fg, used primarily for `solaire-mode',
    ;; but can also be useful as a basis for subtle highlights (e.g. for hl-line
@@ -63,8 +56,8 @@ Can be an integer to determine the exact padding."
    (base1      '("#e7e7e7" "#e7e7e7" "brightblack"  ))
    (base2      '("#dfdfdf" "#dfdfdf" "brightblack"  ))
    (base3      '("#c6c7c7" "#c6c7c7" "brightblack"  ))
-   (base4      '("#9ca0a4" "#9ca0a4" "brightblack"  ))
-   (base5      '("#383a42" "#424242" "brightblack"  ))
+   (base4      '("#6a737d" "#6a737d" "brightblack"  ))
+   (base5      '("#222222" "#222222" "brightblack"  ))
    (base6      '("#202328" "#2e2e2e" "brightblack"  ))
    (base7      '("#1c1f24" "#1e1e1e" "brightblack"  ))
    (base8      '("#1b2229" "black"   "black"        ))
@@ -72,15 +65,16 @@ Can be an integer to determine the exact padding."
 
    (grey       base4)
    (red        '("#e45649" "#e45649" "red"          ))
-   (orange     '("#da8548" "#dd8844" "brightred"    ))
-   (green      '("#50a14f" "#50a14f" "green"        ))
+   (dark-red        '("#d12f1b" "#d12f1b" "red"          ))
+   (orange     '("#c25d1e" "#c25d1e" "brightred"    ))
+   (green      '("#22863a" "#22863a" "green"        ))
    (green2      '("#008000" "#008000" "green"        ))
    (teal       '("#4db5bd" "#44b9b1" "brightgreen"  ))
-   (yellow     '("#986801" "#986801" "yellow"       ))
+   (yellow     '("#b87700" "#b87700" "yellow"       ))
    (blue       '("#4078f2" "#4078f2" "brightblue"   ))
    (dark-blue  '("#a0bcf8" "#a0bcf8" "blue"         ))
    (magenta    '("#a626a4" "#a626a4" "magenta"      ))
-   (violet     '("#b751b6" "#b751b6" "brightmagenta"))
+   (violet     '("#a626a4" "#a626a4" "brightmagenta"))
    (cyan       '("#0184bc" "#0184bc" "brightcyan"   ))
    (dark-cyan  '("#005478" "#005478" "cyan"         ))
 
@@ -96,14 +90,14 @@ Can be an integer to determine the exact padding."
    (doc-comments   (doom-darken comments 0.15))
    (constants      violet)
    (functions      magenta)
-   (keywords       red)
+   (keywords       dark-red)
    (methods        cyan)
    (operators      blue)
    (type           yellow)
    (strings        green)
    (variables      (doom-darken magenta 0.36))
    (numbers        orange)
-   (region         `(,(doom-darken (car bg-alt) 0.1) ,@(doom-darken (cdr base0) 0.3)))
+   (region         '("#add6ff" "#add6ff" "lightblue"))
    (error          red)
    (warning        yellow)
    (success        green)
@@ -138,6 +132,7 @@ Can be an integer to determine the exact padding."
    ;; ((line-number &override) :foreground (doom-lighten base4 0.15) :slant 'normal)
    ((line-number &override) :foreground base9 :slant 'normal)
    ((line-number-current-line &override) :foreground base8 :slant 'normal)
+   ;; ((line-number-current-line &override) :foreground blue :slant 'normal)
    (mode-line
     :background modeline-bg :foreground modeline-fg
     :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg)))
