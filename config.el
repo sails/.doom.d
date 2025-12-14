@@ -37,7 +37,11 @@
 ;; (setq doom-theme 'doom-one)
 
 (setq sails-light-brighter-comments t)
-(setq doom-theme 'sails-light)
+;; (setq doom-theme 'sails-light)
+(setq doom-theme 'sails-light2)
+;; (setq doom-theme 'sanityinc-tomorrow-bright)
+;; (setq doom-theme 'doom-one)
+
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -47,11 +51,12 @@
       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12)
       )
 (setq-default line-spacing 1)  ;; 行间距，整数以像素为单位
-;; (setq doom-font (font-spec :family "Monaco" :size 12 :weight 'regular)
+
+;; (setq doom-font (font-spec :family "menlo" :size 12 :weight 'light)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
 ;; (setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'light)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
-;; (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12 :weight 'light)
+;; (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12 :weight 'regular)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
 
 (when IS-MAC
@@ -268,14 +273,14 @@
 (require 'init-shell)
 (require 'init-exec-path)
 
-(setq whitespace-line-column 120
-      whitespace-style
-      '(face indentation tabs tab-mark spaces space-mark newline newline-mark
-        trailing lines-tail)
-      whitespace-display-mappings
-      '((tab-mark ?\t [?› ?\t])
-        ;; (newline-mark ?\n [?¬ ?\n])
-        (space-mark ?\  [?·] [?.])))
+;; (setq whitespace-line-column 120
+;;       whitespace-style
+;;       '(face indentation tabs tab-mark spaces space-mark newline newline-mark
+;;         trailing lines-tail)
+;;       whitespace-display-mappings
+;;       '((tab-mark ?\t [?› ?\t])
+;;         ;; (newline-mark ?\n [?¬ ?\n])
+;;         (space-mark ?\  [?·] [?.])))
 
 ;; (add-hook 'prog-mode-hook 'whitespace-mode)
 
@@ -615,19 +620,19 @@
 ;; 在跳转出现helm候选列表时，鼠标经常会位于候选列表中，让其处于选中状态，出现误导
 (setq helm-allow-mouse nil)
 
-(after! magit
-  ;; Stop magit complaining about too-long summary lines
-  (setq git-commit-style-convention-checks
-        (remove 'overlong-summary-line git-commit-style-convention-checks))
-  ;; Show timestamps rather than relative dates
-  (setq magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
-  ;; Try to speed up status buffer refreshes
-  (remove-hook 'magit-status-headers-hook 'magit-insert-tags-header)
-  ;; (setq magit-refresh-verbose t)
-  )
+;; (after! magit
+;;   ;; Stop magit complaining about too-long summary lines
+;;   (setq git-commit-style-convention-checks
+;;         (remove 'overlong-summary-line git-commit-style-convention-checks))
+;;   ;; Show timestamps rather than relative dates
+;;   (setq magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 18))
+;;   ;; Try to speed up status buffer refreshes
+;;   (remove-hook 'magit-status-headers-hook 'magit-insert-tags-header)
+;;   ;; (setq magit-refresh-verbose t)
+;;   )
 
-;;fix the issue where line numbers are briefly shown and then disappear when opening magit-status
-(add-hook! magit-mode (display-line-numbers-mode -1))
+;; ;;fix the issue where line numbers are briefly shown and then disappear when opening magit-status
+;; (add-hook! magit-mode (display-line-numbers-mode -1))
 
 ;; To remove the bold effect, place the cursor on the bolded code and press M-x describe-face (or SPC h f).
 ;; Emacs will tell you the name of the face currently used for that character.
@@ -644,3 +649,10 @@
   (setq gt-langs '(en zh))
   (setq gt-default-translator (gt-translator :engines (gt-youdao-dict-engine)))
   )
+
+;; fd 命令会忽略.gitignore等设置中的文件
+(after! projectile
+  (setq projectile-generic-command
+        (if (executable-find "fd")
+            "fd . -I -0 --type f --color=never --strip-cwd-prefix"
+          projectile-generic-command)))

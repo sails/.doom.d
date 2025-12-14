@@ -6,15 +6,13 @@
 ;; (defvar +ccls-initial-whitelist [])
 
 ;; cc-mode设置
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode))
 
 (defun my-c-mode-func ()
-  (google-set-c-style)
-
   (setenv "GTAGSFORCECPP" "1")
-
   (add-hook 'c-mode-hook 'helm-gtags-mode)
   (add-hook 'c++-mode-hook 'helm-gtags-mode)
+  (add-hook 'c++-ts-mode-hook 'helm-gtags-mode)
   (add-hook 'protobuf-mode-hook 'helm-gtags-mode)
   (with-eval-after-load 'helm-gtags
     (define-key helm-gtags-mode-map (kbd "M-t") 'helm-gtags-find-tag)
@@ -83,8 +81,9 @@
     :default "c++")
 )
 
-(add-hook 'c-mode-common-hook 'my-c-mode-func)
 
+(add-hook 'c-mode-common-hook 'my-c-mode-func)
+(add-hook 'c++-ts-mode-hook 'my-c-mode-func)
 
 (provide 'init-cc)
 

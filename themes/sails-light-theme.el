@@ -69,6 +69,7 @@ Can be an integer to determine the exact padding."
    (orange     '("#c25d1e" "#c25d1e" "brightred"    ))
    (green      '("#22863a" "#22863a" "green"        ))
    (green2      '("#008000" "#008000" "green"        ))
+   (green3      '("#529E4E" "#529E4E" "green"        ))
    (teal       '("#4db5bd" "#44b9b1" "brightgreen"  ))
    (yellow     '("#b87700" "#b87700" "yellow"       ))
    (blue       '("#4078f2" "#4078f2" "brightblue"   ))
@@ -102,7 +103,7 @@ Can be an integer to determine the exact padding."
    (warning        yellow)
    (success        green)
    (vc-modified    orange)
-   (vc-added       green)
+   (vc-added       green3)
    (vc-deleted     red)
 
    ;; These are extra color variables used only in this theme; i.e. they aren't
