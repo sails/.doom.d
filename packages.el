@@ -107,3 +107,9 @@
 
 (package! go-translate
   :recipe (:host github :repo "lorniu/go-translate"))
+
+(package! magit)
+
+(package! shell-maker)
+(package! acp)
+(package! agent-shell)

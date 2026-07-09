@@ -9,6 +9,8 @@
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode))
 
 (defun my-c-mode-func ()
+  (setq c-basic-offset 2)
+  (setq tab-width 2)
   (setenv "GTAGSFORCECPP" "1")
   (add-hook 'c-mode-hook 'helm-gtags-mode)
   (add-hook 'c++-mode-hook 'helm-gtags-mode)

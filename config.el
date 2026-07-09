@@ -9,6 +9,12 @@
 (setq user-full-name "sailsxu"
       user-mail-address "sailsxu@qq.com")
 
+;; 网络代理 (尽早设置，确保所有URL请求走代理)
+;; (setq url-proxy-services
+;;       '(("no_proxy" . "^\\(localhost\\|10\\..*\\|192\\.168\\..*\\)")
+;;         ("http" . "127.0.0.1:7890")
+;;         ("https" . "127.0.0.1:7890")))
+
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
 ;; - `doom-font' -- the primary font to use
@@ -47,10 +53,10 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
-(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+(setq doom-font (font-spec :family "JetBrains Mono" :size 12 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12)
       )
-(setq-default line-spacing 1)  ;; 行间距，整数以像素为单位
+(setq-default line-spacing 2)  ;; 行间距，整数以像素为单位
 
 ;; (setq doom-font (font-spec :family "menlo" :size 12 :weight 'light)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
@@ -59,16 +65,14 @@
 ;; (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12 :weight 'regular)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
 
-(when IS-MAC
-  ;; 启用细线平滑
-  (setq ns-use-thin-smoothing t)
-  )
 ;; 中文字体配置
 (defun init-cjk-fonts()
   (dolist (charset '(kana han cjk-misc bopomofo))  ;; kana 日文假名,han 中文,cjk-misc中日韩相关杂项,bopomofo 台湾中文
     (set-fontset-font (frame-parameter nil 'font)
       charset (font-spec :family "PingFang SC" :size 12))))
-(add-hook 'doom-init-ui-hook 'init-cjk-fonts)
+
+(when (display-graphic-p)
+  (add-hook 'doom-init-ui-hook #'init-cjk-fonts))
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -303,7 +307,7 @@
 ;; 设置cache文件数50w,如果太小，会在重启后清理，导致每次启动后运行projectile都需要重建
 ;; (setq doom-projectile-cache-limit 1000000)
 
-(add-to-list 'doom-large-file-excluded-modes 'c++-mode)
+;; (add-to-list 'doom-large-file-excluded-modes 'c++-mode)
 
 ;; (use-package! hide-mode-line
 ;;   :config
@@ -640,6 +644,16 @@
           (lambda ()
             (set-face-attribute 'button nil :weight 'normal)
             (set-face-attribute 'font-lock-preprocessor-face nil :weight 'normal)
+            (set-face-attribute 'font-lock-keyword-face nil :weight 'normal)
+            (set-face-attribute 'font-lock-function-name-face nil :weight 'normal)
+            (set-face-attribute 'font-lock-type-face nil :weight 'normal)
+            (set-face-attribute 'font-lock-variable-name-face nil :weight 'normal)
+            (set-face-attribute 'font-lock-builtin-face nil :weight 'normal)
+            (set-face-attribute 'font-lock-constant-face nil :weight 'normal)
+            (set-face-attribute 'font-lock-doc-face nil :weight 'normal)
+            (set-face-attribute 'font-lock-comment-face nil :weight 'normal)
+            (set-face-attribute 'font-lock-string-face nil :weight 'normal)
+            (set-face-attribute 'font-lock-warning-face nil :weight 'normal)
             ))
 
 ;; doom default enable highlight-numbers-mode for number bold in code
@@ -656,3 +670,21 @@
         (if (executable-find "fd")
             "fd . -I -0 --type f --color=never --strip-cwd-prefix"
           projectile-generic-command)))
+
+(add-load-path! "~/.config/doom/lisp/emacs-tramp-rpc/lisp")
+(require 'tramp-rpc)
+
+(require 'acp)
+(require 'agent-shell)
+;; (setq agent-shell-anthropic-claude-environment
+;;       (agent-shell-make-environment-variables
+;;        "ANTHROPIC_BASE_URL" "https://api.lkeap.cloud.tencent.com/plan/anthropic"
+;;        "ANTHROPIC_API_KEY" (auth-source-pass-get 'secret "sk-tp-oWQoONGKiJ3s85ETXm1HetfPvhhefUkJJ0Zoy9757FVGcYBZ")
+;;        "ANTHROPIC_MODEL" "glm-5.1"
+;;        "ANTHROPIC_SMALL_FAST_MODEL" "minimax-m2.5"))
+
+;; 网络代理 (放在文件开头以确保最先生效)
+(setq url-proxy-services
+      '(("no_proxy" . "^\\(localhost\\|10\\..*\\|192\\.168\\..*\\)")
+        ("http" . "127.0.0.1:7890")
+        ("https" . "127.0.0.1:7890")))
