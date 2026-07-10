@@ -43,8 +43,12 @@
 ;; (setq doom-theme 'doom-one)
 
 (setq sails-light-brighter-comments t)
-;; (setq doom-theme 'sails-light)
+;; 全局主题用 sails-light2：dashboard / org / modeline / 补全菜单 / buffer 列表等所有
+;; 基础界面保持与以前完全一致。C/C++/Go 代码 buffer 的 VSCode Light+ 配色不走主题
+;; override(那会污染共用 font-lock face 的 UI)，而是在 +vscode-code.el 里用 buffer-local
+;; face-remap 实现——只染代码 buffer，不波及任何 UI。见文件末尾的 (load! "+vscode-code")。
 (setq doom-theme 'sails-light2)
+;; (setq doom-theme 'sails-light)
 ;; (setq doom-theme 'sanityinc-tomorrow-bright)
 ;; (setq doom-theme 'doom-one)
 
@@ -515,6 +519,11 @@
 ;;   (which-function-mode 1)
 ;;   )
 
+
+;; C/C++/Go 代码的 VSCode Light+ 配色（buffer-local face-remap）+ 相关 lsp 设置，
+;; 全部集中在同目录的 +vscode-code.el 里，保持本文件整洁。全局主题为 sails-light2，
+;; 代码色只作用于代码 buffer，不污染 dashboard/org 等共用 font-lock face 的 UI。
+(load! "+vscode-code")
 
 ;; (setq mouse-wheel-progressive-speed t)
 
