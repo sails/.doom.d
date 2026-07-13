@@ -101,7 +101,11 @@
                  (lsp-face-semhl-string            :foreground ,string)
                  (lsp-face-semhl-comment           :foreground ,comment :slant normal)
                  (lsp-face-semhl-operator          :foreground ,operator)
-                 (lsp-face-semhl-static            :foreground ,bluekw)))
+                 ;; static 方法/函数的语义高亮也走金色,和普通方法/函数保持一致
+                ;; (clangd 对 static 方法给 semantic token type=static,默认走
+                ;; bluekw 蓝色,而非 function 的 brown 金色——同一个文件里 static
+                ;; 方法和普通方法的函数名颜色不一致)
+                (lsp-face-semhl-static            :foreground ,brown)))
         (apply #'face-remap-add-relative (car spec) (cdr spec))))))
 
 ;;; --- lsp 语义高亮开关（让 Emacs 像 VSCode 一样给函数调用/成员/参数上色）---
