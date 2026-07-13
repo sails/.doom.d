@@ -69,6 +69,29 @@
 ;; (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12 :weight 'regular)
 ;;       doom-variable-pitch-font (font-spec :family "Fira Sans" :size 12))
 
+;; ── 连字(ligature)：剔除所有含 "*" 的连字 ──────────────────────────────
+;; doom 的 ligatures 模块默认连字表里含 "**" "***" "*/" "/*" "*>" "(*" "*)" 等，
+;; ligature.el 会把注释里的 /****** 中的 *** 合成为单个连字字形(度量不同)，
+;; 而剩余星号单独渲染，导致「连续星号高度不一致」。这里清空 doom 预置的连字表，
+;; 重设为「去掉所有含星号」的版本——-> => != <= >= 等常用连字全部保留，只是不再
+;; 合成任何星号序列，于是 /****** 里每个星号都作为普通字符等高渲染。
+(after! ligature
+  (setq ligature-composition-table nil)
+  (ligature-set-ligatures
+   't
+   '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "||=" "||>"
+     ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+     "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+     "<~~" "<~>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+     "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+     "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+     "~>" "~-" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+     "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+     ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<|" "<:"
+     "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+     "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+     "?=" "?." "??" ";;" "/=" "/>" "//" "__" "://")))
+
 ;; 中文字体配置
 (defun init-cjk-fonts()
   (dolist (charset '(kana han cjk-misc bopomofo))  ;; kana 日文假名,han 中文,cjk-misc中日韩相关杂项,bopomofo 台湾中文
@@ -281,16 +304,16 @@
 (require 'init-shell)
 (require 'init-exec-path)
 
-;; (setq whitespace-line-column 120
-;;       whitespace-style
-;;       '(face indentation tabs tab-mark spaces space-mark newline newline-mark
-;;         trailing lines-tail)
-;;       whitespace-display-mappings
-;;       '((tab-mark ?\t [?› ?\t])
-;;         ;; (newline-mark ?\n [?¬ ?\n])
-;;         (space-mark ?\  [?·] [?.])))
+(setq whitespace-line-column 120
+      whitespace-style
+      '(face indentation tabs tab-mark spaces space-mark newline newline-mark
+        trailing lines-tail)
+      whitespace-display-mappings
+      '((tab-mark ?\t [?› ?\t])
+        ;; (newline-mark ?\n [?¬ ?\n])
+        (space-mark ?\  [?·] [?.])))
 
-;; (add-hook 'prog-mode-hook 'whitespace-mode)
+(add-hook 'prog-mode-hook 'whitespace-mode)
 
 ;; 大小写M-u,M-l
 (put 'upcase-region 'disabled nil)
@@ -573,6 +596,8 @@
    indent-bars-prefer-character nil
    indent-bars-color '(highlight :face-bg t :blend 0.3)
    indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 0.5)
+   ;; 是「当前列高亮色」与 background 的混合因子(没设 :color 时走 blend-only 分支).
+   ;; 1.0 = 100% 与背景混合(最淡,接近背景), 0.0 = 100% 主色(最深).
    indent-bars-highlight-current-depth '(:blend 1)
    ;; character设置
    ;; indent-bars-prefer-character t
@@ -685,15 +710,42 @@
 
 (require 'acp)
 (require 'agent-shell)
+(add-hook 'agent-shell-mode-hook #'agent-recall-track-sessions)
+(setq agent-shell-session-restore-verbosity 'last)
+
+;; ── agent-shell 性能补丁：工具调用输入的 JSON 美化 ─────────────────────
+;; profiler 热点：agent-shell--on-notification 每收到一条 session/update 流式
+;; 通知，就会对整个 tool-call 的 rawInput 调 agent-shell--format-tool-call-input
+;; 重新美化一遍。原实现用 json-pretty-print-buffer → json-pretty-print →
+;; replace-region-contents（做最小 diff 替换，非常贵，占了 CPU 采样的 ~42%）。
+;; 大的工具输入 + 高频流式更新叠加，就卡成 profile 里那样。
+;;
+;; 覆盖为纯字符串构建：用 json.el 的 json-encoding-pretty-print 让 json-encode
+;; 直接产出带缩进的 JSON，不经过临时 buffer、不走 replace-region-contents；
+;; 并对超大输入(>20KB)直接输出紧凑 JSON，跳过美化。
+;; (with-eval-after-load 'agent-shell
+;;   (require 'json)
+;;   (defvar my/agent-shell-tool-input-pretty-limit 20000
+;;     "rawInput 的 JSON 长度超过该字节数时不再美化，直接输出紧凑 JSON。")
+;;   (defun my/agent-shell--format-tool-call-input (acp-raw-input)
+;;     "ACP-RAW-INPUT 的快速格式化，替代原 json-pretty-print-buffer 版本。"
+;;     (if-let* (((= (length acp-raw-input) 1))
+;;               (value (cdar acp-raw-input))
+;;               ((and (stringp value) (not (string-empty-p value)))))
+;;         (format "```\n%s\n```" value)
+;;       (let* ((compact (json-encode acp-raw-input))
+;;              (pretty (if (> (length compact) my/agent-shell-tool-input-pretty-limit)
+;;                          compact
+;;                        (let ((json-encoding-pretty-print t)
+;;                              (json-encoding-default-indentation "  "))
+;;                          (json-encode acp-raw-input)))))
+;;         (format "```json\n%s\n```" pretty))))
+;;   (advice-add 'agent-shell--format-tool-call-input :override
+;;               #'my/agent-shell--format-tool-call-input))
+
 ;; (setq agent-shell-anthropic-claude-environment
 ;;       (agent-shell-make-environment-variables
 ;;        "ANTHROPIC_BASE_URL" "https://api.lkeap.cloud.tencent.com/plan/anthropic"
 ;;        "ANTHROPIC_API_KEY" (auth-source-pass-get 'secret "sk-tp-oWQoONGKiJ3s85ETXm1HetfPvhhefUkJJ0Zoy9757FVGcYBZ")
 ;;        "ANTHROPIC_MODEL" "glm-5.1"
 ;;        "ANTHROPIC_SMALL_FAST_MODEL" "minimax-m2.5"))
-
-;; 网络代理 (放在文件开头以确保最先生效)
-(setq url-proxy-services
-      '(("no_proxy" . "^\\(localhost\\|10\\..*\\|192\\.168\\..*\\)")
-        ("http" . "127.0.0.1:7890")
-        ("https" . "127.0.0.1:7890")))

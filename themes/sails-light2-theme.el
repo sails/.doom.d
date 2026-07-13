@@ -231,6 +231,8 @@ Can be an integer to determine the exact padding."
    ;;;; whitespace
    ((whitespace-tab &override)         :background (unless (default-value 'indent-tabs-mode) base0))
    ((whitespace-indentation &override) :background (if (default-value 'indent-tabs-mode) base0))
+   ((whitespace-space &override)       :foreground "#d0d0d0")
+   ((whitespace-newline &override)     :foreground "#d0d0d0")
    ;; cursor
    (cursor :background "#000000")
 
