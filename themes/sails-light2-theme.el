@@ -233,6 +233,15 @@ Can be an integer to determine the exact padding."
    ((whitespace-indentation &override) :background (if (default-value 'indent-tabs-mode) base0))
    ((whitespace-space &override)       :foreground "#d0d0d0")
    ((whitespace-newline &override)     :foreground "#d0d0d0")
+   ;; trailing-whitespace 默认有红色背景(catppuccin peach/themer accent0),
+   ;; 导致行末尾随空格显示为红色块(特别是一行只有空格的"空行").
+   ;; 清掉背景色,只保留前景和普通空格一致的淡色.
+   ((trailing-whitespace &override)    :background nil :foreground "#d0d0d0")
+   ((whitespace-trailing &override)    :background nil :foreground "#d0d0d0")
+   ;; show-paren-match-expression 默认继承自 catppuccin 的 match face,
+   ;; 会把整对匹配括号之间的所有内容(包括 {} 空块内的空白)一起染色.
+   ;; 透明化这个 face,只保留 show-paren-match(只高亮括号本身).
+   (show-paren-match-expression :background nil :foreground nil)
    ;; cursor
    (cursor :background "#000000")
 

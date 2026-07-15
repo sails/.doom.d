@@ -145,7 +145,8 @@
 
 
 (when (display-graphic-p)
-  (setq doom-modeline-height 2)
+  ;; (setq doom-modeline-height 2)
+  (setq doom-modeline-height 1)
   ;; (setq doom-modeline-icon nil)
   ;; (setq doom-modeline-major-mode-icon t)
 )
@@ -304,16 +305,16 @@
 (require 'init-shell)
 (require 'init-exec-path)
 
-(setq whitespace-line-column 120
-      whitespace-style
-      '(face indentation tabs tab-mark spaces space-mark newline newline-mark
-        trailing lines-tail)
-      whitespace-display-mappings
-      '((tab-mark ?\t [?› ?\t])
-        ;; (newline-mark ?\n [?¬ ?\n])
-        (space-mark ?\  [?·] [?.])))
+;; (setq whitespace-line-column 120
+;;       whitespace-style
+;;       '(face indentation tabs tab-mark spaces space-mark newline newline-mark
+;;         trailing lines-tail)
+;;       whitespace-display-mappings
+;;       '((tab-mark ?\t [?› ?\t])
+;;         ;; (newline-mark ?\n [?¬ ?\n])
+;;         (space-mark ?\  [?·] [?.])))
 
-(add-hook 'prog-mode-hook 'whitespace-mode)
+;; (add-hook 'prog-mode-hook 'whitespace-mode)
 
 ;; 大小写M-u,M-l
 (put 'upcase-region 'disabled nil)
@@ -598,7 +599,7 @@
    indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 0.5)
    ;; 是「当前列高亮色」与 background 的混合因子(没设 :color 时走 blend-only 分支).
    ;; 1.0 = 100% 与背景混合(最淡,接近背景), 0.0 = 100% 主色(最深).
-   indent-bars-highlight-current-depth '(:blend 1)
+   indent-bars-highlight-current-depth '(:blend 0.85)
    ;; character设置
    ;; indent-bars-prefer-character t
    ;; indent-bars-no-stipple-char ?┊  ;; | ⎸

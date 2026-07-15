@@ -93,7 +93,17 @@
                  (lsp-face-semhl-parameter         :foreground ,dkblue)
                  (lsp-face-semhl-property          :foreground ,dkblue)
                  (lsp-face-semhl-field             :foreground ,dkblue)
-                 (lsp-face-semhl-constant          :foreground ,constblue)
+                 ;; constant / defaultLibrary modifier 会让 const method call
+                 ;; 或 std::string::empty() 等标准库方法同时叠上
+                 ;; (constant default-library method) 三个 face.  默认:
+                 ;; - lsp-face-semhl-constant  :inherit font-lock-constant-face
+                 ;; - lsp-face-semhl-default-library :inherit font-lock-builtin-face
+                 ;; 两者都覆盖 method 的金色(渲染合并时,非 method 的
+                 ;; :foreground 会盖过 method 的 :foreground,导致
+                 ;; .result() / .c_str() / std::empty() 等变蓝).
+                 ;; 两者都设 :foreground nil,让 method 的金色透出.
+                 (lsp-face-semhl-constant          :foreground nil)
+                 (lsp-face-semhl-default-library   :foreground nil)
                  (lsp-face-semhl-enum-member       :foreground ,constblue)
                  (lsp-face-semhl-macro             :foreground ,macro)
                  (lsp-face-semhl-preprocessor      :foreground ,macro)
