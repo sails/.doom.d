@@ -41,11 +41,18 @@
     (setq lsp-lens-enable nil)  ;; 导致cpu100%
     (setq lsp-diagnostics-provider :none)
     (setq lsp-headerline-breadcrumb-segments '(symbols))
+    ;; nice -n 10 降低 clangd 的 OS 调度优先级. 用 advice 在 clangd 命令前插入 nice.
+    (advice-add 'lsp-clients--clangd-command :filter-return
+              (lambda (cmd)
+                (if (string-prefix-p "nice" (car cmd))
+                    cmd
+                  (append '("nice" "-n" "10") cmd))))
+
     )
   (after! eglot
     :config
-    (set-eglot-client! 'c++-mode
-                       '("clangd"
+    (set-eglot-client! '(c++-mode c++-ts-mode)
+                       '("nice" "-n" "10" "clangd"
                          "-j=1"
                          "--background-index"
                          "--clang-tidy"

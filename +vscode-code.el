@@ -115,7 +115,13 @@
                 ;; (clangd 对 static 方法给 semantic token type=static,默认走
                 ;; bluekw 蓝色,而非 function 的 brown 金色——同一个文件里 static
                 ;; 方法和普通方法的函数名颜色不一致)
-                (lsp-face-semhl-static            :foreground ,brown)))
+                (lsp-face-semhl-static            :foreground ,brown)
+                 ;; --- modeline（清掉 box 下划线，跟主题一致）---
+                 ;; 加载本文件后 mode-line-highlight 的 :box 会让 isearch 计数
+                 ;; 1/2、6/45 等出现一条灰色横线（看起来像下划线）。
+                 ;; 清掉 box 和 underline，背景走主题 modeline 背景。
+                 (mode-line-highlight
+                  :box nil :underline nil)))
         (apply #'face-remap-add-relative (car spec) (cdr spec))))))
 
 ;;; --- lsp 语义高亮开关（让 Emacs 像 VSCode 一样给函数调用/成员/参数上色）---

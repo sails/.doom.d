@@ -287,9 +287,9 @@
       syntax-wholeline-max 1000)
 
 ;; 在doom中默认titlebar与编辑框是相同颜色，但显得头轻脚重，这里设置成不同颜色
-;; (defun my-ns-transparent-titlebar-advice (&rest _args)
-;;   (set-frame-parameter nil 'ns-transparent-titlebar nil))
-;; (advice-add 'ns-auto-titlebar-set-frame :after 'my-ns-transparent-titlebar-advice)
+(defun my-ns-transparent-titlebar-advice (&rest _args)
+  (set-frame-parameter nil 'ns-transparent-titlebar nil))
+(advice-add 'ns-auto-titlebar-set-frame :after 'my-ns-transparent-titlebar-advice)
 ;; (setq ns-use-proxy-icon nil)
 (setq frame-title-format
       '((:eval (if (buffer-file-name)
@@ -669,6 +669,12 @@
 ;;   (remove-hook 'magit-status-headers-hook 'magit-insert-tags-header)
 ;;   ;; (setq magit-refresh-verbose t)
 ;;   )
+
+(after! magit
+  ;; 不在 magit-status 里显示 submodule 的 modified 状态(避免 noise).
+  ;; 设置 nil 时 magit 完全忽略 submodule changes; 设置 t 时只显示当前目录下
+  ;; 的 submodule,不再递归显示嵌套的.
+  (setq magit-submodule-list nil))
 
 ;; ;;fix the issue where line numbers are briefly shown and then disappear when opening magit-status
 ;; (add-hook! magit-mode (display-line-numbers-mode -1))

@@ -229,10 +229,13 @@ Can be an integer to determine the exact padding."
    ;;;; wgrep <built-in>
    (wgrep-face :background base1)
    ;;;; whitespace
-   ((whitespace-tab &override)         :background (unless (default-value 'indent-tabs-mode) base0))
-   ((whitespace-indentation &override) :background (if (default-value 'indent-tabs-mode) base0))
-   ((whitespace-space &override)       :foreground "#d0d0d0")
-   ((whitespace-newline &override)     :foreground "#d0d0d0")
+  ((whitespace-tab &override)         :background (unless (default-value 'indent-tabs-mode) base0))
+  ((whitespace-indentation &override) :background (if (default-value 'indent-tabs-mode) base0))
+  ((whitespace-space &override)       :foreground "#d0d0d0")
+  ((whitespace-newline &override)     :foreground "#d0d0d0")
+  ;; isearch 0/0 失败状态默认有 RosyBrown1 浅红背景,在 modeline 里
+  ;; 形成下划线效果. 改成跟 isearch 正常状态一致:无背景,仅前景
+  (isearch-fail :background nil :underline nil)
    ;; trailing-whitespace 默认有红色背景(catppuccin peach/themer accent0),
    ;; 导致行末尾随空格显示为红色块(特别是一行只有空格的"空行").
    ;; 清掉背景色,只保留前景和普通空格一致的淡色.
