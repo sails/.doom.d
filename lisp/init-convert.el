@@ -97,16 +97,30 @@
   )
 
 ;; base64
+(defun convert::base64-encode-string (text)
+  "Encode TEXT to base64, first encoding as UTF-8 bytes.
+base64-encode-string 只接受 unibyte 字节,中文等多字节字符会报
+\"Multibyte character in data for base64 encoding\"。这里先用
+encode-coding-string 把文本按 utf-8 编码成字节,再做 base64。"
+  (base64-encode-string (encode-coding-string text 'utf-8) t))
+
 (defun convert:base64-encode-region (start end)
-  "Convert base64 for region START and END."
+  "Convert base64 for region START and END (encode from UTF-8)."
   (interactive "r")
-  (base64-encode-region start end)
+  (convert:replace-region start end 'convert::base64-encode-string)
   )
 
+(defun convert::base64-decode-string (text)
+  "Decode base64 TEXT to raw bytes, then decode as UTF-8.
+base64-decode-string 返回的是 unibyte 原始字节,不经过编码系统,
+所以中文会显示成 \\343\\200\\200 之类的八进制转义。
+这里再用 decode-coding-string 按 utf-8 解码成真正的多字节字符。"
+  (decode-coding-string (base64-decode-string text) 'utf-8))
+
 (defun convert:base64-decode-region (start end)
-  "Convert base64 for region START and END."
+  "Convert base64 for region START and END (decode as UTF-8)."
   (interactive "r")
-  (base64-decode-region start end)
+  (convert:replace-region start end 'convert::base64-decode-string)
   )
 
 ;; decimal-to-binary
