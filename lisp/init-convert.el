@@ -45,9 +45,47 @@
 
 ;; Unicode转换
 (defun convert:unibyte-to-string (text)
-  "Converts a region from Unicode escape sequences to Utf8 characters."
-  (decode-coding-string (string-as-unibyte (read (concat "\"" text "\""))) 'utf-8)
-  )
+  "把 TEXT 中的 \\ooo 八进制转义序列转成对应 UTF-8 字符,其它内容原样保留.
+
+连续的一个或多个 \\ooo(如 \\346\\254\\272\\350\\257\\210)会被收集成一段字节流,
+整体按 utf-8 解码成字符(中文一般是 3 个 \\ooo 一个字符)。非转义的部分原样保留。
+
+注意: 不能用 replace-regexp-in-string / replace-match 实现——把多字节的
+解码结果替换进 unibyte 的转义文本时,match-data 的字节/字符
+位置会错乱,导致替换错位、残留 \257\\210 之类。所以这里用纯手动逐字符
+遍历,完全避开 match-data。"
+  (let ((result '())
+        (i 0)
+        (len (length text)))
+    (while (< i len)
+      (if (and (eq (aref text i) ?\\)
+               (<= (+ i 3) (1- len))          ; 后面至少还有 3 个字符
+               (let ((ok t))
+                 (dotimes (k 3)
+                   (unless (<= ?0 (aref text (+ i 1 k)) ?7)
+                     (setq ok nil)))
+                 ok))
+          ;; 收集从 i 开始的连续 \\ooo 转义
+          (let ((byte-list '())
+                (j i))
+            (while (and (<= (+ j 3) (1- len))
+                        (eq (aref text j) ?\\)
+                        (let ((ok t))
+                          (dotimes (k 3)
+                            (unless (<= ?0 (aref text (+ j 1 k)) ?7)
+                              (setq ok nil)))
+                          ok))
+              (push (string-to-number (substring text (1+ j) (+ j 4)) 8)
+                    byte-list)
+              (setq j (+ j 4)))
+            (push (decode-coding-string
+                   (apply #'unibyte-string (nreverse byte-list)) 'utf-8)
+                  result)
+            (setq i j))
+        ;; 普通字符原样保留
+        (push (char-to-string (aref text i)) result)
+        (setq i (1+ i))))
+    (apply #'concat (nreverse result))))
 (defun convert:unibyte-decode-region (start end)
   "Convert decode unibyte for region START and END."
   (interactive "r")
